@@ -23,17 +23,16 @@ const middleware = require('./middleware');
 //const importRoutes = keystone.importer(__dirname);
 const cors = require('cors');
 
-const schema = require('../graphql/schema-compose');
+//const schema = require('../graphql/schema-compose');
 //const schema ={};
 const graphql = require('graphql');
 const bodyParser = require('body-parser');
-const graphqlExpress = require('graphql-server-express').graphqlExpress;
-const graphiqlExpress = require('graphql-server-express').graphiqlExpress;
-const jwt = require('express-jwt');
+//const graphqlExpress = require('graphql-server-express').graphqlExpress;
+/const graphiqlExpress = require('graphql-server-express').graphiqlExpress;
+//const jwt = require('express-jwt');
 
 //const User = keystone.list('User').model;
-const Outlet = keystone.list('Outlet').model;
-const Candidate = keystone.list('Candidate').model;
+//const Candidate = keystone.list('Candidate').model;
 //const JWT_SECRET = require('../config').JWT_SECRET;
 
 if (process.env.NODE_ENV == 'development') {
