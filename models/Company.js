@@ -38,5 +38,6 @@ Company.add({
 /**
  * Registration
  */
+Company.defaultSort = '-createdAt';
 Company.defaultColumns = 'name, phone, email';
 Company.register();
