@@ -48,7 +48,7 @@ if (process.env.NODE_ENV == 'development') {
 
 // Setup Route Bindings
 exports = module.exports = function (app) {
-	app.graphqlSchema = schema;
+	//app.graphqlSchema = schema;
 
 	//Configure CORS -- Remove localhost in final version
 	var whitelist = ['http://ktt-app.herokuapp.com', 'http://localhost']
