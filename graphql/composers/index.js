@@ -11,23 +11,33 @@ const Candidate = keystone.list('Candidate').model;
 
 const UserTCOptions = {
   fields:{
-    remove: ['password','isAdmin']
+    remove: ['password', 'passwordVersion','isAdmin']
   }
 };
-
+const CandidateTCOptions = {
+  fields:{
+    remove: ['password', 'passwordVersion', 'isVerified', 'isEmployed', 'documentsUploaded', 'caseFile']
+  },
+  resolvers:{
+    updateById: {
+      record: {
+        removeFields: ['phone', 'result', 'category', 'password', 'passwordVersion', 'isVerified', 'isEmployed', 'documentsUploaded', 'caseFile']
+      }
+    }
+  }
+};
 const UserTC = composeWithMongoose(User, UserTCOptions);
 const PollTC = composeWithMongoose(Poll, {});
 const PollVoteTC = composeWithMongoose(PollVote, {});
 const LocalGovernmentTC = composeWithMongoose(LocalGovernment, {});
 const StateTC = composeWithMongoose(State, {});
-const OutletTC = composeWithMongoose(Outlet, {});
-const CandidateTC = composeWithMongoose(Candidate, {});
+const CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
+//const CandidateUserTC = composeWithMongoose(Candidate, CandidateUserTCOptions);
 
 /**
 * Add JWT to user models for login
 */
 UserTC.addFields({jwt: 'String'})
-OutletTC.addFields({jwt: 'String'})
 CandidateTC.addFields({jwt: 'String'})
 
 /**
@@ -72,24 +82,6 @@ const ViewerTCfields = {
 }
 ViewerTC.addFields(ViewerTCfields);
 
-const OutletViewerTC = GQC.getOrCreateTC('OutletViewer');
-OutletViewerTC.addResolver({
-	kind: 'query',
-  name: 'outletAccess',
-  type: OutletViewerTC,
-  resolve: ({ args, context , contextOutlet}) => {
-		console.log('this outlet');
-		//console.log(context.user);
-    return { outlet: contextOutlet }
-  },
-})
-
-const OutletViewerTCFields = {
-	outlet: OutletTC.getType()
-	//add other exclusive to outlet fields here
-}
-OutletViewerTC.addFields(OutletViewerTCFields);
-
 const ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
 ViewerCandidateTC.addResolver({
 	kind: 'query',
@@ -112,8 +104,6 @@ ViewerCandidateTC.addFields(ViewerCandidateTCFields);
 * === Exports ===
 */
 module.exports = {
-  UserTC, EventTC, PollTC, PollVoteTC, NewsTC,
-  PollingCenterTC, WardTC, LocalGovernmentTC, StateTC,
-  OutletTC, CandidateTC,
-  ViewerTC, OutletViewerTC, ViewerCandidateTC
+  UserTC, PollTC, PollVoteTC, LocalGovernmentTC, StateTC,
+  CandidateTC, ViewerTC, ViewerCandidateTC
 };

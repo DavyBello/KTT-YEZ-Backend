@@ -10,15 +10,16 @@ var Job = new keystone.List('Job', {
 });
 
 Job.add({
-	name: { type: Types.Name, required: true, index: true },
-	phone: { type: Types.Text, initial: true },
-	email: { type: Types.Email, initial: true },
-	website: { type: Types.Text, initial: true },
-	address: { type: Types.Text, initial: true },
-	phone: { type: Types.Text, initial: true },
+	title: { type: String, required: true, index: true, initial: true },
+	description: { type: Types.Text, initial: true },
+	role: { type: Types.Email, initial: true },
+	vacancy: { type: Types.Text, initial: true },
+	contact: { type: Types.Text, initial: true },
 	industry: { type: Types.Relationship, ref: 'Industry', many: false },
 	//password: { type: Types.Password, initial: true, required: true },
 	//passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
+}, 'Status', {
+	isVacant: {type: Boolean, default: false, index: true},
 }, 'Requirements', {
 	address: { type: Types.Text, initial: true },
 });
@@ -38,5 +39,5 @@ Job.add({
 /**
  * Registration
  */
-Job.defaultColumns = 'name, phone, email';
+Job.defaultColumns = 'title, role, industry';
 Job.register();

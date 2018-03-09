@@ -23,28 +23,18 @@ const middleware = require('./middleware');
 //const importRoutes = keystone.importer(__dirname);
 const cors = require('cors');
 
-//const schema = require('../graphql/schema-compose');
-//const schema ={};
+const schema = require('../graphql/schema-compose');
 const graphql = require('graphql');
 const bodyParser = require('body-parser');
-//const graphqlExpress = require('graphql-server-express').graphqlExpress;
-//const graphiqlExpress = require('graphql-server-express').graphiqlExpress;
-//const jwt = require('express-jwt');
+const graphqlExpress = require('graphql-server-express').graphqlExpress;
+const graphiqlExpress = require('graphql-server-express').graphiqlExpress;
+const jwt = require('express-jwt');
 
-//const User = keystone.list('User').model;
-//const Candidate = keystone.list('Candidate').model;
+const User = keystone.list('User').model;
+const Candidate = keystone.list('Candidate').model;
+const Company = keystone.list('Company').model;
 //const JWT_SECRET = require('../config').JWT_SECRET;
 
-if (process.env.NODE_ENV == 'development') {
-	// Common Middleware
-	keystone.pre('routes', middleware.initLocals);
-	keystone.pre('render', middleware.flashMessages);
-}
-
-// Import Route Controllers
-/*const routes = {
-	views: importRoutes('./views'),
-};*/
 
 // Setup Route Bindings
 exports = module.exports = function (app) {
@@ -69,29 +59,30 @@ exports = module.exports = function (app) {
 	//NO JWT
 	//app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 	//enable cors and jwt middleware on api route
-	//app.use('/graphql', cors(corsOptions), bodyParser.json(), jwt({
-	/*app.use('/graphql', cors(), bodyParser.json(), jwt({
+	// app.use('/graphql', cors(corsOptions), bodyParser.json(), jwt({
+	app.use('/graphql', cors(), bodyParser.json(), jwt({
 	  secret: process.env.JWT_SECRET,
 	  credentialsRequired: false,
 	}), graphqlExpress(req => {
 		//req.user is provided by jwt from the authorization header provided
+		let context = {};
+		if (req.user) {
+			context = {
+				//user: req.user ? User.findOne({ _id: req.user._id || req.user.id, version: req.user.version}) : Promise.resolve(null),
+				candidate: req.user.type==='Candidate' ?
+					Candidate.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
+			}
+		}
 		return ({
 		  schema: schema,
-		  context: {
-		    //user: req.user ? User.findOne({ _id: req.user._id || req.user.id, version: req.user.version}) : Promise.resolve(null),
-				outlet: req.outlet ?
-		      Outlet.findOne({ _id: req.outlet._id || req.outlet.id}) : Promise.resolve(null),
-				candidate: req.candidate ?
-			    Candidate.findOne({ _id: req.candidate._id || req.candidate.id}) : Promise.resolve(null),
-		  },
+		  context: context
 		})}
 	));
 	app.use('/graphiql', graphiqlExpress({
 			endpointURL: '/graphql'
-	}));*/
+	}));
 	// Views
 	app.get('/admin', (req, res) => {res.redirect('/keystone')});
-	//app.get('/', routes.views.index);
 	app.get('/', (req, res) => {res.redirect('/keystone')});
 
 	//routes for testing in development

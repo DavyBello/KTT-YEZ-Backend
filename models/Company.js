@@ -11,16 +11,22 @@ var Company = new keystone.List('Company', {
 
 Company.add({
 	name: { type: String, required: true, index: true },
+	logoUrl: { type: Types.Text, initial: true },
 	phone: { type: Types.Text, initial: true },
 	email: { type: Types.Email, initial: true },
 	website: { type: Types.Text, initial: true },
 	address: { type: Types.Text, initial: true },
-	//phone: { type: Types.Text, initial: true },
+	description: { type: Types.Text, initial: true },
+	cacRegNo: { type: Types.Text, initial: true },
+	staff: {type: Types.Select, options: ['1-10','11-30','31-100']},
 	industry: { type: Types.Relationship, ref: 'Industry', many: false, initial: true },
-	//password: { type: Types.Password, initial: true, required: true },
-	//passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
+	password: { type: Types.Password, initial: true, required: true },
+	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
 }, 'Jobs', {
 	jobs: { type: Types.Relationship, ref: 'Job', many: true },
+}, 'Status', {
+	isActive: {type: Boolean, default: false, index: true},
+	isVerified: {type: Boolean, default: false, index: true},
 });
 
 // Provide access to Keystone
@@ -39,5 +45,5 @@ Company.add({
  * Registration
  */
 Company.defaultSort = '-createdAt';
-Company.defaultColumns = 'name, phone, email';
+Company.defaultColumns = 'name, phone, email, cacRegNo';
 Company.register();
