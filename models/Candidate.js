@@ -6,10 +6,12 @@ var Types = keystone.Field.Types;
  * ==========
  */
 var Candidate = new keystone.List('Candidate');
+Candidate.schema.set('usePushEach', true);
 
 Candidate.add({
 	name: { type: Types.Name, required: true, index: true },
 	phone: { type: Types.Text, initial: true, required: true},
+	username: { type: Types.Text, initial: true},
 	email: { type: Types.Email, initial: true, required: false, unique: true, index: true },
 	password: { type: Types.Password, initial: true, required: true },
 	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
@@ -28,6 +30,7 @@ Candidate.add({
 	isVerified: { type: Boolean, index: true },
 }, 'Results', {
 	result: {
+		skillAnalysis: { type: Types.Relationship, ref: 'SkillAnalysisResult', many: false },
 		seeker: { type: Types.Relationship, ref: 'SeekerResult', many: false },
 		startup: { type: Types.Relationship, ref: 'StartupResult', many: false },
 	}

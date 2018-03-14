@@ -61,6 +61,7 @@ exports = module.exports = function (app) {
 	//enable cors and jwt middleware on api route
 	// app.use('/graphql', cors(corsOptions), bodyParser.json(), jwt({
 	app.use('/graphql', cors(), bodyParser.json(), jwt({
+	// app.use('/graphql', bodyParser.json(), jwt({
 	  secret: process.env.JWT_SECRET,
 	  credentialsRequired: false,
 	}), graphqlExpress(req => {

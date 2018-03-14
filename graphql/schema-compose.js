@@ -6,13 +6,40 @@ const { GQC } = require('graphql-compose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-
-const typeComposers = require('./composers/index');
+const User = keystone.list('User').model;
+const Candidate = keystone.list('Candidate').model;
+const typeComposers = require('./composers');
+const addRelationships = require('./relationships');
 
 const {
 	UserTC, PollTC, PollVoteTC, LocalGovernmentTC, StateTC,
-  CandidateTC, ViewerTC, ViewerCandidateTC
+  CandidateTC, ViewerTC, ViewerCandidateTC, JobExperienceTC
 } = typeComposers;
+//Add relationships to schema
+addRelationships();
+
+const createAndUpdateCandidate = ( field, TC ) => {
+	return TC.get('$createOne').wrapResolve(next => async (rp) => {
+		//get contextCandidate from resolveParams (rp)
+		const { contextCandidate } = rp
+		const _field = contextCandidate[field]
+		if (Array.isArray(_field)) {
+			//add field to db and get result of createOne resolver
+			const result = await next(rp);
+			contextCandidate[field].push(result.recordId);
+			try {
+				await contextCandidate.save();
+				return result;
+			} catch (e) {
+				//Placeholder function to stop the field from saving to the db
+				result.record.remove().exec();
+				return Promise.reject(`Unexpected error adding the document to candidate`);
+			}
+		} else {
+			return Promise.reject(`Field: ${field} is not an collection field`);
+		}
+	});
+}
 
 //Add fields and resolvers to rootQuery
 GQC.rootQuery().addFields({
@@ -21,7 +48,12 @@ GQC.rootQuery().addFields({
 	}),
 	...candidateAccess({
 		viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
-	})
+	}),
+	currentTime: {
+    type: 'Date',
+    resolve: () => Date.now(),
+  },
+	stateMany: StateTC.get('$findMany'),
 	// pollById: PollTC.get('$findById'),
 	// pollByIds: PollTC.get('$findByIds'),
 	// pollOne: PollTC.get('$findOne'),
@@ -29,8 +61,6 @@ GQC.rootQuery().addFields({
 	// pollTotal: PollTC.get('$count'),
 });
 
-const User = keystone.list('User').model;
-const Candidate = keystone.list('Candidate').model;
 GQC.rootMutation().addFields({
 	//userCreate: UserTC.get('$createOne'),
 	/*login: {
@@ -99,7 +129,12 @@ GQC.rootMutation().addFields({
 	},
 	...candidateAccess({
 		candidateUpdateById: CandidateTC.get('$updateById'),
-	})
+		addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC)
+		// addJobExperience: createAndUpdateCandidate( 'education', JobExperienceTC)
+		// addJobExperience: createAndUpdateCandidate( 'certificates', JobExperienceTC)
+		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC)
+	}),
+	stateCreate: StateTC.get('$createOne'),
   // userUpdateById: UserTC.get('$updateById'),
   //userRemoveById: UserTC.get('$removeById'),
   //userRemoveOne: UserTC.get('$removeOne'),
