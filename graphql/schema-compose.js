@@ -171,7 +171,8 @@ function candidateAccess(resolvers) {
 				const candidate = await rp.context.candidate;
 				if (!candidate){
 					console.log('Unauthorized request');
-					return new Error('You must be signed in as a candidate, to have access to this action.');
+					//console.log(new Error('You must be signed in as a candidate, to have access to this action.'));
+					throw new Error('You must be signed in as a candidate, to have access to this action.')
 				}
 				//console.log('authorized');
 				//add signed-In candidate to the resolver parameters
