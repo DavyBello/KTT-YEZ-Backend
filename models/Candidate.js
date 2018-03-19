@@ -17,7 +17,7 @@ Candidate.add({
 	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
 	category: {type: Types.Select, options: ['seeker','startup','employed']}
 }, 'Details', {
-	address: { type: Types.Text},
+	address: { type: Types.Location, default: {country: 'Nigeria'}},
 	imageUrl: { type: Types.Text},
 	bvn: { type: Types.Text},
 	gender: {type: Types.Select, options: ['male','female','other']},

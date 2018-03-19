@@ -70,7 +70,7 @@ exports = module.exports = function (app) {
 		if (req.user) {
 			context = {
 				//user: req.user ? User.findOne({ _id: req.user._id || req.user.id, version: req.user.version}) : Promise.resolve(null),
-				candidate: req.user.type==='Candidate' ?
+				Candidate: req.user.type==='Candidate' ?
 					Candidate.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
 			}
 		}

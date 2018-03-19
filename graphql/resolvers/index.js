@@ -1,4 +1,4 @@
-const candidateResolvers = require('./candidateResolvers')
+const candidateResolvers = require('./candidate')
 
 module.exports = addResolvers = () => {
   candidateResolvers();

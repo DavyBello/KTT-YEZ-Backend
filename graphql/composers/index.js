@@ -44,54 +44,16 @@ const LocalGovernmentTC = exports.LocalGovernmentTC = composeWithMongoose(LocalG
 const StateTC = exports.StateTC = composeWithMongoose(State);
 const JobExperienceTC = exports.JobExperienceTC = composeWithMongoose(JobExperience);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
-//const CandidateUserTC = composeWithMongoose(Candidate, CandidateUserTCOptions);
 
 /**
 * Add JWT to user models for login
 */
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
-
-/**
-* Relationships
-*/
+JobExperienceTC.addFields({duration: 'String'})
 
 
 /**
 * Viewer Fields for authentication and authorization
 */
-
-//Viewer Types for restricted data access
-const ViewerTC = exports.ViewerTC = GQC.getOrCreateTC('Viewer');
-ViewerTC.addResolver({
-	kind: 'query',
-  name: 'adminAccess',
-  type: ViewerTC,
-  resolve: ({ args, context , contextUser}) => {
-		console.log('this user');
-    return { user: contextUser }
-  },
-})
-
-const ViewerTCfields = {
-	user: UserTC.getType()
-}
-ViewerTC.addFields(ViewerTCfields);
-
 const ViewerCandidateTC = exports.ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
-ViewerCandidateTC.addResolver({
-	kind: 'query',
-  name: 'candidateAccess',
-  type: ViewerCandidateTC,
-  resolve: ({ args, context , contextCandidate}) => {
-		console.log('this outlet');
-		contextCandidate.id = contextCandidate._id;
-    return { candidate: contextCandidate }
-  },
-})
-
-const ViewerCandidateTCFields = {
-	candidate: CandidateTC.getType()
-	//add other exclusive to candidate fields here
-}
-ViewerCandidateTC.addFields(ViewerCandidateTCFields);

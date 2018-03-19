@@ -1,13 +1,17 @@
 const keystone = require('keystone');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { CandidateTC } = require('../composers');
 const Candidate = keystone.list('Candidate').model;
 
 module.exports = () => {
   CandidateTC.addResolver({
-    kind: 'query',
+    kind: 'mutation',
     name: 'loginWithPhone',
-    type: CandidateTC.getType(),
-    resolve: (_, args, context) => {
+    description: 'login a candidate',
+    args: {phone: 'String', password: 'String'},
+    type: CandidateTC,
+    resolve: async ({ args, context }) => {
       console.log('candidate login this ----');
       const { phone, password } = args;
       //console.log(context);
@@ -35,4 +39,5 @@ module.exports = () => {
       });
     },
   })
+
 }

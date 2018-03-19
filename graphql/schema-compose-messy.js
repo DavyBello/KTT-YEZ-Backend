@@ -12,7 +12,7 @@ const addResolvers = require('./resolvers');
 const addViewers = require('./viewers');
 
 //Get logic middleware
-const { authAccess, updateSelf, createSelfRelationship, updateSelfRelationship } = require('./logic/common');
+const { candidateAccess, updateCandidateRelationshipField, createAndUpdateCandidate} = require('./logic/candidate');
 
 const {
 	UserTC, PollTC, PollVoteTC, LocalGovernmentTC, StateTC,
@@ -26,22 +26,29 @@ addResolvers();
 
 //Add fields and resolvers to rootQuery
 GQC.rootQuery().addFields({
-	...authAccess('Candidate', {
+	...candidateAccess({
 		viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
 	}),
 	currentTime: {
     type: 'Date',
-    resolve: () => new Date().toISOString(),
+    resolve: () => Date.now(),
   },
+	stateMany: StateTC.get('$findMany'),
+	// pollById: PollTC.get('$findById'),
+	// pollByIds: PollTC.get('$findByIds'),
+	// pollOne: PollTC.get('$findOne'),
+	// pollMany: PollTC.get('$findMany'),
+	// pollTotal: PollTC.get('$count'),
 });
 
 //Add fields and resolvers to rootQuery
 GQC.rootMutation().addFields({
+	//userCreate: UserTC.get('$createOne'),
 	loginCandidate: CandidateTC.get('$loginWithPhone'),
-	...authAccess('Candidate', {
-		candidateUpdateById:updateSelf(CandidateTC),
-		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
-		updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
+	...candidateAccess({
+		candidateUpdateById: CandidateTC.get('$updateById'),
+		addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
+		updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
 		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
@@ -49,7 +56,13 @@ GQC.rootMutation().addFields({
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
 		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
 	}),
+	stateCreate: StateTC.get('$createOne'),
+  // userUpdateById: UserTC.get('$updateById'),
+  //userRemoveById: UserTC.get('$removeById'),
+  //userRemoveOne: UserTC.get('$removeOne'),
+  //userRemoveMany: UserTC.get('$removeMany'),
 });
 
 const schema = GQC.buildSchema();
+
 module.exports = schema;

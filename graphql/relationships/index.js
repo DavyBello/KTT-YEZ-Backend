@@ -1,6 +1,6 @@
-const stateRel = require('./State');
-const pollRel = require('./Poll');
-const candidateRel = require('./Candidate');
+const stateRel = require('./state');
+const pollRel = require('./poll');
+const candidateRel = require('./candidate');
 
 const addRelationships = module.exports = () => {
   stateRel();
