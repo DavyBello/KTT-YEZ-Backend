@@ -50,7 +50,6 @@ const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, Candida
 */
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
-JobExperienceTC.addFields({duration: 'String'})
 
 
 /**

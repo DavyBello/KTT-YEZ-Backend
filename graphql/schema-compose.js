@@ -12,7 +12,13 @@ const addResolvers = require('./resolvers');
 const addViewers = require('./viewers');
 
 //Get logic middleware
-const { authAccess, updateSelf, createSelfRelationship, updateSelfRelationship } = require('./logic/common');
+const {
+	authAccess,
+	updateSelf,
+	createSelfRelationship,
+	updateSelfRelationship,
+	deleteSelfRelationship
+} = require('./logic/common');
 
 const {
 	UserTC, PollTC, PollVoteTC, LocalGovernmentTC, StateTC,
@@ -26,6 +32,7 @@ addResolvers();
 
 //Add fields and resolvers to rootQuery
 GQC.rootQuery().addFields({
+	user: UserTC.get('$findOne'),
 	...authAccess('Candidate', {
 		viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
 	}),
@@ -37,11 +44,13 @@ GQC.rootQuery().addFields({
 
 //Add fields and resolvers to rootQuery
 GQC.rootMutation().addFields({
+	user: UserTC.get('$removeById'),
 	loginCandidate: CandidateTC.get('$loginWithPhone'),
 	...authAccess('Candidate', {
 		candidateUpdateById:updateSelf(CandidateTC),
 		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
+		deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
 		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
