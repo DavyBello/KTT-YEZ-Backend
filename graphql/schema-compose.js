@@ -46,6 +46,7 @@ GQC.rootQuery().addFields({
 GQC.rootMutation().addFields({
 	user: UserTC.get('$removeById'),
 	loginCandidate: CandidateTC.get('$loginWithPhone'),
+	signUpCandidate: CandidateTC.get('$signUp'),
 	...authAccess('Candidate', {
 		candidateUpdateById:updateSelf(CandidateTC),
 		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
