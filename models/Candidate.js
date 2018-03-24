@@ -10,9 +10,9 @@ Candidate.schema.set('usePushEach', true);
 
 Candidate.add({
 	name: { type: Types.Name, required: true, index: true },
-	phone: { type: Types.Text, initial: true, required: true},
-	username: { type: Types.Text, initial: true},
-	email: { type: Types.Email, initial: true, required: false, unique: true, index: true },
+	phone: { type: Types.Text, initial: true, required: true, unique: true},
+	username: { type: Types.Text, initial: true, required: false, unique: true, index: true, sparse: true },
+	email: { type: Types.Email, initial: true, required: false, unique: true, index: true, sparse: true },
 	password: { type: Types.Password, initial: true, required: true },
 	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
 	category: {type: Types.Select, options: ['seeker','startup','employed']}
