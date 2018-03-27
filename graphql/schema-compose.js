@@ -3,8 +3,6 @@
 */
 const keystone = require('keystone');
 const { GQC } = require('graphql-compose');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 const typeComposers = require('./composers');
 const addRelationships = require('./relationships');
@@ -59,7 +57,29 @@ GQC.rootMutation().addFields({
 		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
 		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
 	}),
+	// ...authAccess('Candidate', {
+	// 	candidateUpdateById:updateSelf(CandidateTC),
+	// 	addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
+	// 	updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
+	// 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
+	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
+	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
+	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
+	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
+	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
+	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
+	// }),
 });
 
 const schema = GQC.buildSchema();
 module.exports = schema;
+
+/*
+var fs = require('fs');
+fs.writeFile("./graphql/schema.txt", JSON.stringify(schema, null, 2), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("\nThe schema was saved to schema.json!");
+});
+*/
