@@ -1,6 +1,46 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
+const STATES = [
+  "Abia",
+  "Adamawa",
+  "Anambra",
+  "AkwaIbom",
+  "Bauchi",
+  "Bayelsa",
+  "Benue",
+  "Borno",
+  "CrossRiver",
+  "Delta",
+  "Ebonyi",
+  "Enugu",
+  "Edo",
+  "Ekiti",
+  "FCTAbuja",
+  "Gombe",
+  "Imo",
+  "Jigawa",
+  "Kaduna",
+  "Kano",
+  "Katsina",
+  "Kebbi",
+  "Kogi",
+  "Kwara",
+  "Lagos",
+  "Nasarawa",
+  "Niger",
+  "Ogun",
+  "Ondo",
+  "Osun",
+  "Oyo",
+  "Plateau",
+  "Rivers",
+  "Sokoto",
+  "Taraba",
+  "Yobe",
+  "Zamfara"
+]
+
 /**
  * Candidate Model
  * ==========
@@ -18,9 +58,10 @@ Candidate.add({
 	category: {type: Types.Select, options: ['seeker','startup','employed']}
 }, 'Details', {
 	address: { type: Types.Location, default: {country: 'Nigeria'}},
+	stateOfResidence: {type: Types.Select, options: STATES},
 	imageUrl: { type: Types.Text},
 	bvn: { type: Types.Text},
-	gender: {type: Types.Select, options: ['male','female','other']},
+	gender: {type: Types.Select, options: ['Male','Female','Other']},
 	dateOfBirth: { type: Types.Date },
 	placeOfBirth: { type: Types.Text},
 	nationality: { type: Types.Text},
