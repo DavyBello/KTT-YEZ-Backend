@@ -1,5 +1,8 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
+var moment = require("moment")
+
+const { STATES, MONTHS, toCamelCase  } = require('../lib/common');
 
 /**
  * JobExperience Model
@@ -7,12 +10,11 @@ var Types = keystone.Field.Types;
  */
 var JobExperience = new keystone.List('JobExperience');
 
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
 JobExperience.add({
 	companyName: { type: Types.Text, required: true, initial: true, index: true },
 	role: { type: Types.Text, label: 'Role/Position', initial: true, required: true},
 	address: { type: Types.Text, initial: true, required: true},
+	state: {type: Types.Select, options: STATES},
 	salary: { type: Types.Text, initial: true, required: false},
 	fromMonth: {type: Types.Select, options: MONTHS, initial: true},
 	fromYear: { type: Types.Text, initial: true, required: false},
@@ -20,6 +22,7 @@ JobExperience.add({
 	toMonth: {type: Types.Select, options: MONTHS, initial: true},
 	toYear: { type: Types.Text, initial: true, required: false},
 	duration: { type: Types.Text},
+	startDate: { type: Types.Date, index: true},
 	to: {
 		month: {type: Types.Select, options: MONTHS, initial: true},
 		year: { type: Types.Text, initial: true, required: false},
@@ -33,15 +36,23 @@ JobExperience.add({
 	return this.isAdmin;
 });*/
 
+// Model Hooks
 JobExperience.schema.pre('save', function (next) {
+	if (this.role.length > 5) {
+		this.role = toCamelCase(this.role)
+	}
+	this.companyName = toCamelCase(this.companyName)
+	this.address = toCamelCase(this.address)
 	if (this.isWorkingHere){
 		now = new Date()
 		this.toMonth = MONTHS[now.getMonth()];
 		this.toYear = now.getFullYear();
 	}
+	//month
+	this.startDate = moment({month: MONTHS.indexOf(this.fromMonth), year: this.fromYear}).format()
 	this.duration = !this.isWorkingHere ?
-		`${this.fromMonth}, ${this.fromYear} - ${this.toMonth}, ${this.toYear} | 3 Months` :
-		`${this.fromMonth}, ${this.fromYear} - Present | 3 Months`
+		`${this.fromMonth}, ${this.fromYear} - ${this.toMonth}, ${this.toYear}` :
+		`${this.fromMonth}, ${this.fromYear} - Present`
 	next();
 });
 

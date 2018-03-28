@@ -1,45 +1,7 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
-const STATES = [
-  "Abia",
-  "Adamawa",
-  "Anambra",
-  "AkwaIbom",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "CrossRiver",
-  "Delta",
-  "Ebonyi",
-  "Enugu",
-  "Edo",
-  "Ekiti",
-  "FCTAbuja",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara"
-]
+const { STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase  } = require('../lib/common');
 
 /**
  * Candidate Model
@@ -55,13 +17,13 @@ Candidate.add({
 	email: { type: Types.Email, initial: true, required: false, unique: true, index: true, sparse: true },
 	password: { type: Types.Password, initial: true, required: true },
 	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
-	category: {type: Types.Select, options: ['seeker','startup','employed']}
+	category: {type: Types.Select, options: CANDIDATE_CATEGORIES}
 }, 'Details', {
-	address: { type: Types.Location, default: {country: 'Nigeria'}},
+	address: { type: Types.Text },
 	stateOfResidence: {type: Types.Select, options: STATES},
 	imageUrl: { type: Types.Text},
 	bvn: { type: Types.Text},
-	gender: {type: Types.Select, options: ['Male','Female','Other']},
+	gender: {type: Types.Select, options: GENDERS},
 	dateOfBirth: { type: Types.Date },
 	placeOfBirth: { type: Types.Text},
 	nationality: { type: Types.Text},
@@ -88,7 +50,7 @@ Candidate.add({
 	caseFile: { type: Types.Text, initial: false, required: true, default: 1},
 });
 
-// Provide access to Keystone
+// Virtuals
 Candidate.schema.virtual('isTested').get(() => {
 	if (this.result.seeker || this.result.startup)
 		return true;
@@ -102,6 +64,15 @@ Candidate.schema.virtual('testTaken').get(() => {
 	if (this.result.startup)
 		return 'startup';
 	return 'none';
+});
+
+// Model Hooks
+Candidate.schema.pre('save', function (next) {
+  this.name.first = toCamelCase(this.name.first);
+  this.name.last = toCamelCase(this.name.last);
+  if (PHONE_REGEX.test(this.phone)){
+    next();
+  }
 });
 
 /**
