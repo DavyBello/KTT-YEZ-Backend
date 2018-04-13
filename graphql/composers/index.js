@@ -12,6 +12,7 @@ const LocalGovernment = keystone.list('LocalGovernment').model;
 const State = keystone.list('State').model;
 const Candidate = keystone.list('Candidate').model;
 const JobExperience = keystone.list('JobExperience').model;
+const Company = keystone.list('Company').model;
 
 /**
 * Config
@@ -33,6 +34,11 @@ const CandidateTCOptions = {
     }
   }
 };
+const CompanyTCOptions = {
+  fields:{
+    remove: ['password', 'passwordVersion','createdAt', 'createdBy', 'updatedAt', 'updatedBy']
+  }
+};
 
 /**
 * Exports
@@ -44,15 +50,18 @@ const LocalGovernmentTC = exports.LocalGovernmentTC = composeWithMongoose(LocalG
 const StateTC = exports.StateTC = composeWithMongoose(State);
 const JobExperienceTC = exports.JobExperienceTC = composeWithMongoose(JobExperience);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
+const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
 
 /**
 * Add JWT to user models for login
 */
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
+CompanyTC.addFields({jwt: 'String'})
 
 
 /**
 * Viewer Fields for authentication and authorization
 */
 const ViewerCandidateTC = exports.ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
+const ViewerCompanyTC = exports.ViewerCompanyTC = GQC.getOrCreateTC('ViewerCompany');

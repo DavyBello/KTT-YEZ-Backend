@@ -72,7 +72,9 @@ Candidate.schema.pre('save', function (next) {
   this.name.last = toCamelCase(this.name.last);
   if (PHONE_REGEX.test(this.phone)){
     next();
-  }
+  } else {
+		next(new Error('Invalid Phone Number'));
+	}
 });
 
 /**

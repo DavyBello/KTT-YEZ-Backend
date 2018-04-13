@@ -72,6 +72,8 @@ exports = module.exports = function (app) {
 				//user: req.user ? User.findOne({ _id: req.user._id || req.user.id, version: req.user.version}) : Promise.resolve(null),
 				Candidate: req.user.type==='Candidate' ?
 					Candidate.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
+				Company: req.user.type==='Company' ?
+					Company.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
 			}
 		}
 		return ({

@@ -19,8 +19,16 @@ const {
 } = require('./logic/common');
 
 const {
-	UserTC, PollTC, PollVoteTC, LocalGovernmentTC, StateTC,
-  CandidateTC, ViewerCandidateTC, JobExperienceTC
+	UserTC,
+	PollTC,
+	PollVoteTC,
+	LocalGovernmentTC,
+	StateTC,
+  CandidateTC,
+	ViewerCandidateTC,
+	JobExperienceTC,
+	CompanyTC,
+	ViewerCompanyTC
 } = typeComposers;
 
 //Add relationships and resolvers to schema
@@ -34,6 +42,9 @@ GQC.rootQuery().addFields({
 	...authAccess('Candidate', {
 		viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
 	}),
+	...authAccess('Company', {
+		viewerCompany: ViewerCompanyTC.get('$companyAccess')
+	}),
 	currentTime: {
     type: 'Date',
     resolve: () => new Date().toISOString(),
@@ -45,6 +56,7 @@ GQC.rootMutation().addFields({
 	user: UserTC.get('$removeById'),
 	loginCandidate: CandidateTC.get('$loginWithPhone'),
 	signUpCandidate: CandidateTC.get('$signUp'),
+	loginCompany: CompanyTC.get('$loginWithEmail'),
 	...authAccess('Candidate', {
 		candidateUpdateById:updateSelf(CandidateTC),
 		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
