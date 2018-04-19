@@ -9,7 +9,7 @@ module.exports = () => {
     kind: 'mutation',
     name: 'loginWithPhone',
     description: 'login a candidate',
-    args: {phone: 'String', password: 'String'},
+    args: {phone: 'String!', password: 'String!'},
     type: CandidateTC,
     resolve: async ({ args, context }) => {
       console.log('candidate login this ----');
