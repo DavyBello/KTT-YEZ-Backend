@@ -12,7 +12,9 @@ const LocalGovernment = keystone.list('LocalGovernment').model;
 const State = keystone.list('State').model;
 const Candidate = keystone.list('Candidate').model;
 const JobExperience = keystone.list('JobExperience').model;
+const Education = keystone.list('Education').model;
 const Company = keystone.list('Company').model;
+const Certificate = keystone.list('Certificate').model;
 
 /**
 * Config
@@ -49,6 +51,8 @@ const PollVoteTC = exports.PollVoteTC = composeWithMongoose(PollVote);
 const LocalGovernmentTC = exports.LocalGovernmentTC = composeWithMongoose(LocalGovernment);
 const StateTC = exports.StateTC = composeWithMongoose(State);
 const JobExperienceTC = exports.JobExperienceTC = composeWithMongoose(JobExperience);
+const EducationTC = exports.EducationTC = composeWithMongoose(Education);
+const CertificateTC = exports.CertificateTC = composeWithMongoose(Certificate);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
 

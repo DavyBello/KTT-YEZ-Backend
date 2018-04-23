@@ -1,6 +1,6 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
-var moment = require("moment")
+var moment = require("moment");
 
 const { STATES, MONTHS, toCamelCase  } = require('../lib/common');
 
@@ -23,6 +23,7 @@ JobExperience.add({
 	toYear: { type: Types.Text, initial: true, required: false},
 	duration: { type: Types.Text},
 	startDate: { type: Types.Date, index: true},
+	endDate: { type: Types.Date, index: true},
 	to: {
 		month: {type: Types.Select, options: MONTHS, initial: true},
 		year: { type: Types.Text, initial: true, required: false},
@@ -47,6 +48,9 @@ JobExperience.schema.pre('save', function (next) {
 		now = new Date()
 		this.toMonth = MONTHS[now.getMonth()];
 		this.toYear = now.getFullYear();
+	} else {
+		const monthDays = moment({month: MONTHS.indexOf(this.toMonth), year: this.toYear}).daysInMonth();
+		this.endDate = moment({day: monthDays, month: MONTHS.indexOf(this.toMonth), year: this.toYear}).format();
 	}
 	//month
 	this.startDate = moment({month: MONTHS.indexOf(this.fromMonth), year: this.fromYear}).format()

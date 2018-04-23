@@ -98,9 +98,10 @@ const deleteSelfRelationship = exports.deleteSelfRelationship =  ( field, TC ) =
 				//check if relationship to be update is a member of _field array
 				let exist = _field.find((fieldId)=>(fieldId==args._id));
 				if (exist){
-					//delete document and relationship
+					//delete document from db
 					const result = await next(rp);
-					sourceUser[field] = sourceUser[field].filter(e => e !== result.recordId);
+					//delete relationship id from sourcedocument
+					sourceUser[field] = sourceUser[field].filter(e => e != result.recordId);
 					try {
 						await sourceUser.save();
 						return result;

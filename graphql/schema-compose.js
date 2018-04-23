@@ -27,6 +27,8 @@ const {
   CandidateTC,
 	ViewerCandidateTC,
 	JobExperienceTC,
+	EducationTC,
+	CertificateTC,
 	CompanyTC,
 	ViewerCompanyTC
 } = typeComposers;
@@ -62,12 +64,12 @@ GQC.rootMutation().addFields({
 		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
-		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
-		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
-		// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-		// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
+		addEducation: createSelfRelationship( 'education', EducationTC),
+		updateEducation: updateSelfRelationship( 'education', EducationTC),
+		deleteEducation: deleteSelfRelationship( 'education', EducationTC),
+		addCertificate: createSelfRelationship( 'certificates', CertificateTC),
+		updateCertificate: updateSelfRelationship( 'certificates', CertificateTC),
+		deleteCertificate: deleteSelfRelationship( 'certificates', CertificateTC),
 	}),
 	// ...authAccess('Candidate', {
 	// 	candidateUpdateById:updateSelf(CandidateTC),
