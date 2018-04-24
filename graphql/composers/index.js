@@ -15,6 +15,7 @@ const JobExperience = keystone.list('JobExperience').model;
 const Education = keystone.list('Education').model;
 const Company = keystone.list('Company').model;
 const Certificate = keystone.list('Certificate').model;
+const Referee = keystone.list('Referee').model;
 
 /**
 * Config
@@ -53,6 +54,7 @@ const StateTC = exports.StateTC = composeWithMongoose(State);
 const JobExperienceTC = exports.JobExperienceTC = composeWithMongoose(JobExperience);
 const EducationTC = exports.EducationTC = composeWithMongoose(Education);
 const CertificateTC = exports.CertificateTC = composeWithMongoose(Certificate);
+const RefereeTC = exports.RefereeTC = composeWithMongoose(Referee);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
 

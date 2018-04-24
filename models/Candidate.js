@@ -37,8 +37,8 @@ Candidate.add({
 		seeker: { type: Types.Relationship, ref: 'SeekerResult', many: false },
 		startup: { type: Types.Relationship, ref: 'StartupResult', many: false },
 	}
-}, 'Refrees', {
-	refrees: { type: Types.Relationship, ref: 'Refree', many: true },
+}, 'Referees', {
+	referees: { type: Types.Relationship, ref: 'Referee', many: true },
 }, 'Qualifications', {
 	experience: { type: Types.Relationship, ref: 'JobExperience', many: true },
 	education: { type: Types.Relationship, ref: 'Education', many: true },

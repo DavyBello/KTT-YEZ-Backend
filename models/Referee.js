@@ -2,17 +2,17 @@ var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
 /**
- * Refree Model
+ * Referee Model
  * ==========
  */
-var Refree = new keystone.List('Refree');
+var Referee = new keystone.List('Referee');
 
 const { GENDERS, PHONE_REGEX, toCamelCase  } = require('../lib/common');
 
-Refree.add({
+Referee.add({
 	name: { type: Types.Name, required: true, index: true },
 	phone: { type: Types.Text, initial: true, required: true},
-	gender: {type: Types.Select, options: ['male','female'], initial: true},
+	// gender: {type: Types.Select, options: ['male','female'], initial: true},
 	gender: {type: Types.Select, options: GENDERS},
 	email: { type: Types.Email, initial: true, required: true, unique: true, index: true },
 	// password: { type: Types.Password, initial: true, required: true },
@@ -24,20 +24,25 @@ Refree.add({
 	isVerified: { type: Boolean, index: true },
 });
 
-// Provide access to Keystone
-/*Refree.schema.virtual('canAccessKeystone').get(function () {
-	return this.isAdmin;
-});*/
-
+// Model Hooks
+Referee.schema.pre('save', function (next) {
+  this.name.first = toCamelCase(this.name.first);
+  this.name.last = toCamelCase(this.name.last);
+  if (PHONE_REGEX.test(this.phone)){
+    next();
+  } else {
+		next(new Error('Invalid Phone Number'));
+	}
+});
 
 /**
  * Relationships
  */
-//Refree.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
+//Referee.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
 
 
 /**
  * Registration
  */
-Refree.defaultColumns = 'name, phone, email, gender, relationship, isVerified';
-Refree.register();
+Referee.defaultColumns = 'name, phone, email, gender, relationship, isVerified';
+Referee.register();

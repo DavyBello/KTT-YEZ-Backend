@@ -46,7 +46,7 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	candidates: ['Candidate', 'Education', 'JobExperience', 'Refree', 'Certificate' ],
+	candidates: ['Candidate', 'Education', 'JobExperience', 'Referee', 'Certificate' ],
 	CandidateDocuments: ['CandidateDocument', 'SkillAnalysisResult', 'SeekerResult', 'StartupResult'],
 	Companies: ['Company', 'Industry', 'Job'],
 	poll: ['Poll', 'PollVote'],
