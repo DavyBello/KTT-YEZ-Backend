@@ -13,7 +13,7 @@ Referee.add({
 	name: { type: Types.Name, required: true, index: true },
 	phone: { type: Types.Text, initial: true, required: true},
 	// gender: {type: Types.Select, options: ['male','female'], initial: true},
-	gender: {type: Types.Select, options: GENDERS},
+	gender: {type: Types.Select, options: GENDERS, initial: true},
 	email: { type: Types.Email, initial: true, required: true, unique: true, index: true },
 	// password: { type: Types.Password, initial: true, required: true },
 	// passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
