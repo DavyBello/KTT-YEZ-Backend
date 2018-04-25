@@ -16,6 +16,7 @@ const Education = keystone.list('Education').model;
 const Company = keystone.list('Company').model;
 const Certificate = keystone.list('Certificate').model;
 const Referee = keystone.list('Referee').model;
+const Industry = keystone.list('Industry').model;
 
 /**
 * Config
@@ -27,19 +28,40 @@ const UserTCOptions = {
 };
 const CandidateTCOptions = {
   fields:{
-    remove: ['password', 'passwordVersion', 'isVerified', 'isEmployed', 'documentsUploaded', 'caseFile']
+    remove: [
+      'password', 'passwordVersion', 'isVerified', 'isEmployed',
+       'documentsUploaded', 'caseFile'
+     ]
   },
   resolvers:{
     updateById: {
       record: {
-        removeFields: ['phone', 'result', 'category', 'password', 'passwordVersion', 'isVerified', 'isEmployed', 'documentsUploaded', 'caseFile']
+        removeFields: [
+          'phone', 'result', 'category', 'password',
+          'passwordVersion', 'isVerified', 'isEmployed',
+          'documentsUploaded', 'caseFile', 'referees',
+          'experience', 'education', 'certificates', 'documentsUploaded'
+        ]
       }
     }
   }
 };
 const CompanyTCOptions = {
   fields:{
-    remove: ['password', 'passwordVersion','createdAt', 'createdBy', 'updatedAt', 'updatedBy']
+    remove: [
+      'password', 'passwordVersion','createdAt', 'createdBy', 'updatedAt',
+       'updatedBy'
+    ]
+  },
+  resolvers:{
+    updateById: {
+      record: {
+        removeFields: [
+          'jobs', 'cacRegNo', 'password', 'passwordVersion',
+          'isVerified', 'isActive'
+        ]
+      }
+    }
   }
 };
 
@@ -57,6 +79,7 @@ const CertificateTC = exports.CertificateTC = composeWithMongoose(Certificate);
 const RefereeTC = exports.RefereeTC = composeWithMongoose(Referee);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
+const IndustryTC = exports.IndustryTC = composeWithMongoose(Industry);
 
 /**
 * Add JWT to user models for login

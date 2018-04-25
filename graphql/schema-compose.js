@@ -31,7 +31,8 @@ const {
 	CertificateTC,
 	RefereeTC,
 	CompanyTC,
-	ViewerCompanyTC
+	ViewerCompanyTC,
+	IndustryTC
 } = typeComposers;
 
 //Add relationships and resolvers to schema
@@ -46,7 +47,8 @@ GQC.rootQuery().addFields({
 		viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
 	}),
 	...authAccess('Company', {
-		viewerCompany: ViewerCompanyTC.get('$companyAccess')
+		viewerCompany: ViewerCompanyTC.get('$companyAccess'),
+		industryMany: IndustryTC.get('$findMany')
 	}),
 	currentTime: {
     type: 'Date',
@@ -75,18 +77,12 @@ GQC.rootMutation().addFields({
 		updateReferee: updateSelfRelationship( 'referees', RefereeTC),
 		deleteReferee: deleteSelfRelationship( 'referees', RefereeTC),
 	}),
-	// ...authAccess('Candidate', {
-	// 	candidateUpdateById:updateSelf(CandidateTC),
-	// 	addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
-	// 	updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
-	// 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
-	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
-	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
-	// 	// addJobExperience: createAndUpdateCandidate( 'experience', JobExperienceTC),
-	// 	// updateJobExperience: updateCandidateRelationshipField( 'experience', JobExperienceTC),
-	// }),
+	...authAccess('Company', {
+		companyUpdateById:updateSelf(CompanyTC),
+		// addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
+		// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
+		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
+	}),
 });
 
 const schema = GQC.buildSchema();

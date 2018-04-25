@@ -15,21 +15,28 @@ Company.schema.set('usePushEach', true);
 
 
 staffOptions = [
-	{ value: "a", label: '1 - 10' },
-	{ value: "b", label: '11 - 30' },
-	{ value: "c", label: '31 - 100' },
+	{ value: "a", label: '0 - 1' },
+	{ value: "b", label: '2 - 10' },
+	{ value: "c", label: '11 - 50' },
+	{ value: "d", label: '51 - 200' },
+	{ value: "e", label: '201 - 500' },
+	{ value: "f", label: '501 - 1000' },
+	{ value: "g", label: '1,001 - 5,000' },
+	{ value: "h", label: '5,001 - 10,000' },
+	{ value: "i", label: '10,000+' },
 ]
 
 Company.add({
 	name: { type: String, required: true, index: true },
 	logoUrl: { type: Types.Text, initial: true },
 	phone: { type: Types.Text, initial: true, index: true, required: true },
-	email: { type: Types.Email, initial: true, index: true, required: true },
+	email: { type: Types.Email, initial: true, index: true, required: true, unique: true, sparse: true },
 	website: { type: Types.Text, initial: true },
 	address: { type: Types.Text, initial: true },
 	stateOfResidence: {type: Types.Select, options: STATES, index: true},
 	description: { type: Types.Text, initial: true },
-	cacRegNo: { type: Types.Text, initial: true, index: true },
+	cacRegNo: { type: Types.Text, initial: true, index: true, unique: true, sparse: true },
+	yearFounded: { type: Types.Number, initial: true, index: true },
 	staffSize: {type: Types.Select, options: staffOptions},
 	industry: { type: Types.Relationship, ref: 'Industry', many: false, initial: true },
 	password: { type: Types.Password, initial: true, required: true },
