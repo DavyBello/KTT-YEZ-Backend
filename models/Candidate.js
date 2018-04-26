@@ -7,7 +7,9 @@ const { STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase  } = req
  * Candidate Model
  * ==========
  */
-var Candidate = new keystone.List('Candidate');
+var Candidate = new keystone.List('Candidate', {
+	track: true
+});
 Candidate.schema.set('usePushEach', true);
 
 Candidate.add({

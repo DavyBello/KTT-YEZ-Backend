@@ -28,14 +28,14 @@ staffOptions = [
 
 Company.add({
 	name: { type: String, required: true, index: true },
-	logoUrl: { type: Types.Text, initial: true },
-	phone: { type: Types.Text, initial: true, index: true, required: true },
 	email: { type: Types.Email, initial: true, index: true, required: true, unique: true, sparse: true },
+	cacRegNo: { type: Types.Text, initial: true, index: true, required: true, unique: true, sparse: true },
+	phone: { type: Types.Text, initial: true, index: true },
+	logoUrl: { type: Types.Text, initial: true },
 	website: { type: Types.Text, initial: true },
 	address: { type: Types.Text, initial: true },
 	stateOfResidence: {type: Types.Select, options: STATES, index: true},
 	description: { type: Types.Text, initial: true },
-	cacRegNo: { type: Types.Text, initial: true, index: true, unique: true, sparse: true },
 	yearFounded: { type: Types.Number, initial: true, index: true },
 	staffSize: {type: Types.Select, options: staffOptions},
 	industry: { type: Types.Relationship, ref: 'Industry', many: false, initial: true },
@@ -61,11 +61,16 @@ Company.add({
 
 Company.schema.pre('save', function (next) {
   this.name = toCamelCase(this.name);
-  if (PHONE_REGEX.test(this.phone)){
-    next();
-  } else {
-		next(new Error('Invalid Phone Number'));
+	if (this.phone) {
+		if (PHONE_REGEX.test(this.phone)){
+			next();
+		} else {
+			next(new Error('Invalid Phone Number'));
+		}
+	} else {
+		next();
 	}
+	console.log(this);
 });
 
 /**
