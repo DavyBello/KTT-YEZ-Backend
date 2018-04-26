@@ -63,7 +63,6 @@ module.exports = () => {
           })
           return newCandidate.save().then((candidate)=>{
             const { id, phone } = candidate;
-            //console.log('---' + hash);
             const token = jwt.sign({
               id: candidate.id,
               //email: candidate.email,
@@ -71,7 +70,7 @@ module.exports = () => {
               type: 'Candidate',
               //passwordVersion: candidate.passwordVersion,
             }, process.env.JWT_SECRET);
-            console.log('-----' + candidate.password);
+            // console.log('-----' + candidate.password);
             candidate.jwt = token;
             context.candidate = Promise.resolve(candidate);
             return candidate;
