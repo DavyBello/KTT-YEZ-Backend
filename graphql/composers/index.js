@@ -17,6 +17,7 @@ const Company = keystone.list('Company').model;
 const Certificate = keystone.list('Certificate').model;
 const Referee = keystone.list('Referee').model;
 const Industry = keystone.list('Industry').model;
+const Job = keystone.list('Job').model;
 
 /**
 * Config
@@ -80,6 +81,7 @@ const RefereeTC = exports.RefereeTC = composeWithMongoose(Referee);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
 const IndustryTC = exports.IndustryTC = composeWithMongoose(Industry);
+const JobTC = exports.JobTC = composeWithMongoose(Job);
 
 /**
 * Add JWT to user models for login
