@@ -44,63 +44,36 @@ module.exports = () => {
     kind: 'mutation',
     name: 'signUp',
     description: 'signUp a company',
-    args: {firstName: 'String!', lastName: 'String!', phone: 'String!', password: 'String!'},
+    args: {name: 'String!', email: 'String!', cacRegNo: 'String!', password: 'String!'},
     type: CompanyTC,
     resolve: async ({ args, context }) => {
       // console.log('company signUp this ----');
-      const { firstName, lastName, phone, password } = args;
+      const { name, email, cacRegNo, password } = args;
 
-      return Company.findOne({phone}).then((existing) => {
+      return Company.findOne({email}).then((existing) => {
         if (!existing) {
           // hash password and create user
           const newCompany = new Company({
-            phone,
-            password: password,
-            name: {
-              first: firstName,
-              last: lastName
-            }
+            name,
+            email,
+            cacRegNo,
+            password
           })
           return newCompany.save().then((company)=>{
-            const { id, phone } = company;
-            //console.log('---' + hash);
+            const { id, email } = company;
             const token = jwt.sign({
               id: company.id,
-              //email: company.email,
-              phone: company.phone,
+              email: company.email,
               type: 'Company',
               //passwordVersion: company.passwordVersion,
             }, process.env.JWT_SECRET);
-            console.log('-----' + company.password);
+            // console.log('-----' + company.password);
             company.jwt = token;
             context.company = Promise.resolve(company);
             return company;
           })
-          /*return bcrypt.hash(password, 10).then(hash =>
-            Company.create({
-            phone,
-            password: hash,
-            name: {
-              first: firstName,
-              last: lastName
-            }
-          })).then((company) => {
-            const { id, phone } = company;
-            console.log('---' + hash);
-            const token = jwt.sign({
-              id: company.id,
-              //email: company.email,
-              phone: company.phone,
-              type: 'Company',
-              //passwordVersion: company.passwordVersion,
-            }, process.env.JWT_SECRET);
-            console.log('-----' + company.password);
-            company.jwt = token;
-            context.company = Promise.resolve(company);
-            return company;
-          });*/
         }
-        return Promise.reject('phone already Exists');
+        return Promise.reject('email already Exists');
       })
     },
   })
