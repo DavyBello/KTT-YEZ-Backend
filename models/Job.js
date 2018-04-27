@@ -22,13 +22,13 @@ typeOptions = [
 
 Job.add({
 	role: { type: String, required: true, index: true, initial: true },
-	address: { type: Types.Text, initial: true, required: true},
+	// address: { type: Types.Text, initial: true, required: true},
 	state: {type: Types.Select, options: STATES},
 	basicDescription: { type: Types.Textarea, initial: true },
-	moreDescription: { type: Types.Textarea, initial: true },
+	fullDescription: { type: Types.Textarea, initial: true },
 	vacancy: { type: Types.Text, initial: true },
 	employmentType: {type: Types.Select, options: typeOptions},
-	industry: { type: Types.Relationship, ref: 'Industry', many: false },
+	// industry: { type: Types.Relationship, ref: 'Industry', many: false },
 	industries: { type: Types.Relationship, ref: 'Industry', many: true },
 	salary: { type: Types.Text, initial: true, required: false},
 	publishedDate: { type: Date, index: true, initial: true, default: Date.now },
