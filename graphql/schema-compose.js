@@ -32,7 +32,8 @@ const {
 	RefereeTC,
 	CompanyTC,
 	ViewerCompanyTC,
-	IndustryTC
+	IndustryTC,
+	JobTC
 } = typeComposers;
 
 //Add relationships and resolvers to schema
@@ -80,6 +81,7 @@ GQC.rootMutation().addFields({
 	}),
 	...authAccess('Company', {
 		companyUpdateById:updateSelf(CompanyTC),
+		addJob: createSelfRelationship( 'jobs', JobTC),
 		// addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
