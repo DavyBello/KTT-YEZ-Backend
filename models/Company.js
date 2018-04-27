@@ -39,6 +39,7 @@ Company.add({
 	yearFounded: { type: Types.Number, initial: true, index: true },
 	staffSize: {type: Types.Select, options: staffOptions},
 	industry: { type: Types.Relationship, ref: 'Industry', many: false, initial: true },
+	industries: { type: Types.Relationship, ref: 'Industry', many: true, initial: true },
 	password: { type: Types.Password, initial: true, required: true },
 	passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
 }, 'Jobs', {
