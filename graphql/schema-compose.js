@@ -11,10 +11,12 @@ const addViewers = require('./viewers');
 
 //Get logic middleware
 const {
+	isSelf,
 	authAccess,
 	updateSelf,
 	createSelfRelationship,
 	updateSelfRelationship,
+	findSelfRelationship,
 	deleteSelfRelationship
 } = require('./logic/common');
 
@@ -49,7 +51,11 @@ GQC.rootQuery().addFields({
 	}),
 	...authAccess('Company', {
 		viewerCompany: ViewerCompanyTC.get('$companyAccess'),
-		industryMany: IndustryTC.get('$findMany')
+		industryMany: IndustryTC.get('$findMany'),
+		// jobById: isSelf(JobTC, '$findById'),
+		// jobById: JobTC.get('$findById'),
+		companyJobById: findSelfRelationship('jobs', JobTC),
+		// companyJobsPagination: findSelfRelationship('jobs', JobTC),
 	}),
 	currentTime: {
     type: 'Date',
@@ -65,7 +71,7 @@ GQC.rootMutation().addFields({
 	loginCompany: CompanyTC.get('$loginWithEmail'),
 	signUpCompany: CompanyTC.get('$signUp'),
 	...authAccess('Candidate', {
-		candidateUpdateById:updateSelf(CandidateTC),
+		candidateUpdateById: updateSelf(CandidateTC),
 		addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
@@ -82,6 +88,8 @@ GQC.rootMutation().addFields({
 	...authAccess('Company', {
 		companyUpdateById:updateSelf(CompanyTC),
 		addJob: createSelfRelationship( 'jobs', JobTC),
+		updateJob: updateSelfRelationship( 'jobs', JobTC),
+		deleteJob: deleteSelfRelationship( 'jobs', JobTC),
 		// addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),

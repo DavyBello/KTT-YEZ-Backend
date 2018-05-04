@@ -40,6 +40,53 @@ const updateSelf = exports.updateSelf = ( TC ) => {
 	});
 }
 
+const isSelf = exports.isSelf = ( TC, resolver ) => {
+	return TC.get(resolver).wrapResolve(next => async (rp) => {
+		//get sourceUser from resolveParams (rp)
+		const { args, sourceUser, sourceType } = rp
+		if (sourceUser._id == args.record._id){
+			const result = await next(rp);
+			return result;
+		} else {
+			throw new Error(`This ${sourceType.toLowerCase()} can only edit itself`);
+		}
+	});
+}
+
+const containSelf = exports.containSelf = ( TC, resolver ) => {
+	return TC.get(resolver).wrapResolve(next => async (rp) => {
+		//get sourceUser from resolveParams (rp)
+		const { args, sourceUser, sourceType } = rp
+		if (sourceUser._id == args.record._id){
+			const result = await next(rp);
+			return result;
+		} else {
+			throw new Error(`This ${sourceType.toLowerCase()} can only edit itself`);
+		}
+	});
+}
+
+const findSelfRelationship = exports.findSelfRelationship = ( field, TC ) => {
+	return TC.get('$findById').wrapResolve(next => async (rp) => {
+		//get sourceUser from resolveParams (rp)
+		const { args, sourceUser, sourceType } = rp
+		const _field = sourceUser[field]
+		if (Array.isArray(_field)) {
+			//check if relationship to be update is a member of _field array
+			let exist = _field.find((fieldId)=>(fieldId==args._id));
+			if (exist){
+				//add field to db and get result of createOne resolver
+				const result = await next(rp);
+				return result;
+			} else {
+				throw new Error(`This ${sourceType.toLowerCase()} cannot view this document`);
+			}
+		} else {
+			throw new Error(`Field: ${field} is not an collection field`);
+		}
+	});
+}
+
 //Create and add id of relationship document to the sourceUser/Self
 const createSelfRelationship = exports.createSelfRelationship =  ( field, TC ) => {
 	return TC.get('$createOne').wrapResolve(next => async (rp) => {
