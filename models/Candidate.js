@@ -33,6 +33,7 @@ Candidate.add({
 }, 'Status', {
 	isEmployed: { type: Boolean, index: true },
 	isVerified: { type: Boolean, index: true },
+	assignment: {type: Types.Select, options: CANDIDATE_CATEGORIES}
 }, 'Results', {
 	result: {
 		skillAnalysis: { type: Types.Relationship, ref: 'SkillAnalysisResult', many: false },
