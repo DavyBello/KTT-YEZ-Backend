@@ -11,9 +11,11 @@ const PollVote = keystone.list('PollVote').model;
 const LocalGovernment = keystone.list('LocalGovernment').model;
 const State = keystone.list('State').model;
 const Candidate = keystone.list('Candidate').model;
+const CenterManager = keystone.list('CenterManager').model;
 const JobExperience = keystone.list('JobExperience').model;
 const Education = keystone.list('Education').model;
 const Company = keystone.list('Company').model;
+const CompanyMessage = keystone.list('CompanyMessage').model;
 const Certificate = keystone.list('Certificate').model;
 const Referee = keystone.list('Referee').model;
 const Industry = keystone.list('Industry').model;
@@ -28,6 +30,26 @@ const UserTCOptions = {
   }
 };
 const CandidateTCOptions = {
+  fields:{
+    remove: [
+      'password', 'passwordVersion', 'isVerified', 'isEmployed',
+       'documentsUploaded', 'caseFile'
+     ]
+  },
+  resolvers:{
+    updateById: {
+      record: {
+        removeFields: [
+          'phone', 'result', 'category', 'password',
+          'passwordVersion', 'isVerified', 'isEmployed',
+          'documentsUploaded', 'caseFile', 'referees',
+          'experience', 'education', 'certificates', 'documentsUploaded'
+        ]
+      }
+    }
+  }
+};
+const CenterManagerTCOptions = {
   fields:{
     remove: [
       'password', 'passwordVersion', 'isVerified', 'isEmployed',
@@ -79,7 +101,9 @@ const EducationTC = exports.EducationTC = composeWithMongoose(Education);
 const CertificateTC = exports.CertificateTC = composeWithMongoose(Certificate);
 const RefereeTC = exports.RefereeTC = composeWithMongoose(Referee);
 const CandidateTC = exports.CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
+const CenterManagerTC = exports.CenterManagerTC = composeWithMongoose(CenterManager, CenterManagerTCOptions);
 const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
+const CompanyMessageTC = exports.CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = exports.IndustryTC = composeWithMongoose(Industry);
 const JobTC = exports.JobTC = composeWithMongoose(Job);
 
@@ -89,6 +113,7 @@ const JobTC = exports.JobTC = composeWithMongoose(Job);
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
 CompanyTC.addFields({jwt: 'String'})
+CenterManagerTC.addFields({jwt: 'String'})
 
 
 /**
@@ -96,3 +121,4 @@ CompanyTC.addFields({jwt: 'String'})
 */
 const ViewerCandidateTC = exports.ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
 const ViewerCompanyTC = exports.ViewerCompanyTC = GQC.getOrCreateTC('ViewerCompany');
+const ViewerCenterManagerTC = exports.ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');

@@ -33,9 +33,12 @@ const {
 	CertificateTC,
 	RefereeTC,
 	CompanyTC,
+	CompanyMessageTC,
 	ViewerCompanyTC,
 	IndustryTC,
-	JobTC
+	JobTC,
+	CenterManagerTC,
+	ViewerCenterManagerTC
 } = typeComposers;
 
 //Add relationships and resolvers to schema
@@ -57,6 +60,10 @@ GQC.rootQuery().addFields({
 		companyJobById: findSelfRelationship('jobs', JobTC),
 		// companyJobsPagination: findSelfRelationship('jobs', JobTC),
 	}),
+	...authAccess('CenterManager', {
+		viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),
+		managerCandidateById: CandidateTC.get('$findById')
+	}),
 	currentTime: {
     type: 'Date',
     resolve: () => new Date().toISOString(),
@@ -68,6 +75,8 @@ GQC.rootMutation().addFields({
 	user: UserTC.get('$removeById'),
 	loginCandidate: CandidateTC.get('$loginWithPhone'),
 	signUpCandidate: CandidateTC.get('$signUp'),
+	loginCenterManager: CenterManagerTC.get('$loginWithPhone'),
+	// signUpCenterManager: CenterManagerTC.get('$signUp'),
 	loginCompany: CompanyTC.get('$loginWithEmail'),
 	signUpCompany: CompanyTC.get('$signUp'),
 	...authAccess('Candidate', {
@@ -90,6 +99,7 @@ GQC.rootMutation().addFields({
 		addJob: createSelfRelationship( 'jobs', JobTC),
 		updateJob: updateSelfRelationship( 'jobs', JobTC),
 		deleteJob: deleteSelfRelationship( 'jobs', JobTC),
+		createCompanyMessage: CompanyMessageTC.get('$createOne')
 		// addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
 		// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),

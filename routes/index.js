@@ -33,6 +33,7 @@ const jwt = require('express-jwt');
 const User = keystone.list('User').model;
 const Candidate = keystone.list('Candidate').model;
 const Company = keystone.list('Company').model;
+const CenterManager = keystone.list('CenterManager').model;
 //const JWT_SECRET = require('../config').JWT_SECRET;
 
 
@@ -74,6 +75,8 @@ exports = module.exports = function (app) {
 					Candidate.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
 				Company: req.user.type==='Company' ?
 					Company.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
+				CenterManager: req.user.type==='CenterManager' ?
+					CenterManager.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
 			}
 		}
 		return ({
