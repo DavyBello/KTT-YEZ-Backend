@@ -48,7 +48,8 @@ keystone.set('routes', require('./routes'));
 keystone.set('nav', {
 	candidates: ['Candidate', 'Education', 'JobExperience', 'Referee', 'Certificate' ],
 	CandidateDocuments: ['CandidateDocument', 'SkillAnalysisResult', 'SeekerResult', 'StartupResult'],
-	Companies: ['Company', 'Industry', 'Job'],
+	Companies: ['CompanyMessage', 'Company', 'Industry', 'Job'],
+	CenterManager: 'CenterManager',
 	poll: ['Poll', 'PollVote'],
 	country: ['State', 'LocalGovernment'],
 	//posts: ['posts', 'post-categories'],
