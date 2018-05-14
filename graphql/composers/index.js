@@ -1,6 +1,6 @@
 const { composeWithMongoose } = require('graphql-compose-mongoose');
 const keystone = require('keystone');
-const { GQC } = require('graphql-compose');
+const { GQC, TypeComposer, InputTypeComposer  } = require('graphql-compose');
 
 /**
 * Mongoose Models
@@ -114,6 +114,24 @@ const JobTC = exports.JobTC = composeWithMongoose(Job);
 */
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
+
+// const FileTC = TypeComposer.create({
+//   name: 'File',
+//   fields: {
+//     id: 'Int!',
+//     firstName: 'String',
+//     lastName: 'String',
+//   }
+// });*/
+// CandidateDocumentTC.getInputTypeComposer().addFields({
+//   file: TypeComposer.create(`
+//     type Author {
+//       id: Int!
+//       firstName: String
+//       lastName: String
+//     }
+//   `)
+// })
 CompanyTC.addFields({jwt: 'String'})
 CenterManagerTC.addFields({jwt: 'String'})
 

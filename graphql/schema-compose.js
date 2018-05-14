@@ -27,6 +27,7 @@ const {
 	LocalGovernmentTC,
 	StateTC,
   CandidateTC,
+	CandidateDocumentTC,
 	ViewerCandidateTC,
 	JobExperienceTC,
 	EducationTC,
@@ -45,6 +46,9 @@ const {
 addViewers();
 addRelationships();
 addResolvers();
+
+// console.log(CandidateDocumentTC.getInputTypeComposer().addFields({jwt: 'String'}));
+// console.log(CandidateDocumentTC.getInputTypeComposer().getFields());
 
 //Add fields and resolvers to rootQuery
 GQC.rootQuery().addFields({
@@ -104,6 +108,11 @@ GQC.rootMutation().addFields({
 		// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
 	}),
+	...authAccess('CenterManager', {
+		addCandidateDocument: createSelfRelationship( 'documentsUploaded', CandidateDocumentTC),
+		// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
+		// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
+	})
 });
 
 const schema = GQC.buildSchema();

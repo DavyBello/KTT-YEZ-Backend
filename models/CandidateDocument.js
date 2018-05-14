@@ -10,7 +10,7 @@ var CandidateDocument = new keystone.List('CandidateDocument');
 CandidateDocument.add({
 	fileTitle : { type: Types.Text, initial: true, required: true},
 	fileURL : { type: Types.Text, initial: true, required: true},
-	// image: { type: Types.CloudinaryImage, initial: true},
+	image: { type: Types.CloudinaryImage, initial: true},
 	uploadedBy : { type: Types.Relationship, ref: 'CenterManager', many: false, initial:true, required: true },
 	createdAt : { type: Types.Date, index: true, default: Date.now, required: true},
 	updatedAt : { type: Types.Date, index: true },

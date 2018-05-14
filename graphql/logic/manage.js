@@ -1,5 +1,3 @@
-const keystone = require('keystone');
-
 const authAccess = exports.authAccess = (sourceType, resolvers) => {
 	Object.keys(resolvers).forEach((k) => {
 		resolvers[k] = resolvers[k].wrapResolve(next => async (rp) => {
@@ -170,55 +168,28 @@ const deleteSelfRelationship = exports.deleteSelfRelationship =  ( field, TC ) =
 }
 
 //Create and add id of relationship document (Cloudinary file) to the sourceUser/Self
-const createManagedRelationship = exports.createManagedRelationship =  ( field, TC, modelItem ) => {
+const createSelfFileRelationship = exports.createSelfFileRelationship =  ( field, TC ) => {
 	return TC.get('$createOne').wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
-		// const { sourceUser, sourceType } = rp
-		const { id, Type } = modelItem
-		try {
-			const Model = keystone.list('User').model;
-			const item = await Model.findOne({ _id: id})
-			if (item) {
-				const _field = item[field]
-				if (Array.isArray(_field)) {
-					//add field to db and get result of createOne resolver
-					const result = await next(rp);
-					item[field].push(result.recordId);
-					try {
-						await item.save();
-						return result;
-					} catch (e) {
-						//Placeholder function to stop the field from saving to the db
-						result.record.remove().exec();
-						throw new Error(`Unexpected error adding the document to ${Type.toLowerCase()}`);
-					}
-				} else {
-					throw new Error(`Field: ${field} is not a collection`);
+		const { sourceUser, sourceType } = rp
+		if (sourceUser) {
+			const _field = sourceUser[field]
+			if (Array.isArray(_field)) {
+				//add field to db and get result of createOne resolver
+				const result = await next(rp);
+				sourceUser[field].push(result.recordId);
+				try {
+					await sourceUser.save();
+					return result;
+				} catch (e) {
+					//Placeholder function to stop the field from saving to the db
+					result.record.remove().exec();
+					throw new Error(`Unexpected error adding the document to ${sourceType.toLowerCase()}`);
 				}
 			} else {
-				return null;
+				throw new Error(`Field: ${field} is not a collection`);
 			}
-		} catch (e) {
-			throw new Error(`Unexpected error adding the document to ${Type.toLowerCase()}`);
 		}
-		// if (sourceUser) {
-		// 	const _field = sourceUser[field]
-		// 	if (Array.isArray(_field)) {
-		// 		//add field to db and get result of createOne resolver
-		// 		const result = await next(rp);
-		// 		sourceUser[field].push(result.recordId);
-		// 		try {
-		// 			await sourceUser.save();
-		// 			return result;
-		// 		} catch (e) {
-		// 			//Placeholder function to stop the field from saving to the db
-		// 			result.record.remove().exec();
-		// 			throw new Error(`Unexpected error adding the document to ${sourceType.toLowerCase()}`);
-		// 		}
-		// 	} else {
-		// 		throw new Error(`Field: ${field} is not a collection`);
-		// 	}
-		// }
 	});
 }
 
