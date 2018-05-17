@@ -114,6 +114,17 @@ const JobTC = exports.JobTC = composeWithMongoose(Job);
 */
 UserTC.addFields({jwt: 'String', id: 'String'})
 CandidateTC.addFields({jwt: 'String', id: 'String'})
+/*CandidateDocumentTC.getITC().addFields({
+  id: {type: 'String'},
+  file: `type ComplexType {
+    subField1: String
+    subField2: Float
+    subField3: Boolean
+    subField4: ID
+    subField5: JSON
+    subField6: Date
+  }`
+})*/
 
 // const FileTC = TypeComposer.create({
 //   name: 'File',

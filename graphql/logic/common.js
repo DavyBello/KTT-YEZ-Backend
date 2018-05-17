@@ -170,17 +170,28 @@ const deleteSelfRelationship = exports.deleteSelfRelationship =  ( field, TC ) =
 }
 
 //Create and add id of relationship document (Cloudinary file) to the sourceUser/Self
-const createManagedRelationship = exports.createManagedRelationship =  ( field, TC, modelItem ) => {
-	return TC.get('$createOne').wrapResolve(next => async (rp) => {
+const createManagedRelationship = exports.createManagedRelationship =  ( field, TC ) => {
+	// console.log(TC.get('$createOne'));
+	return TC.get('$createOne').addArgs({
+		managedId: 'String!',
+		managedModelType: 'String!'
+	}).wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
-		// const { sourceUser, sourceType } = rp
-		const { id, Type } = modelItem
+		const { sourceUser, sourceType } = rp
+		const { args: { managedId, managedModelType} } = rp
 		try {
-			const Model = keystone.list('User').model;
-			const item = await Model.findOne({ _id: id})
+			const Model = keystone.list(managedModelType).model;
+			// console.log(Model);
+			const item = await Model.findOne({ _id: managedId})
 			if (item) {
 				const _field = item[field]
 				if (Array.isArray(_field)) {
+					// console.log(sourceUser._id);
+					rp.args.record.uploadedBy = sourceUser._id;
+					rp.args.record.createdBy = sourceUser._id;
+					rp.args.record.lastEditedBy = sourceUser._id;
+					rp.args.record.createdAt = Date.now();
+					rp.args.record.updatedAt = Date.now();
 					//add field to db and get result of createOne resolver
 					const result = await next(rp);
 					item[field].push(result.recordId);
@@ -190,35 +201,25 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 					} catch (e) {
 						//Placeholder function to stop the field from saving to the db
 						result.record.remove().exec();
-						throw new Error(`Unexpected error adding the document to ${Type.toLowerCase()}`);
+						return Error(`Unexpected error adding the document to ${managedModelType.toLowerCase()}`);
 					}
 				} else {
-					throw new Error(`Field: ${field} is not a collection`);
+					return Error(`Field: ${field} is not a collection in ${managedModelType}`);
 				}
 			} else {
-				return null;
+				return Error(`Cannot find "${managedModelType}" with specified _id`);
 			}
 		} catch (e) {
-			throw new Error(`Unexpected error adding the document to ${Type.toLowerCase()}`);
+			// console.log(e);
+			if (e.message === `Unknown keystone list "${managedModelType}"`)
+				throw new Error(`Unknown model type "${managedModelType}"`);
+
+			if (e.message === `Cast to ObjectId failed for value "${managedId}" at path "_id" for model "${managedModelType}"`)
+				throw new Error(`Invalid Id supplied for model type "${managedModelType}"`);
+
+			// console.log(e.message === `Unknown keystoone list "asda"`);
+			// throw new Error(`Unexpected error adding the document to ${managedModelType.toLowerCase()}`);
 		}
-		// if (sourceUser) {
-		// 	const _field = sourceUser[field]
-		// 	if (Array.isArray(_field)) {
-		// 		//add field to db and get result of createOne resolver
-		// 		const result = await next(rp);
-		// 		sourceUser[field].push(result.recordId);
-		// 		try {
-		// 			await sourceUser.save();
-		// 			return result;
-		// 		} catch (e) {
-		// 			//Placeholder function to stop the field from saving to the db
-		// 			result.record.remove().exec();
-		// 			throw new Error(`Unexpected error adding the document to ${sourceType.toLowerCase()}`);
-		// 		}
-		// 	} else {
-		// 		throw new Error(`Field: ${field} is not a collection`);
-		// 	}
-		// }
 	});
 }
 
