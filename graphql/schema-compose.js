@@ -18,7 +18,8 @@ const {
 	updateSelfRelationship,
 	findSelfRelationship,
 	deleteSelfRelationship,
-	createManagedRelationship
+	createManagedRelationship,
+	deleteManagedRelationship
 } = require('./logic/common');
 
 const {
@@ -128,6 +129,7 @@ GQC.rootMutation().addFields({
 	}),
 	...authAccess('CenterManager', {
 		addCandidateDocument: createManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
+		deleteCandidateDocument: deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
 		// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
 		// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
 	})
