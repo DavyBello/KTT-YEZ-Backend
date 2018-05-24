@@ -89,6 +89,18 @@ const CompanyTCOptions = {
     }
   }
 };
+const CaseFileTCOptions = {
+  resolvers:{
+    createOne: {
+      record: {
+        removeFields: [
+          'fileNumber', 'authorManager', 'candidate', 'owner',
+          'createdAt',
+        ]
+      }
+    }
+  }
+};
 
 /**
 * Exports
@@ -109,7 +121,7 @@ const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOpti
 const CompanyMessageTC = exports.CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = exports.IndustryTC = composeWithMongoose(Industry);
 const JobTC = exports.JobTC = composeWithMongoose(Job);
-const CaseFileTC = exports.CaseFileTC = composeWithMongoose(CaseFile);
+const CaseFileTC = exports.CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
 
 /**
 * Add JWT to user models for login

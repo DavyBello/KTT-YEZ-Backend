@@ -175,7 +175,7 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 	// console.log(TC.get('$createOne'));
 	return TC.get('$createOne').addArgs({
 		managedId: 'String!',
-		managedModelType: 'String!'
+		// managedModelType: 'String!'
 	}).wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
 		const { sourceUser, sourceType } = rp
@@ -190,11 +190,15 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 				if (Array.isArray(_field)) {
 					// console.log(sourceUser._id);
 					rp.args.record.owner = managedId;
-					rp.args.record.uploadedBy = sourceUser._id;
+					if (field == 'caseFiles'){
+						rp.args.record.fileNumber = item[field].length + 1;
+					}
+					// rp.args.record.uploadedBy = sourceUser._id;
 					rp.args.record.createdBy = sourceUser._id;
 					rp.args.record.lastEditedBy = sourceUser._id;
 					rp.args.record.createdAt = Date.now();
 					rp.args.record.updatedAt = Date.now();
+					console.log(rp.args);
 					//add field to db and get result of createOne resolver
 					const result = await next(rp);
 					item[field].push(result.recordId);
@@ -231,7 +235,7 @@ const deleteManagedRelationship = exports.deleteManagedRelationship =  ( field, 
 	// console.log(TC.get('$createOne'));
 	return TC.get('$removeById').addArgs({
 		managedId: 'String!',
-		managedModelType: 'String!'
+		// managedModelType: 'String!'
 	}).wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
 		const { sourceUser, sourceType } = rp
