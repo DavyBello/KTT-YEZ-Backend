@@ -1,4 +1,4 @@
-const { CandidateTC, JobExperienceTC, EducationTC, CertificateTC, RefereeTC, CandidateDocumentTC } = require('../composers');
+const { CandidateTC, JobExperienceTC, EducationTC, CertificateTC, RefereeTC, CandidateDocumentTC, CaseFileTC } = require('../composers');
 
 module.exports = () => {
   CandidateTC.addRelation('experience', {
@@ -39,6 +39,14 @@ module.exports = () => {
         _ids: (source) => source.documentsUploaded,
       },
       projection: { documentsUploaded: true }, // point fields in source object, which should be fetched from DB
+    }
+  );
+  CandidateTC.addRelation('caseFiles', {
+      resolver: () => CaseFileTC.getResolver('findByIds'),
+      prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
+        _ids: (source) => source.caseFiles,
+      },
+      projection: { caseFiles: true }, // point fields in source object, which should be fetched from DB
     }
   );
   CandidateTC.addRelation('documentsPagination', {

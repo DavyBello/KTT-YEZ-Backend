@@ -40,6 +40,7 @@ const {
 	ViewerCompanyTC,
 	IndustryTC,
 	JobTC,
+	CaseFileTC,
 	CenterManagerTC,
 	ViewerCenterManagerTC
 } = typeComposers;
@@ -128,8 +129,9 @@ GQC.rootMutation().addFields({
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
 	}),
 	...authAccess('CenterManager', {
-		addCandidateDocument: createManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
-		deleteCandidateDocument: deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
+		addCandidateDocument: createManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+		deleteCandidateDocument: deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+		addCandidateCaseFile: createManagedRelationship( 'caseFiles', CaseFileTC, 'Candidate'),
 		// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
 		// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
 	})
