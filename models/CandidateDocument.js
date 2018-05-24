@@ -9,11 +9,17 @@ var CandidateDocument = new keystone.List('CandidateDocument');
 
 CandidateDocument.add({
 	fileTitle : { type: Types.Text, initial: true, required: true},
-	fileURL : { type: Types.Text, initial: true, required: true},
+	fileURL : { type: Types.Text},
 	image: { type: Types.CloudinaryImage, initial: true},
 	uploadedBy : { type: Types.Relationship, ref: 'CenterManager', many: false, initial:true, required: true },
-	createdAt : { type: Types.Date, index: true, default: Date.now, required: true},
+	createdAt : { type: Types.Date, index: true, default: Date.now},
 	updatedAt : { type: Types.Date, index: true },
+});
+
+// Model Hooks
+CandidateDocument.schema.pre('save', function (next) {
+  this.fileURL = this.image.url;
+	next();
 });
 
 // Provide access to Keystone

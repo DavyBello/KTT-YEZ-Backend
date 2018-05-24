@@ -17,7 +17,9 @@ const {
 	createSelfRelationship,
 	updateSelfRelationship,
 	findSelfRelationship,
-	deleteSelfRelationship
+	deleteSelfRelationship,
+	createManagedRelationship,
+	deleteManagedRelationship
 } = require('./logic/common');
 
 const {
@@ -49,6 +51,23 @@ addResolvers();
 
 // console.log(CandidateDocumentTC.getInputTypeComposer().addFields({jwt: 'String'}));
 // console.log(CandidateDocumentTC.getInputTypeComposer().getFields());
+// const FileITC = InputTypeComposer.create({
+// 	name: 'File',
+// 	fields: {
+// 		lastModified: 'Int',
+// 		name: 'String',
+// 		pre
+// 	}
+// });
+// console.log(CandidateDocumentTC.get('$createOne').addArgs({
+// 	itemId: 'String',
+// 	modelType: 'String',
+// 	// file: FileITC
+// }).getArgs());
+// console.log(CandidateDocumentTC.get('$createOne').addArgs({
+// 	itemId: 'String',
+// 	modelType: 'String'
+// }));
 
 //Add fields and resolvers to rootQuery
 GQC.rootQuery().addFields({
@@ -109,7 +128,8 @@ GQC.rootMutation().addFields({
 		// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
 	}),
 	...authAccess('CenterManager', {
-		addCandidateDocument: createSelfRelationship( 'documentsUploaded', CandidateDocumentTC),
+		addCandidateDocument: createManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
+		deleteCandidateDocument: deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC),
 		// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
 		// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
 	})
