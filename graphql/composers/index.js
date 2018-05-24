@@ -21,6 +21,7 @@ const Certificate = keystone.list('Certificate').model;
 const Referee = keystone.list('Referee').model;
 const Industry = keystone.list('Industry').model;
 const Job = keystone.list('Job').model;
+const CaseFile = keystone.list('CaseFile').model;
 
 /**
 * Config
@@ -43,7 +44,7 @@ const CandidateTCOptions = {
         removeFields: [
           'phone', 'result', 'category', 'password',
           'passwordVersion', 'isVerified', 'isEmployed',
-          'documentsUploaded', 'caseFile', 'referees',
+          'documentsUploaded', 'caseFiles', 'referees',
           'experience', 'education', 'certificates', 'documentsUploaded'
         ]
       }
@@ -108,6 +109,7 @@ const CompanyTC = exports.CompanyTC = composeWithMongoose(Company, CompanyTCOpti
 const CompanyMessageTC = exports.CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = exports.IndustryTC = composeWithMongoose(Industry);
 const JobTC = exports.JobTC = composeWithMongoose(Job);
+const CaseFileTC = exports.CaseFileTC = composeWithMongoose(CaseFile);
 
 /**
 * Add JWT to user models for login

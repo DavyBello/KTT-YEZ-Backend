@@ -98,6 +98,7 @@ const createSelfRelationship = exports.createSelfRelationship =  ( field, TC ) =
 			const _field = sourceUser[field]
 			if (Array.isArray(_field)) {
 				//add field to db and get result of createOne resolver
+				rp.args.record.owner = sourceUser._id;
 				const result = await next(rp);
 				sourceUser[field].push(result.recordId);
 				try {
@@ -170,7 +171,7 @@ const deleteSelfRelationship = exports.deleteSelfRelationship =  ( field, TC ) =
 }
 
 //Create and add id of relationship document (Cloudinary file) to the sourceUser/Self
-const createManagedRelationship = exports.createManagedRelationship =  ( field, TC ) => {
+const createManagedRelationship = exports.createManagedRelationship =  ( field, TC, managedModelType ) => {
 	// console.log(TC.get('$createOne'));
 	return TC.get('$createOne').addArgs({
 		managedId: 'String!',
@@ -178,7 +179,8 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 	}).wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
 		const { sourceUser, sourceType } = rp
-		const { args: { managedId, managedModelType} } = rp
+		// const { args: { managedId, managedModelType} } = rp
+		const { args: { managedId } } = rp
 		try {
 			const Model = keystone.list(managedModelType).model;
 			// console.log(Model);
@@ -187,6 +189,7 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 				const _field = item[field]
 				if (Array.isArray(_field)) {
 					// console.log(sourceUser._id);
+					rp.args.record.owner = managedId;
 					rp.args.record.uploadedBy = sourceUser._id;
 					rp.args.record.createdBy = sourceUser._id;
 					rp.args.record.lastEditedBy = sourceUser._id;
@@ -224,7 +227,7 @@ const createManagedRelationship = exports.createManagedRelationship =  ( field, 
 }
 
 //Create and add id of relationship document (Cloudinary file) to the sourceUser/Self
-const deleteManagedRelationship = exports.deleteManagedRelationship =  ( field, TC ) => {
+const deleteManagedRelationship = exports.deleteManagedRelationship =  ( field, TC, managedModelType ) => {
 	// console.log(TC.get('$createOne'));
 	return TC.get('$removeById').addArgs({
 		managedId: 'String!',
@@ -232,7 +235,8 @@ const deleteManagedRelationship = exports.deleteManagedRelationship =  ( field, 
 	}).wrapResolve(next => async (rp) => {
 		//get sourceUser from resolveParams (rp)
 		const { sourceUser, sourceType } = rp
-		const { args: { managedId, managedModelType, _id} } = rp
+		// const { args: { managedId, managedModelType, _id} } = rp
+		const { args: { managedId, _id} } = rp
 		try {
 			const Model = keystone.list(managedModelType).model;
 			const item = await Model.findOne({ _id: managedId})

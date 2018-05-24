@@ -50,7 +50,8 @@ Candidate.add({
 	documentsUploaded: { type: Types.Relationship, ref: 'CandidateDocument', many: true },
 	//documents: { type: Types.Relationship, ref: 'CandidateDocument', many: true },
 }, 'Case File', {
-	caseFile: { type: Types.Text, initial: false, required: true, default: 1},
+	caseFiles: { type: Types.Relationship, ref: 'CaseFile', many: true },
+	// caseFile: { type: Types.Text, initial: false, required: true, default: 1},
 });
 
 // Virtuals
