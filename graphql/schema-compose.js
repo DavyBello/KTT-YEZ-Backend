@@ -86,7 +86,9 @@ GQC.rootQuery().addFields({
 	}),
 	...authAccess('CenterManager', {
 		viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),
-		managerCandidateById: CandidateTC.get('$findById')
+		managerCandidateById: CandidateTC.get('$findById'),
+		managerCandidateMany: CandidateTC.get('$findMany'),
+		managerCandidatePagination: CandidateTC.get('$pagination')
 	}),
 	currentTime: {
     type: 'Date',
