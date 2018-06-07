@@ -1,7 +1,7 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
-const { STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase  } = require('../lib/common');
+const { STATES, GENDERS, CANDIDATE_CATEGORIES, STAFF_TYPES, PHONE_REGEX, toCamelCase  } = require('../lib/common');
 
 /**
  * Candidate Model
@@ -33,7 +33,6 @@ Candidate.add({
 }, 'Status', {
 	isEmployed: { type: Boolean, index: true },
 	isVerified: { type: Boolean, index: true },
-	assignment: {type: Types.Select, options: CANDIDATE_CATEGORIES}
 }, 'Results', {
 	result: {
 		skillAnalysis: { type: Types.Relationship, ref: 'SkillAnalysisResult', many: false },
@@ -49,8 +48,12 @@ Candidate.add({
 }, 'verification', {
 	documentsUploaded: { type: Types.Relationship, ref: 'CandidateDocument', many: true },
 	//documents: { type: Types.Relationship, ref: 'CandidateDocument', many: true },
-}, 'Case File', {
+}, 'Case Files', {
 	caseFiles: { type: Types.Relationship, ref: 'CaseFile', many: true },
+	// caseFile: { type: Types.Text, initial: false, required: true, default: 1},
+}, 'Current Assignment', {
+	assignmentTpe: { type: Types.Select, options: STAFF_TYPES },
+	staff: { type: Types.Relationship, ref: 'Staff', many: false },
 	// caseFile: { type: Types.Text, initial: false, required: true, default: 1},
 });
 

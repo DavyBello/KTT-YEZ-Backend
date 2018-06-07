@@ -4,15 +4,15 @@ var Types = keystone.Field.Types;
 const { STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase  } = require('../lib/common');
 
 /**
- * CenterManager Model
+ * Staff Model
  * ==========
  */
-var CenterManager = new keystone.List('CenterManager', {
+var Staff = new keystone.List('Staff', {
 	track: true
 });
-CenterManager.schema.set('usePushEach', true);
+Staff.schema.set('usePushEach', true);
 
-CenterManager.add({
+Staff.add({
 	name: { type: Types.Name, required: true, index: true },
 	phone: { type: Types.Text, initial: true, required: true, unique: true},
 	username: { type: Types.Text, initial: true, required: false, unique: true, index: true, sparse: true },
@@ -33,7 +33,7 @@ CenterManager.add({
 });
 
 // Model Hooks
-CenterManager.schema.pre('save', function (next) {
+Staff.schema.pre('save', function (next) {
   this.name.first = toCamelCase(this.name.first);
   this.name.last = toCamelCase(this.name.last);
   if (PHONE_REGEX.test(this.phone)){
@@ -46,11 +46,11 @@ CenterManager.schema.pre('save', function (next) {
 /**
  * Relationships
  */
-//CenterManager.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
+//Staff.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
 
 
 /**
  * Registration
  */
-CenterManager.defaultColumns = 'name, phone, email, stateOfResidence';
-CenterManager.register();
+Staff.defaultColumns = 'name, phone, email, stateOfResidence';
+Staff.register();
