@@ -10,10 +10,10 @@ var State = new keystone.List('State', {
 });
 
 State.add({
-  name: { type: String, required: true, index: true },
-  locals: { type: Types.Relationship, ref: 'LocalGovernment', many: true },
+  name: { type: String, required: true, index: true }
 });
 
+State.relationship({ ref: 'LocalGovernment', path: 'localGovernments', refPath: 'state' });
 
 /**
  * Registration
