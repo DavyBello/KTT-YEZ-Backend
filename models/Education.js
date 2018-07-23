@@ -8,10 +8,13 @@ const { MONTHS, toCamelCase } = require('../lib/common');
  * Education Model
  * ==========
  */
-var Education = new keystone.List('Education');
+var Education = new keystone.List('Education',{
+	map: { name: 'school' },
+});
 
 Education.add({
 	school: { type: Types.Text, initial: true, required: true},
+	candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
 	degree: { type: Types.Text, initial: true, required: true},
 	field: { type: Types.Text, initial: true, required: true},
 	grade: { type: Types.Text, initial: true},
@@ -26,35 +29,19 @@ Education.add({
 	isVerified: { type: Boolean, initial: true },
 });
 
-// Provide access to Keystone
-/*Education.schema.virtual('canAccessKeystone').get(function () {
-	return this.isAdmin;
-});*/
-
 // Model Hooks
 Education.schema.pre('save', function (next) {
   this.school = toCamelCase(this.school);
-  // this.degree = toCamelCase(this.degree);
   this.field = toCamelCase(this.field);
-	// if (this.isSchoolingHere){
-	// 	now = new Date()
-	// 	// this.toMonth = MONTHS[now.getMonth()];
-	// 	this.toYear = now.getFullYear();
-	// }
-	//month
 	this.startDate = moment({ year: this.fromYear}).format()
-	this.duration = `${this.fromYear} - ${this.toYear}`;
+	// this.duration = `${this.fromYear} - ${this.toYear}`;
+	this.duration = !this.isSchoolingHere ?
+		`${this.fromYear} - ${this.toYear}` : `${this.fromYear} - Present`
   next();
 });
 
 /**
- * Relationships
- */
-//Education.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
-
-
-/**
  * Registration
  */
-Education.defaultColumns = 'school, degree, field';
+Education.defaultColumns = 'school, degree, field, candidateId';
 Education.register();

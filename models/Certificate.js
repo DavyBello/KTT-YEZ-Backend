@@ -8,10 +8,13 @@ const { MONTHS, toCamelCase } = require('../lib/common');
  * Certificate Model
  * ==========
  */
-var Certificate = new keystone.List('Certificate');
+var Certificate = new keystone.List('Certificate', {
+	map: { name: 'title' },
+});
 
 Certificate.add({
-	name: { type: Types.Text, initial: true, required: true},
+	title: { type: Types.Text, initial: true, required: true},
+	candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
 	authority: { type: Types.Text, initial: true, required: true},
 	licenseNumber: { type: Types.Text, initial: true},
 	url: { type: Types.Text, initial: true},
@@ -26,14 +29,9 @@ Certificate.add({
 	isVerified: { type: Boolean, initial: true, default: false },
 });
 
-// Provide access to Keystone
-/*Certificate.schema.virtual('canAccessKeystone').get(function () {
-	return this.isAdmin;
-});*/
-
 // Model Hooks
 Certificate.schema.pre('save', function (next) {
-  this.name = toCamelCase(this.name);
+  this.title = toCamelCase(this.title);
   this.authority = toCamelCase(this.authority);
 
 	this.startDate = moment({ year: this.fromYear}).format()
@@ -44,13 +42,7 @@ Certificate.schema.pre('save', function (next) {
 });
 
 /**
- * Relationships
- */
-//Certificate.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
-
-
-/**
  * Registration
  */
-Certificate.defaultColumns = 'name, authority, licenseNumber, doesNotExpire, isVerified';
+Certificate.defaultColumns = 'title, authority, licenseNumber, isVerified, candidateId';
 Certificate.register();

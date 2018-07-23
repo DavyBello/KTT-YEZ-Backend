@@ -8,10 +8,13 @@ const { STATES, MONTHS, toCamelCase  } = require('../lib/common');
  * JobExperience Model
  * ==========
  */
-var JobExperience = new keystone.List('JobExperience');
+var JobExperience = new keystone.List('JobExperience', {
+	map: { name: 'companyName' }
+});
 
 JobExperience.add({
 	companyName: { type: Types.Text, required: true, initial: true, index: true },
+	candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
 	role: { type: Types.Text, label: 'Role/Position', initial: true, required: true},
 	address: { type: Types.Text, initial: true, required: true},
 	state: {type: Types.Select, options: STATES},
@@ -69,5 +72,5 @@ JobExperience.schema.pre('save', function (next) {
 /**
  * Registration
  */
-JobExperience.defaultColumns = 'companyName, role, address';
+JobExperience.defaultColumns = 'companyName, role, address, candidateId';
 JobExperience.register();

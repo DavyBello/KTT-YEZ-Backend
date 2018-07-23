@@ -10,9 +10,8 @@ const keystone = require('keystone');
 // and documentation.
 
 keystone.init({
-	'name': 'Ktt-Backend',
-	'brand': 'Ktt-Backend',
-
+	'name': 'yez-ng-backend',
+	'brand': 'Youth Empowerment Zone',
 	'less': 'public',
 	'static': 'public',
 	'favicon': 'public/favicon.ico',
@@ -24,11 +23,12 @@ keystone.init({
 	'auto update': true,
 	'session': true,
 	'auth': true,
-	'user model': 'User',
+	'user model': 'keystoneAdmin',
 });
 
 // Load your project's Models
 keystone.import('models');
+keystone.import('subModels');
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
@@ -46,24 +46,43 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	candidates: ['Candidate', 'Education', 'JobExperience', 'Referee', 'Certificate' ],
-	CandidateDocuments: ['CandidateDocument', 'SkillAnalysisResult', 'SeekerResult', 'StartupResult'],
-	Companies: ['CompanyMessage', 'Company', 'Industry', 'Job'],
-	CenterManager: 'CenterManager',
-	poll: ['Poll', 'PollVote'],
+	candidates: ['Candidate', 'Education', 'JobExperience', 'Certificate' ],
+	// CandidateDocuments: ['CandidateDocument', 'SkillAnalysisResult', 'SeekerResult', 'StartupResult'],
+	// Companies: ['CompanyMessage', 'Company', 'Industry', 'Job'],
+	// CenterManager: 'CenterManager',
+	// poll: ['Poll', 'PollVote'],
 	country: ['State', 'LocalGovernment'],
 	//posts: ['posts', 'post-categories'],
 	//galleries: 'galleries',
-	enquiries: 'enquiries',
-	users: 'users',
+	// enquiries: 'enquiries',
+	users: ['keystoneAdmin', 'users'],
 });
 
 // Configure cloudinary
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL );
 
+keystone.set('brandDetails', {
+	brand: keystone.get('brand') || 'Youth Empowerment Zone',
+	mailAddress: '22 Kumasi Cresent, Wuse 2, Abuja',
+	homepageUrl: process.env.FRONT_END_URL,
+	phone: '+234.818.855.5611',
+	emailLogoUrl: `http://www.mycareerchoice.global/static/images/mcclogo-text-dark.png`
+});
+
+//check for environment variables
+function checkEnv(envVariable) {
+	if (!process.env[envVariable]) {
+		console.log('----------------------------------------'
+		+ `\nWARNING: MISSING ${envVariable} CREDENTIALS`
+		+ '\n----------------------------------------')
+	}
+}
+
+checkEnv('FRONT_END_URL');
+checkEnv('JWT_SECRET');
+// checkEnv('ACTIVATION_JWT_SECRET');
+
 // Start Keystone to connect to your database and initialise the web server
-
-
 if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
 	console.log('----------------------------------------'
 	+ '\nWARNING: MISSING MAILGUN CREDENTIALS'

@@ -10,7 +10,6 @@ const { STATES, GENDERS, CANDIDATE_CATEGORIES, STAFF_TYPES, PHONE_REGEX, toCamel
 var Candidate = new keystone.List('Candidate', {
 	track: true
 });
-Candidate.schema.set('usePushEach', true);
 
 Candidate.add({
 	name: { type: Types.Name, required: true, index: true },

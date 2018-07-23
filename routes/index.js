@@ -18,51 +18,45 @@
  * http://expressjs.com/api.html#app.VERB
  */
 
-const keystone = require('keystone');
-const middleware = require('./middleware');
-//const importRoutes = keystone.importer(__dirname);
-const cors = require('cors');
+ const keystone = require('keystone');
+ const cors = require('cors');
+ const jwt = require('express-jwt');
+ const bodyParser = require('body-parser');
+ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+ const { ApolloServer } = require('apollo-server-express');
 
 const schema = require('../graphql/schema-compose');
-const graphql = require('graphql');
-const bodyParser = require('body-parser');
-const graphqlExpress = require('graphql-server-express').graphqlExpress;
-const graphiqlExpress = require('graphql-server-express').graphiqlExpress;
-const jwt = require('express-jwt');
 
 const User = keystone.list('User').model;
 const Candidate = keystone.list('Candidate').model;
-const Company = keystone.list('Company').model;
-const CenterManager = keystone.list('CenterManager').model;
+// const Company = keystone.list('Company').model;
+// const CenterManager = keystone.list('CenterManager').model;
 //const JWT_SECRET = require('../config').JWT_SECRET;
 
 
 // Setup Route Bindings
 exports = module.exports = function (app) {
-	//app.graphqlSchema = schema;
-
 	//Configure CORS -- Remove localhost in final version
-	var whitelist = ['http://ktt-app.herokuapp.com', 'http://localhost']
-	var corsOptions = {
-	  origin: function (origin, callback) {
-	    if (whitelist.indexOf(origin) !== -1) {
-	      callback(null, true)
-	    } else {
-	      callback(new Error('Not allowed by CORS'))
-	    }
-	  }
-	}
+	// let corsOptions = {}
+  // if (process.env.NODE_ENV == 'production') {
+  //   const whitelist = [process.env.FRONT_END_URL, 'http://localhost']
+  //   corsOptions = {
+  //     origin: function (origin, callback) {
+  //       if (whitelist.indexOf(origin) !== -1) {
+  //         callback(null, true)
+  //       } else {
+  //         callback(new Error('Not allowed by CORS'))
+  //       }
+  //     }
+  //   }
+  // }
 
-	//app.use(cors());
-	//
 	// Register API middleware
 	// -------------------------------------------------------------------------
-	//NO JWT
-	//app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
-	//enable cors and jwt middleware on api route
+	// enable cors and jwt middleware on api route
 	// app.use('/graphql', cors(corsOptions), bodyParser.json(), jwt({
-	app.use('/graphql', cors(), bodyParser.json(), jwt({
-	// app.use('/graphql', bodyParser.json(), jwt({
+
+  app.use('/graphql', cors(), bodyParser.json(), jwt({
 	  secret: process.env.JWT_SECRET,
 	  credentialsRequired: false,
 	}), graphqlExpress(req => {
@@ -71,12 +65,13 @@ exports = module.exports = function (app) {
 		if (req.user) {
 			context = {
 				//user: req.user ? User.findOne({ _id: req.user._id || req.user.id, version: req.user.version}) : Promise.resolve(null),
+				User: req.user.type ? Promise.resolve(req.user) : Promise.resolve(null),
 				Candidate: req.user.type==='Candidate' ?
-					Candidate.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
-				Company: req.user.type==='Company' ?
-					Company.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
-				CenterManager: req.user.type==='CenterManager' ?
-					CenterManager.findOne({ _id: req.user._id || req.user.id}) : Promise.resolve(null),
+					Candidate.findById(req.user.id) : Promise.resolve(null),
+          // Company: req.user.type==='Company' ?
+  				// 	Company.findById(req.user.id) : Promise.resolve(null),
+  				// CenterManager: req.user.type==='CenterManager' ?
+  				// 	CenterManager.findById(req.user.id) : Promise.resolve(null)
 			}
 		}
 		return ({
@@ -84,9 +79,14 @@ exports = module.exports = function (app) {
 		  context: context
 		})}
 	));
-	app.use('/graphiql', graphiqlExpress({
-			endpointURL: '/graphql'
-	}));
+
+	app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' })); // if you want GraphiQL enabled
+
+  // const server = new ApolloServer({ schema });
+  // server.applyMiddleware({ app });
+  // console.log(server);
+
+
 	// Views
 	app.get('/admin', (req, res) => {res.redirect('/keystone')});
 	app.get('/', (req, res) => {res.redirect('/keystone')});
@@ -99,8 +99,4 @@ exports = module.exports = function (app) {
 		app.get('/gallery', routes.views.gallery);
 		app.all('/contact', routes.views.contact);*/
 	}
-
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
-
 };
