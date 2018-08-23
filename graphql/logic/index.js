@@ -1,5 +1,5 @@
-const candidateLogic = require('./Candidate')
+const candidateLogic = require('./Candidate');
 
 module.exports = {
-  ...candidateLogic
-}
+  ...candidateLogic,
+};

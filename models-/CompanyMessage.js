@@ -1,22 +1,23 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+const keystone = require('keystone');
+
+const Types = keystone.Field.Types;
 
 /**
  * CompanyMessage Model
  * =============
  */
 
-var CompanyMessage = new keystone.List('CompanyMessage', {
-	nocreate: true,
-	// noedit: true,*/
-	// track: true
+const CompanyMessage = new keystone.List('CompanyMessage', {
+  nocreate: true,
+  // noedit: true,*/
+  // track: true
 });
 
 CompanyMessage.add({
   company: { type: Types.Relationship, ref: 'Company', many: false },
-	title: { type: Types.Text, initial: true, required: true},
-	message: { type: Types.Textarea, initial: true, required: true },
-  isClosed: { type: Boolean, default: false }
+  title: { type: Types.Text, initial: true, required: true },
+  message: { type: Types.Textarea, initial: true, required: true },
+  isClosed: { type: Boolean, default: false },
 });
 /*
 CompanyMessage.schema.pre('save', function (next) {
@@ -63,7 +64,7 @@ CompanyMessage.schema.methods.sendNotificationEmail = function (callback) {
 			brand: brand,
 		}, callback);
 	});
-};*/
+}; */
 
 CompanyMessage.defaultSort = '-createdAt';
 CompanyMessage.defaultColumns = 'company, title, isClosed';

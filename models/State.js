@@ -1,16 +1,17 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+const keystone = require('keystone');
+
+const Types = keystone.Field.Types;
 
 /**
  * State Model
  * ==========
  */
-var State = new keystone.List('State', {
-    //track: true
+const State = new keystone.List('State', {
+  // track: true
 });
 
 State.add({
-  name: { type: String, required: true, index: true }
+  name: { type: String, required: true, index: true },
 });
 
 State.relationship({ ref: 'LocalGovernment', path: 'localGovernments', refPath: 'state' });

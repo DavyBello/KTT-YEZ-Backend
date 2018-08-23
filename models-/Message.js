@@ -1,27 +1,31 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+const keystone = require('keystone');
+
+const Types = keystone.Field.Types;
 
 /**
  * Message Model
  * =============
  */
 
-var Message = new keystone.List('Message', {
-	/*nocreate: true,
-	noedit: true,*/
-	track: true
+const Message = new keystone.List('Message', {
+  /* nocreate: true,
+	noedit: true, */
+  track: true,
 });
 
 Message.add({
-	name: { type: Types.Name, initial: true, required: true},
-	email: { type: Types.Email, initial: true, required: false },
-	phone: { type: String },
-	MessageType: { type: Types.Select, options: [
-		{ value: 'message', label: 'Just leaving a message' },
-		{ value: 'question', label: 'I\'ve got a question' },
-		{ value: 'other', label: 'Something else...' },
-	] },
-	content: { type: Types.Markdown, initial: true, required: true },	
+  name: { type: Types.Name, initial: true, required: true },
+  email: { type: Types.Email, initial: true, required: false },
+  phone: { type: String },
+  MessageType: {
+    type: Types.Select,
+    options: [
+      { value: 'message', label: 'Just leaving a message' },
+      { value: 'question', label: 'I\'ve got a question' },
+      { value: 'other', label: 'Something else...' },
+    ],
+  },
+  content: { type: Types.Markdown, initial: true, required: true },
 });
 /*
 Message.schema.pre('save', function (next) {
@@ -68,7 +72,7 @@ Message.schema.methods.sendNotificationEmail = function (callback) {
 			brand: brand,
 		}, callback);
 	});
-};*/
+}; */
 
 Message.defaultSort = '-createdAt';
 Message.defaultColumns = 'name, email, MessageType, createdAt';

@@ -5,16 +5,16 @@ module.exports = () => {
   	kind: 'query',
     name: 'centerManagerAccess',
     type: ViewerCenterManagerTC,
-    resolve: ({ args, context , sourceUser}) => {
-  		//console.log('this outlet');
+    resolve: ({ args, context, sourceUser }) => {
+  		// console.log('this outlet');
   		sourceUser.id = sourceUser._id;
-      return { centerManager: sourceUser }
+      return { centerManager: sourceUser };
     },
-  })
+  });
 
   const ViewerCenterManagerTCFields = {
-  	centerManager: CenterManagerTC.getType()
-  	//add other exclusive to centerManager fields here
-  }
+  	centerManager: CenterManagerTC.getType(),
+  	// add other exclusive to centerManager fields here
+  };
   ViewerCenterManagerTC.addFields(ViewerCenterManagerTCFields);
-}
+};

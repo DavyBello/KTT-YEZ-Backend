@@ -5,16 +5,16 @@ module.exports = () => {
   	kind: 'query',
     name: 'candidateAccess',
     type: ViewerCandidateTC,
-    resolve: ({ args, context , sourceUser}) => {
-  		//console.log('this outlet');
+    resolve: ({ args, context, sourceUser }) => {
+  		// console.log('this outlet');
   		sourceUser.id = sourceUser._id;
-      return { candidate: sourceUser }
+      return { candidate: sourceUser };
     },
-  })
+  });
 
   const ViewerCandidateTCFields = {
-  	candidate: CandidateTC.getType()
-  	//add other exclusive to candidate fields here
-  }
+  	candidate: CandidateTC.getType(),
+  	// add other exclusive to candidate fields here
+  };
   ViewerCandidateTC.addFields(ViewerCandidateTCFields);
-}
+};
