@@ -1,9 +1,8 @@
-const candidateResolvers = require('./candidate');
-const companyResolvers = require('./company');
-const CenterManagerResolvers = require('./centerManager');
 
-module.exports = addResolvers = () => {
-  candidateResolvers();
-  companyResolvers();
-  CenterManagerResolvers();
+module.exports = () => {
+  require('./user')();
+  require('./placeholder')();
+  require('./candidate')();
+  // require('./company')();
+  // require('./centerManager')();
 };

@@ -1,6 +1,8 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
+const ModelMethods = require('../modelMethods/user/index.js');
 
 const { PHONE_REGEX, toCamelCase } = require('../lib/common');
 
@@ -8,19 +10,21 @@ const { PHONE_REGEX, toCamelCase } = require('../lib/common');
  * User Model
  * ==========
  */
-const User = new keystone.List('User');
+const User = new keystone.List('User', {
+  hidden: true,
+});
 
 User.add({
   name: { type: Types.Text, index: true },
   email: {
-    type: Types.Email, initial: true, required: true, unique: true, index: true,
+    type: Types.Email, initial: true, required: true, unique: true, index: true, sparse: true
   },
   password: { type: Types.Password, initial: true, required: true },
   passwordVersion: { type: Types.Number, required: true, default: 1 },
 });
 
 // Model Hooks
-User.schema.pre('save', function (next) {
+User.schema.pre('save', (next) => {
   this.wasNew = this.isNew;
 
   if (this.name) this.name = toCamelCase(this.name);
@@ -35,6 +39,13 @@ User.schema.pre('save', function (next) {
     next();
   }
 });
+
+// Methods
+const { sendPasswordResetLink, signToken } = ModelMethods;
+
+User.schema.methods.sendPasswordResetLink = sendPasswordResetLink;
+User.schema.methods.signToken = signToken;
+
 
 /**
  * Registration

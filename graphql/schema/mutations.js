@@ -1,13 +1,3 @@
-/*	generates a schema based on the database models for GraphQL using graphql-compose
-	NOT YET COMPLETE
-*/
-const { GQC } = require('graphql-compose');
-
-const typeComposers = require('./composers');
-// const addRelationships = require('./relationships');
-// const addResolvers = require('./resolvers');
-// const addViewers = require('./viewers');
-
 // Get logic middleware
 // const {
 // 	isSelf,
@@ -22,7 +12,8 @@ const typeComposers = require('./composers');
 // } = require('./logic/common');
 
 const {
-  UserTC,
+  // UserTC,
+  CandidateTC,
   // PollTC,
   // PollVoteTC,
   // LocalGovernmentTC,
@@ -42,64 +33,11 @@ const {
   // CaseFileTC,
   // CenterManagerTC,
   // ViewerCenterManagerTC
-} = typeComposers;
+} = require('../composers');
 
-// Add relationships and resolvers to schema
-// addViewers();
-// addRelationships();
-// addResolvers();
-
-// console.log(CandidateDocumentTC.getInputTypeComposer().addFields({jwt: 'String'}));
-// console.log(CandidateDocumentTC.getInputTypeComposer().getFields());
-// const FileITC = InputTypeComposer.create({
-// 	name: 'File',
-// 	fields: {
-// 		lastModified: 'Int',
-// 		name: 'String',
-// 		pre
-// 	}
-// });
-// console.log(CandidateDocumentTC.get('$createOne').addArgs({
-// 	itemId: 'String',
-// 	modelType: 'String',
-// 	// file: FileITC
-// }).getArgs());
-// console.log(CandidateDocumentTC.get('$createOne').addArgs({
-// 	itemId: 'String',
-// 	modelType: 'String'
-// }));
-
-// Add fields and resolvers to rootQuery
-GQC.rootQuery().addFields({
-  user: UserTC.get('$findOne'),
-  // ...authAccess('Candidate', {
-  // 	viewerCandidate: ViewerCandidateTC.get('$candidateAccess')
-  // }),
-  // ...authAccess('Company', {
-  // 	viewerCompany: ViewerCompanyTC.get('$companyAccess'),
-  // 	industryMany: IndustryTC.get('$findMany'),
-  // 	// jobById: isSelf(JobTC, '$findById'),
-  // 	// jobById: JobTC.get('$findById'),
-  // 	companyJobById: findSelfRelationship('jobs', JobTC),
-  // 	// companyJobsPagination: findSelfRelationship('jobs', JobTC),
-  // }),
-  // ...authAccess('CenterManager', {
-  // 	viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),
-  // 	managerCandidateById: CandidateTC.get('$findById'),
-  // 	managerCandidateMany: CandidateTC.get('$findMany'),
-  // 	managerCandidatePagination: CandidateTC.get('$pagination')
-  // }),
-  currentTime: {
-    type: 'Date',
-    resolve: () => new Date().toISOString(),
-  },
-});
-
-// Add fields and resolvers to rootQuery
-GQC.rootMutation().addFields({
-  user: UserTC.get('$updateById'),
-  // loginCandidate: CandidateTC.get('$loginWithPhone'),
-  // signUpCandidate: CandidateTC.get('$signUp'),
+module.exports = {
+  loginCandidate: CandidateTC.getResolver('loginWithPhone'),
+  candidateCreateAccount: CandidateTC.getResolver('createAccount'),
   // loginCenterManager: CenterManagerTC.get('$loginWithPhone'),
   // // signUpCenterManager: CenterManagerTC.get('$signUp'),
   // loginCompany: CompanyTC.get('$loginWithEmail'),
@@ -136,7 +74,4 @@ GQC.rootMutation().addFields({
   // 	// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
   // 	// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
   // })
-});
-
-const schema = GQC.buildSchema();
-module.exports = schema;
+};

@@ -1,6 +1,6 @@
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
  * LocalGovernment Model
@@ -14,7 +14,7 @@ LocalGovernment.add({
   name: {
     type: String, initial: true, index: true, required: true,
   },
-  state: { type: Types.Relationship, ref: 'State' },
+  stateId: { type: Types.Relationship, ref: 'State' },
 });
 
 /**

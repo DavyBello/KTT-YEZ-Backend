@@ -1,10 +1,11 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
-const jwt = require('jsonwebtoken');
+const { Types } = keystone.Field;
+const ModelMethods = require('../modelMethods/candidate/index.js');
 
 const {
-  STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase,
+  STATES, GENDERS, CANDIDATE_CATEGORIES, toCamelCase,
 } = require('../lib/common');
 
 /**
@@ -13,6 +14,7 @@ const {
  */
 const Candidate = new keystone.List('Candidate', {
   track: true,
+  hidden: false,
   inherits: keystone.list('User'),
 });
 
@@ -48,11 +50,11 @@ Candidate.add('Candidate', {
 });
 
 // Virtuals
-Candidate.schema.virtual('isTested').get(() => {
+Candidate.schema.virtual('isTested').get(function () {
   if (this.result.seeker || this.result.startup) { return true; }
   return false;
 });
-Candidate.schema.virtual('testTaken').get(() => {
+Candidate.schema.virtual('testTaken').get(function () {
   if (this.result.seeker && this.result.startup) { return 'both'; }
   if (this.result.seeker) { return 'seeker'; }
   if (this.result.startup) { return 'startup'; }
@@ -70,7 +72,7 @@ Candidate.schema.pre('save', async function (next) {
 Candidate.schema.post('save', async function () {
   if (this.wasNew) {
     try {
-      this.sendActivationLink();
+      // this.sendActivationLink();
     } catch (e) {
       console.log(e);
     }
@@ -78,51 +80,10 @@ Candidate.schema.post('save', async function () {
 });
 
 // Methods
-Candidate.schema.methods.sendActivationLink = function () {
-  const user = this;
-  return new Promise(((resolve, reject) => {
-    console.log('sending user activation email');
-    if (true) {
-      // if (user.isActivated) {
-      // console.log('Account is already activated');
-      reject(new Error('Account is already activated'));
-    } else {
-      if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-        console.log('Unable to send email - no mailgun credentials provided');
-        reject(new Error('could not find mailgun credentials'));
-      }
+// Methods
+const { sendActivationLink } = ModelMethods;
 
-      const brandDetails = keystone.get('brandDetails');
-
-      const code = jwt.sign({
-        id: user._id,
-        createdAt: Date.now(),
-      }, process.env.ACTIVATION_JWT_SECRET);
-      const activationLink = `${process.env.FRONT_END_URL}/activate?code=${code}`;
-
-      new keystone.Email({
-        templateName: 'activate-account',
-        transport: 'mailgun',
-      }).send({
-        to: [user.email],
-        from: {
-          name: 'MCC',
-          email: 'no-reply@mycarrerchoice.global',
-        },
-        subject: 'MCC Account Activation',
-        user,
-        brandDetails,
-        activationLink,
-      }, (err) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        }
-      });
-      resolve();
-    }
-  }));
-};
+Candidate.schema.methods.sendActivationLink = sendActivationLink;
 
 /**
  * Relationships

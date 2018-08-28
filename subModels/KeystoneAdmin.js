@@ -1,11 +1,7 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
-const jwt = require('jsonwebtoken');
-
-const {
-  STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase,
-} = require('../lib/common');
+const { Types } = keystone.Field;
 
 /**
  * keystoneAdmin Model
@@ -13,10 +9,16 @@ const {
  */
 const keystoneAdmin = new keystone.List('keystoneAdmin', {
   track: true,
-  inherits: keystone.list('User'),
 });
 
-keystoneAdmin.add('Permissions', {
+keystoneAdmin.add({
+  name: { type: Types.Text, index: true },
+  email: {
+    type: Types.Email, initial: true, required: true, unique: true, index: true,
+  },
+  password: { type: Types.Password, initial: true, required: true },
+  passwordVersion: { type: Types.Number, required: true, default: 1 },
+}, 'Permissions', {
   isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
   recieveGuestEnquiries: { type: Boolean, label: 'receives notification email when an equiry is made', index: true },
 });

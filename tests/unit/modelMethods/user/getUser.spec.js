@@ -1,0 +1,76 @@
+const mongoose = require('mongoose');
+const chai = require('chai');
+
+const { decodeToken } = require('../../../../modelMethods/user');
+const getContext = require('../../../../graphql/lib/getContext');
+const {
+  connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows,
+} = require('../../../helper');
+
+const { expect } = chai;
+
+
+const { ObjectId } = mongoose.Types;
+
+before(connectMongoose);
+
+beforeEach(clearDbAndRestartCounters);
+
+after(disconnectMongoose);
+
+describe('getUser', () => {
+  it('should return an empty object when token is null', async () => {
+    const token = null;
+    const decodedToken = decodeToken(token);
+
+    expect(decodedToken).to.be.deep.equal({});
+  });
+
+  // it('should return null when token is invalid', async () => {
+  //   const token = 'invalid';
+  //   const decodedToken = decodeToken(token);
+  //   console.log(decodedToken);
+  //   expect(decodedToken).to.be.deep.equal({});
+  // });
+
+  // it('should return null when token is invalid', async () => {
+  //   const token = 'invalid token';
+  //   const { User } = await getUser(token);
+  //
+  //   expect(User).toBe(null);
+  // });
+  //
+  // it('should return null when token do not represent a valid user', async () => {
+  //   const token = signToken({ _id: new ObjectId() });
+  //   const { User } = await getUser(token);
+  //
+  //   expect(User).toBe(null);
+  // });
+  //
+  it('should return user from a valid token', async () => {
+    const me = await createRows.createUser();
+
+    const token = me.signToken();
+    const decodedToken = decodeToken(token);
+    const { User } = await getContext({ jwtPayload: decodedToken });
+
+    const user = await User;
+
+    expect(user.id).to.equal(me._id.toString());
+  });
+  it('should return candidate from a valid candidate token', async () => {
+    const me = await createRows.createCandidate();
+
+    const token = me.signToken();
+    const jwtPayload = decodeToken(token);
+    const { Candidate } = await getContext({ jwtPayload });
+
+    const candidate = await Candidate;
+
+    expect(candidate._id).to.be.deep.equal(me._id);
+    expect(candidate.passwordVersion).to.equal(me.passwordVersion);
+    expect(candidate.firstName).to.equal(me.firstName);
+    expect(candidate.lastName).to.equal(me.lastName);
+    expect(candidate.phone).to.equal(me.phone);
+  });
+});

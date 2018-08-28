@@ -22,3 +22,8 @@ exports.createManagedRelationship = require('./createManagedRelationship');
 exports.deleteManagedRelationship = require('./deleteManagedRelationship');
 
 exports.createModelRelationship = require('./createModelRelationship');
+
+// Create and add id of relationship document to the sourceUser/Self
+exports.createDocumentWithIdReference = require('./withReference/createDocumentWithIdReference');
+
+exports.updateDocumentWithIdReference = require('./withReference/updateDocumentWithIdReference');

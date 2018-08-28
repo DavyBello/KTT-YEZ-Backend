@@ -1,3 +1,5 @@
+const { AuthenticationError, ForbiddenError } = require('apollo-server');
+
 module.exports = (options = {}, resolvers) => {
   const { sourceUserType, isActivated = false } = options;
   Object.keys(resolvers).forEach((k) => {
@@ -6,18 +8,18 @@ module.exports = (options = {}, resolvers) => {
       try {
         const sourceUser = await rp.context[sourceUserType]; // eg rp.context.Candidate
         if (!sourceUserType) {
-          throw new Error('Provide a source Type for this Auth wrapper');
+          throw new ForbiddenError('Provide a source Type for this Auth wrapper');
         }
         if (!sourceUser) {
           // Unauthorized request
-          if (resolvers[k].parent.name == 'isAuthenticated') {
+          if (resolvers[k].parent.name === 'isAuthenticated') {
             return false;
           }
-          throw new Error(`You must be signed in as a ${sourceUserType.toLowerCase()} to have access to this action.`);
+          throw new AuthenticationError(`You must be signed in as a ${sourceUserType.toLowerCase()} to have access to this action.`);
         }
         if (isActivated) {
           if (!sourceUser.isActivated) {
-            throw new Error('account has not been activated');
+            throw new ForbiddenError('account has not been activated');
           }
         }
         // console.log('authorized');

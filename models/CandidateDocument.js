@@ -1,6 +1,7 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
  * CandidateDocument Model
@@ -14,7 +15,9 @@ CandidateDocument.add({
   fileTitle: { type: Types.Text, initial: true, required: true },
   fileURL: { type: Types.Text },
   image: { type: Types.CloudinaryImage, initial: true },
-  // uploadedBy : { type: Types.Relationship, ref: 'CenterManager', index: true, initial:true, required: true },
+  // uploadedBy : {
+  //   type: Types.Relationship, ref: 'CenterManager', index: true, initial:true, required: true
+  // },
   createdAt: { type: Types.Datetime, index: true, default: Date.now },
   updatedAt: { type: Types.Datetime, index: true },
   candidateId: {

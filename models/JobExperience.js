@@ -1,6 +1,7 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 const moment = require('moment');
 
 const { STATES, MONTHS, toCamelCase } = require('../lib/common');
@@ -53,12 +54,19 @@ JobExperience.schema.pre('save', function (next) {
   this.companyName = toCamelCase(this.companyName);
   this.address = toCamelCase(this.address);
   if (this.isWorkingHere) {
-    now = new Date();
+    const now = new Date();
     this.toMonth = MONTHS[now.getMonth()];
     this.toYear = now.getFullYear();
   } else {
-    const monthDays = moment({ month: MONTHS.indexOf(this.toMonth), year: this.toYear }).daysInMonth();
-    this.endDate = moment({ day: monthDays, month: MONTHS.indexOf(this.toMonth), year: this.toYear }).format();
+    const monthDays = moment({
+      month: MONTHS.indexOf(this.toMonth),
+      year: this.toYear,
+    }).daysInMonth();
+    this.endDate = moment({
+      day: monthDays,
+      month: MONTHS.indexOf(this.toMonth),
+      year: this.toYear,
+    }).format();
   }
   // month
   this.startDate = moment({ month: MONTHS.indexOf(this.fromMonth), year: this.fromYear }).format();

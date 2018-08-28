@@ -1,5 +1,10 @@
 const {
-  CandidateTC, JobExperienceTC, EducationTC, CertificateTC, RefereeTC, CandidateDocumentTC, CaseFileTC,
+  CandidateTC,
+  JobExperienceTC,
+  EducationTC,
+  CertificateTC,
+  CandidateDocumentTC,
+  CaseFileTC,
 } = require('../../composers');
 
 module.exports = () => {

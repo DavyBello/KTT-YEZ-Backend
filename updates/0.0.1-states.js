@@ -21,7 +21,10 @@ const createState = (state, done) => {
       done(err);
     } else {
       state.state.locals.forEach((local) => {
-        const newLocalGovernment = new LocalGovernment.model({ name: local.name, state: savedState.id });
+        const newLocalGovernment = new LocalGovernment.model({
+          name: local.name,
+          stateId: savedState.id
+        });
         newLocalGovernment.save((err, localGov) => {
           if (err) {
             console.error(`Error adding lG: ${localGov.name} to the database:`);

@@ -1,6 +1,7 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 const moment = require('moment');
 
 const { MONTHS, toCamelCase } = require('../lib/common');

@@ -49,7 +49,12 @@ keystone.set('routes', require('./routes'));
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
   candidates: ['Candidate', 'Education', 'JobExperience', 'Certificate'],
-  // CandidateDocuments: ['CandidateDocument', 'SkillAnalysisResult', 'SeekerResult', 'StartupResult'],
+  // CandidateDocuments: [
+  //   'CandidateDocument',
+  //   'SkillAnalysisResult',
+  //   'SeekerResult',
+  //   'StartupResult'
+  // ],
   // Companies: ['CompanyMessage', 'Company', 'Industry', 'Job'],
   // CenterManager: 'CenterManager',
   // poll: ['Poll', 'PollVote'],
@@ -57,7 +62,7 @@ keystone.set('nav', {
   // posts: ['posts', 'post-categories'],
   // galleries: 'galleries',
   // enquiries: 'enquiries',
-  users: ['keystoneAdmin', 'users'],
+  users: ['keystoneAdmin'],
 });
 
 // Configure cloudinary
