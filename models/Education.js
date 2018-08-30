@@ -24,7 +24,7 @@ Education.add({
   fromYear: { type: Types.Text, initial: true, required: true },
   isSchoolingHere: { type: Boolean, initial: true, default: false },
   // toMonth: {type: Types.Select, options: MONTHS, initial: true},
-  toYear: { type: Types.Text, initial: true, required: true },
+  toYear: { type: Types.Text, initial: true },
   duration: { type: Types.Text },
   startDate: { type: Types.Date, index: true },
 }, 'verification', {
@@ -37,6 +37,9 @@ Education.schema.pre('save', function (next) {
   this.field = toCamelCase(this.field);
   this.startDate = moment({ year: this.fromYear }).format();
   // this.duration = `${this.fromYear} - ${this.toYear}`;
+  if (this.isSchoolingHere) {
+    this.toYear = new Date().getFullYear();
+  }
   this.duration = !this.isSchoolingHere
     ? `${this.fromYear} - ${this.toYear}` : `${this.fromYear} - Present`;
   next();

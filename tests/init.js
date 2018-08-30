@@ -36,6 +36,7 @@ before(async () => {
   global.__COUNTERS__ = {
     user: 0,
     jobExperience: 0,
+    education: 0,
     posts: 0,
     postCategories: 0,
   };

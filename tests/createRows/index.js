@@ -7,6 +7,7 @@ const restartCounters = () => {
 const createUser = require('./createUser');
 const createCandidate = require('./createCandidate');
 const createCandidateJobExperience = require('./createCandidateJobExperience');
+const createCandidateEducation = require('./createCandidateEducation');
 const createPost = require('./createPost');
 const createPostCategory = require('./createPostCategory');
 
@@ -15,6 +16,7 @@ module.exports = {
   createUser,
   createCandidate,
   createCandidateJobExperience,
+  createCandidateEducation,
   createPost,
   createPostCategory,
 };
