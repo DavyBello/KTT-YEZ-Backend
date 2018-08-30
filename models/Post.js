@@ -1,6 +1,7 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
  * Post Model
@@ -19,7 +20,7 @@ Post.add({
   },
   author: { type: Types.Relationship, ref: 'User', index: true },
   publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-  // image: { type: Types.CloudinaryImage },
+  image: { type: Types.CloudinaryImage },
   content: {
     brief: { type: Types.Html, wysiwyg: true, height: 150 },
     extended: { type: Types.Html, wysiwyg: true, height: 400 },

@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const keystone = require('keystone');
 
 /**
