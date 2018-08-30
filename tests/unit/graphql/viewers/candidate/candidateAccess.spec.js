@@ -19,6 +19,7 @@ const VIEWER_CANDIDATE_QUERY = `
 {
   viewerCandidate{
     me {
+      _id
       name
       email
       firstName
@@ -81,6 +82,7 @@ describe('ViewerCandidate Query', () => {
 
     const result = await graphql(schema, query, rootValue, context, variables);
 
+    expect(result.data.viewerCandidate.me._id).to.equal(`${user._id}`);
     expect(result.data.viewerCandidate.me.name).to.equal(user.name);
     expect(result.data.viewerCandidate.me.email).to.equal(user.email);
     expect(result.data.viewerCandidate.me.phone).to.equal(user.phone);
