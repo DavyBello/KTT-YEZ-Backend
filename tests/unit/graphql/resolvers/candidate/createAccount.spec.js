@@ -64,7 +64,7 @@ describe('createAccount Mutation', () => {
     expect(result.errors[0].message).to.equal('phone already exists');
   });
 
-  it('should not create an account with an existing email', async () => {
+  it.skip('should not create an account with an existing email', async () => {
     const user = await createRows.createCandidate();
 
     const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;

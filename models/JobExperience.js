@@ -18,25 +18,27 @@ JobExperience.add({
   companyName: {
     type: Types.Text, required: true, initial: true, index: true,
   },
-  candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
+  candidateId: {
+    type: Types.Relationship, ref: 'Candidate', index: true, initial: true, required: true,
+  },
   role: {
     type: Types.Text, label: 'Role/Position', initial: true, required: true,
   },
   address: { type: Types.Text, initial: true, required: true },
-  state: { type: Types.Select, options: STATES },
-  salary: { type: Types.Text, initial: true, required: false },
-  fromMonth: { type: Types.Select, options: MONTHS, initial: true },
-  fromYear: { type: Types.Text, initial: true, required: false },
-  isWorkingHere: { type: Boolean, initial: true, default: false },
+  state: {
+    type: Types.Select, options: STATES, required: true, initial: true,
+  },
+  salary: { type: Types.Number, initial: true, required: false },
+  fromMonth: {
+    type: Types.Select, options: MONTHS, initial: true, required: true,
+  },
+  fromYear: { type: Types.Text, initial: true, required: true },
+  isWorkingHere: { type: Boolean, initial: true, default: true },
   toMonth: { type: Types.Select, options: MONTHS, initial: true },
-  toYear: { type: Types.Text, initial: true, required: false },
+  toYear: { type: Types.Text, initial: true },
   duration: { type: Types.Text },
   startDate: { type: Types.Date, index: true },
   endDate: { type: Types.Date, index: true },
-  to: {
-    month: { type: Types.Select, options: MONTHS, initial: true },
-    year: { type: Types.Text, initial: true, required: false },
-  },
 }, 'verification', {
   isVerified: { type: Boolean, initial: true, default: false },
 });
