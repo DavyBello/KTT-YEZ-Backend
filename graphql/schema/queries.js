@@ -11,6 +11,7 @@ const {
 const {
   UserTC,
   ViewerCandidateTC,
+  PostTC,
   // PollTC,
   // PollVoteTC,
   // LocalGovernmentTC,
@@ -34,6 +35,7 @@ const {
 
 // Add fields and resolvers to rootQuery
 module.exports = {
+  posts: PostTC.getResolver('findMany'),
   ...authAccess({ sourceUserType: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),
