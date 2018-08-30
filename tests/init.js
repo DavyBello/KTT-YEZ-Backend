@@ -35,6 +35,8 @@ before(async () => {
   global.__MONGO_DB_NAME__ = await mongod.getDbName();
   global.__COUNTERS__ = {
     user: 0,
+    posts: 0,
+    postCategories: 0,
   };
 });
 
