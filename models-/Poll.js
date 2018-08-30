@@ -1,6 +1,6 @@
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
  * Poll Model

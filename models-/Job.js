@@ -1,6 +1,6 @@
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 const { STATES, MONTHS, toCamelCase } = require('../lib/common');
 
