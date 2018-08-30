@@ -24,6 +24,8 @@ const Certificate = keystone.list('Certificate').model;
 // const Industry = keystone.list('Industry').model;
 // const Job = keystone.list('Job').model;
 const CaseFile = keystone.list('CaseFile').model;
+const Post = keystone.list('Post').model;
+const PostCategory = keystone.list('PostCategory').model;
 
 /**
 * Config
@@ -45,15 +47,17 @@ const CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 // const PollVoteTC = composeWithMongoose(PollVote);
 const LocalGovernmentTC = composeWithMongoose(LocalGovernment);
 const StateTC = composeWithMongoose(State);
-const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const JobExperienceTC = composeWithMongoose(JobExperience);
 const EducationTC = composeWithMongoose(Education);
 const CertificateTC = composeWithMongoose(Certificate);
+const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 // const RefereeTC = composeWithMongoose(Referee);
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
 // const IndustryTC = composeWithMongoose(Industry);
 // const JobTC = composeWithMongoose(Job);
 const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
+const PostTC = composeWithMongoose(Post);
+const PostCategoryTC = composeWithMongoose(PostCategory);
 
 /**
 * Viewer Fields for authentication and authorization
@@ -81,4 +85,6 @@ module.exports = {
   // RefereeTC,
   // CompanyMessageTC,
   CaseFileTC,
+  PostTC,
+  PostCategoryTC,
 };
