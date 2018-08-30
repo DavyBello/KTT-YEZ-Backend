@@ -37,6 +37,7 @@ before(async () => {
     user: 0,
     jobExperience: 0,
     education: 0,
+    certificate: 0,
     posts: 0,
     postCategories: 0,
   };

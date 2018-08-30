@@ -8,6 +8,7 @@ const createUser = require('./createUser');
 const createCandidate = require('./createCandidate');
 const createCandidateJobExperience = require('./createCandidateJobExperience');
 const createCandidateEducation = require('./createCandidateEducation');
+const createCandidateCertificate = require('./createCandidateCertificate');
 const createPost = require('./createPost');
 const createPostCategory = require('./createPostCategory');
 
@@ -17,6 +18,7 @@ module.exports = {
   createCandidate,
   createCandidateJobExperience,
   createCandidateEducation,
+  createCandidateCertificate,
   createPost,
   createPostCategory,
 };

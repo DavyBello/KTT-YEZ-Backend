@@ -16,7 +16,9 @@ const Certificate = new keystone.List('Certificate', {
 
 Certificate.add({
   title: { type: Types.Text, initial: true, required: true },
-  candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
+  candidateId: {
+    type: Types.Relationship, ref: 'Candidate', index: true, required: true, initial: true,
+  },
   authority: { type: Types.Text, initial: true, required: true },
   licenseNumber: { type: Types.Text, initial: true },
   url: { type: Types.Text, initial: true },
