@@ -25,7 +25,7 @@ User.add({
 
 // Model Hooks
 User.schema.pre('save', (next) => {
-  this.wasNew = this.isNew;
+  // this.wasNew = this.isNew;
 
   if (this.name) this.name = toCamelCase(this.name);
 

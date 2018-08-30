@@ -2,7 +2,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 require('dotenv').load();
 
 const keystone = require('keystone');
-const chai = require('chai');
+// const chai = require('chai');
 const Cryptr = require('cryptr');
 
 keystone.init({
@@ -17,8 +17,6 @@ keystone.import('./models');
 keystone.import('./subModels');
 
 keystone.pvCryptr = new Cryptr(process.env.PASSWORD_VERSION_SECRET);
-
-// console.log(keystone.lists);
 
 // chai.should();
 
