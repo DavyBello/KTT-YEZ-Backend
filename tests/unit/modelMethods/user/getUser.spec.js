@@ -52,9 +52,9 @@ describe('getUser', () => {
 
     const token = me.signToken();
     const decodedToken = decodeToken(token);
-    const { User } = await getContext({ jwtPayload: decodedToken });
+    const { viewer } = await getContext({ jwtPayload: decodedToken });
 
-    const user = await User;
+    const user = await viewer;
 
     expect(user.id).to.equal(me._id.toString());
   });
@@ -63,9 +63,9 @@ describe('getUser', () => {
 
     const token = me.signToken();
     const jwtPayload = decodeToken(token);
-    const { Candidate } = await getContext({ jwtPayload });
+    const { viewer } = await getContext({ jwtPayload });
 
-    const candidate = await Candidate;
+    const candidate = await viewer;
 
     expect(candidate._id).to.be.deep.equal(me._id);
     expect(candidate.passwordVersion).to.equal(me.passwordVersion);
