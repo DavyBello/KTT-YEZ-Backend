@@ -1,31 +1,33 @@
 const { AuthenticationError, ForbiddenError } = require('apollo-server');
 
 module.exports = (options = {}, resolvers) => {
-  const { sourceUserType, isActivated = false } = options;
+  const { scope, isActivated = false } = options;
   Object.keys(resolvers).forEach((k) => {
     resolvers[k] = resolvers[k].wrapResolve(next => async (rp) => {
       // const { source, args, context, info } = resolveParams = rp
+      if (!scope) {
+        throw new ForbiddenError('provide an authentication scope for this wrapper');
+      }
       try {
-        const sourceUser = await rp.context[sourceUserType]; // eg rp.context.Candidate
-        if (!sourceUserType) {
-          throw new ForbiddenError('Provide a source Type for this Auth wrapper');
-        }
-        if (!sourceUser) {
+        const { viewer } = rp.context;
+        // viewer is a mongoose query
+        const viewerUser = await viewer;
+        if (!viewerUser) {
           // Unauthorized request
           if (resolvers[k].parent.name === 'isAuthenticated') {
             return false;
           }
-          throw new AuthenticationError(`You must be signed in as a ${sourceUserType.toLowerCase()} to have access to this action.`);
+          throw new AuthenticationError('user is not authenticated');
+        }
+        if (scope !== rp.context.scope) {
+          throw new AuthenticationError('user is not permitted to perform this action');
         }
         if (isActivated) {
-          if (!sourceUser.isActivated) {
-            throw new ForbiddenError('account has not been activated');
+          if (!viewerUser.isActivated) {
+            throw new ForbiddenError('user account is not activated');
           }
         }
-        // console.log('authorized');
-        // add signed-In sourceUser to the resolver parameters
-        rp.sourceUser = sourceUser || null;
-        rp.sourceUserType = sourceUserType || null;
+        rp.context.viewer = viewerUser;
         return next(rp);
       } catch (e) {
         return e;

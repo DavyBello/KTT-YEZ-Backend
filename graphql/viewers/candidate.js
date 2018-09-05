@@ -10,6 +10,6 @@ module.exports = () => {
     kind: 'query',
     name: 'candidateAccess',
     type: ViewerCandidateTC,
-    resolve: ({ sourceUser }) => ({ me: sourceUser }),
+    resolve: ({ context: { viewer } }) => ({ me: viewer }),
   });
 };

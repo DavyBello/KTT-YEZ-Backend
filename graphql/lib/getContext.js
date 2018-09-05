@@ -1,24 +1,41 @@
 const keystone = require('keystone');
 
-// const User = keystone.list('User').model;
+const User = keystone.list('User').model;
 const Candidate = keystone.list('Candidate').model;
 // const Company = keystone.list('Company').model;
 // const CenterManager = keystone.list('CenterManager').model;
 
+const getViewer = ({ id, pv, type }) => {
+  const queryParams = {
+    _id: id,
+    passwordVersion: pv ? keystone.pvCryptr.decrypt(pv) : -1,
+  };
+
+  let viewer = Promise.resolve(null);
+
+  if (type === 'User') viewer = User.findOne(queryParams);
+  if (type === 'Candidate') viewer = Candidate.findOne(queryParams);
+  // if (type  === 'Company') viewer = Company.findOne(queryParams);
+  // if (type  === 'CenterManager') viewer = CenterManager.findOne(queryParams);
+
+  return viewer;
+};
 
 module.exports = ({ jwtPayload = {} } = {}) => {
-  let context = {};
+  let context = {
+    models: {
+      User,
+      Candidate,
+    },
+  };
   if (jwtPayload) {
-    const queryParams = {
-      _id: jwtPayload.id,
-      passwordVersion: jwtPayload.pv ? keystone.pvCryptr.decrypt(jwtPayload.pv) : -1,
-    };
+    const { id, pv, type } = jwtPayload;
 
     context = {
-      // user: jwtPayload ? User.findOne(queryParams) : Promise.resolve(null),
-      User: jwtPayload.type ? Promise.resolve(jwtPayload) : Promise.resolve(null),
-      Candidate:
-        jwtPayload.type === 'Candidate' ? Candidate.findOne(queryParams) : Promise.resolve(null),
+      ...context,
+      jwtPayload,
+      viewer: getViewer({ id, pv, type }),
+      scope: type || 'User',
     };
   }
 

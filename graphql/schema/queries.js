@@ -36,7 +36,7 @@ const {
 // Add fields and resolvers to rootQuery
 module.exports = {
   posts: PostTC.getResolver('findMany'),
-  ...authAccess({ sourceUserType: 'Candidate' }, {
+  ...authAccess({ scope: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),
   }),
