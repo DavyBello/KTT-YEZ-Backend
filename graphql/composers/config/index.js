@@ -21,6 +21,7 @@ module.exports = {
             'category',
             'isVerified',
             'isEmployed',
+            'isActivated',
           ],
         },
       },
