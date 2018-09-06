@@ -1,7 +1,15 @@
+const encryptPasswordVersion = require('./encryptPasswordVersion');
+const sendActivationLink = require('./sendActivationLink');
+const sendPasswordResetLink = require('./sendPasswordResetLink');
+const signToken = require('./signToken');
+const decodeToken = require('./decodeToken');
+const getUser = require('./getUser');
+
 module.exports = {
-  sendActivationLink: require('./sendActivationLink'),
-  sendPasswordResetLink: require('./sendPasswordResetLink'),
-  signToken: require('./signToken'),
-  decodeToken: require('./decodeToken'),
-  getUser: require('./getUser'),
+  sendActivationLink,
+  sendPasswordResetLink,
+  signToken,
+  decodeToken,
+  getUser,
+  encryptPasswordVersion,
 };
