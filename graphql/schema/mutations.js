@@ -1,15 +1,18 @@
 // Get logic middleware
-// const {
+const {
+  authAccess,
+} = require('../logic/authentication');
+
+const {
 // 	isSelf,
-// 	authAccess,
-// 	updateSelf,
+  updateSelf,
 // 	createSelfRelationship,
 // 	updateSelfRelationship,
 // 	findSelfRelationship,
 // 	deleteSelfRelationship,
 // 	createManagedRelationship,
 // 	deleteManagedRelationship
-// } = require('./logic/common');
+} = require('../logic/common');
 
 const {
   // UserTC,
@@ -42,8 +45,8 @@ module.exports = {
   // // signUpCenterManager: CenterManagerTC.get('$signUp'),
   // loginCompany: CompanyTC.get('$loginWithEmail'),
   // signUpCompany: CompanyTC.get('$signUp'),
-  // ...authAccess('Candidate', {
-  // 	candidateUpdateById: updateSelf(CandidateTC),
+  ...authAccess({ scope: 'Candidate' }, {
+    candidateUpdateById: updateSelf({ TC: CandidateTC }),
   // 	addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
   // 	updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
   // 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
@@ -56,7 +59,7 @@ module.exports = {
   // 	addReferee: createSelfRelationship( 'referees', RefereeTC),
   // 	updateReferee: updateSelfRelationship( 'referees', RefereeTC),
   // 	deleteReferee: deleteSelfRelationship( 'referees', RefereeTC),
-  // }),
+  }),
   // ...authAccess('Company', {
   // 	companyUpdateById:updateSelf(CompanyTC),
   // 	addJob: createSelfRelationship( 'jobs', JobTC),
