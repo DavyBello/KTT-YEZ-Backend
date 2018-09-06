@@ -19,7 +19,7 @@ const CandidateDocument = keystone.list('CandidateDocument').model;
 const JobExperience = keystone.list('JobExperience').model;
 const Education = keystone.list('Education').model;
 const Certificate = keystone.list('Certificate').model;
-// const Referee = keystone.list('Referee').model;
+const Referee = keystone.list('Referee').model;
 // const CompanyMessage = keystone.list('CompanyMessage').model;
 // const Industry = keystone.list('Industry').model;
 // const Job = keystone.list('Job').model;
@@ -40,22 +40,26 @@ const {
 
 const UserTC = composeWithMongoose(User, UserTCOptions);
 const CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
-
 // const CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
 // const CenterManagerTC = composeWithMongoose(CenterManager, CenterManagerTCOptions);
+
 // const PollTC = composeWithMongoose(Poll);
 // const PollVoteTC = composeWithMongoose(PollVote);
+
 const LocalGovernmentTC = composeWithMongoose(LocalGovernment);
 const StateTC = composeWithMongoose(State);
+
 const JobExperienceTC = composeWithMongoose(JobExperience);
 const EducationTC = composeWithMongoose(Education);
 const CertificateTC = composeWithMongoose(Certificate);
 const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
-// const RefereeTC = composeWithMongoose(Referee);
+const RefereeTC = composeWithMongoose(Referee);
+const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
+
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
 // const IndustryTC = composeWithMongoose(Industry);
 // const JobTC = composeWithMongoose(Job);
-const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
+
 const PostTC = composeWithMongoose(Post);
 const PostCategoryTC = composeWithMongoose(PostCategory);
 
@@ -82,7 +86,7 @@ module.exports = {
   JobExperienceTC,
   EducationTC,
   CertificateTC,
-  // RefereeTC,
+  RefereeTC,
   // CompanyMessageTC,
   CaseFileTC,
   PostTC,

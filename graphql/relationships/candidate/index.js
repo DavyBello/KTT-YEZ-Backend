@@ -4,6 +4,7 @@ const {
   EducationTC,
   CertificateTC,
   CandidateDocumentTC,
+  RefereeTC,
   // CaseFileTC,
 } = require('../../composers');
 
@@ -29,21 +30,20 @@ module.exports = () => {
     },
     projection: { _id: true },
   });
-  // CandidateTC.addRelation('referees', {
-  //     resolver: () => RefereeTC.getResolver('findMany'),
-  //     prepareArgs: {
-  //       filter: (source) => ({ candidateId: source._id}),
-  //     },
-  //     projection: { _id: true },
-  //   }
-  // );
-  CandidateTC.addRelation('documents', {
-    resolver: () => CandidateDocumentTC.getResolver('findMany'),
+  CandidateTC.addRelation('referees', {
+    resolver: () => RefereeTC.getResolver('findMany'),
     prepareArgs: {
       filter: source => ({ candidateId: source._id }),
     },
     projection: { _id: true },
   });
+  // CandidateTC.addRelation('documents', {
+  //   resolver: () => CandidateDocumentTC.getResolver('findMany'),
+  //   prepareArgs: {
+  //     filter: source => ({ candidateId: source._id }),
+  //   },
+  //   projection: { _id: true },
+  // });
   // CandidateTC.addRelation('caseFiles', {
   //   resolver: () => CaseFileTC.getResolver('findMany'),
   //   prepareArgs: {

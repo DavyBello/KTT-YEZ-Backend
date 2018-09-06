@@ -11,9 +11,11 @@ const Referee = new keystone.List('Referee');
 const { GENDERS, PHONE_REGEX, toCamelCase } = require('../lib/common');
 
 Referee.add({
-  name: { type: Types.Name, required: true, index: true },
+  name: { type: Types.Text, required: true, index: true },
+  candidateId: {
+    type: Types.Relationship, ref: 'Candidate', index: true, required: true, initial: true,
+  },
   phone: { type: Types.Text, initial: true, required: true },
-  // gender: {type: Types.Select, options: ['male','female'], initial: true},
   gender: { type: Types.Select, options: GENDERS, initial: true },
   email: {
     type: Types.Email, initial: true, required: true, unique: true, index: true,
@@ -29,8 +31,7 @@ Referee.add({
 
 // Model Hooks
 Referee.schema.pre('save', function (next) {
-  this.name.first = toCamelCase(this.name.first);
-  this.name.last = toCamelCase(this.name.last);
+  this.name = toCamelCase(this.name);
   if (PHONE_REGEX.test(this.phone)) {
     next();
   } else {
@@ -39,13 +40,7 @@ Referee.schema.pre('save', function (next) {
 });
 
 /**
- * Relationships
- */
-// Referee.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
-
-
-/**
  * Registration
  */
-Referee.defaultColumns = 'name, phone, email, gender, relationship, isVerified';
+Referee.defaultColumns = 'name, candidateId, phone, email, gender, relationship, isVerified';
 Referee.register();
