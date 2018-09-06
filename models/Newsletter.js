@@ -1,55 +1,55 @@
 const keystone = require('keystone');
 
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
- * MccNewsletter Model
+ * Newsletter Model
  * =============
  */
 
-const MccNewsletter = new keystone.List('MccNewsletter', {
-	map: { name: 'title' }
+const Newsletter = new keystone.List('Newsletter', {
+  map: { name: 'title' },
 });
 
-MccNewsletter.add({
-	title: { type: Types.Text, required: true, initial: true },
-	preHeader: { type: Types.Text, required: true, initial: true },
-	subject: {
-		'type': Types.Text, 'default': 'MCC MccNewsletter', 'required': true, 'initial': true
-	},
-	content: {
-		type: Types.Html, wysiwyg: true, height: 250, initial: true
-	},
-	createdAt: { 'type': Date, 'default': Date.now, 'noedit': true }
-	// sentTo: { type: Types.Relationship, ref: 'MccNewsletterSubscriber', many: true },
+Newsletter.add({
+  title: { type: Types.Text, required: true, initial: true },
+  preHeader: { type: Types.Text, required: true, initial: true },
+  subject: {
+    type: Types.Text, default: 'Youth Empowerment Zone (YEZ NG) Newsletter', required: true, initial: true,
+  },
+  content: {
+    type: Types.Html, wysiwyg: true, height: 250, initial: true,
+  },
+  createdAt: { type: Date, default: Date.now, noedit: true },
+  // sentTo: { type: Types.Relationship, ref: 'NewsletterSubscriber', many: true },
 }, 'To send out this newsletter set the <state> below to published, save and refresh the page', {
-	state: {
-		'type': Types.Select, 'options': 'draft, published', 'default': 'draft', 'index': true, 'dependsOn': { isSent: false }
-	},
-	isSent: { type: Boolean, noedit: true },
-	sentAt: { type: Date, noedit: true }
+  state: {
+    type: Types.Select, options: 'draft, published', default: 'draft', index: true, dependsOn: { isSent: false },
+  },
+  isSent: { type: Boolean, noedit: true },
+  sentAt: { type: Date, noedit: true },
 }, 'if the <state> field is missing it means this newsletter has already been sent and will not be resent');
 
-MccNewsletter.schema.pre('save', async function (next) {
-	if (this.state == 'published' && !this.isSent) {
-		// console.log('sending newsletter');
-		try {
-			await this.sendMccNewsletter();
-			this.sentAt = Date.now();
-			this.isSent = true;
-			next();
-		} catch (e) {
-			console.log(e);
-			next(e);
-		}
-	}
+Newsletter.schema.pre('save', async function (next) {
+  if (this.state == 'published' && !this.isSent) {
+    // console.log('sending newsletter');
+    try {
+      await this.sendNewsletter();
+      this.sentAt = Date.now();
+      this.isSent = true;
+      next();
+    } catch (e) {
+      console.log(e);
+      next(e);
+    }
+  }
 });
 
-// MccNewsletter.schema.post('save', async function () {
+// Newsletter.schema.post('save', async function () {
 // 	if (this.state == 'published' && !this.isSent) {
 // 		// console.log('sending newsletter');
 // 		try {
-// 			await this.sendMccNewsletter();
+// 			await this.sendNewsletter();
 // 			this.isSent = true;
 // 			this.sentAt = Date.now;
 // 			this.save();
@@ -59,40 +59,40 @@ MccNewsletter.schema.pre('save', async function (next) {
 // 	}
 // });
 
-MccNewsletter.schema.methods.sendMccNewsletter = function () {
-	const newsletter = this;
+Newsletter.schema.methods.sendNewsletter = function () {
+  const newsletter = this;
 
-	return new Promise(((resolve, reject) => {
-		console.log('sending newsletter email');
+  return new Promise(((resolve, reject) => {
+    console.log('sending newsletter email');
 
-		if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-			console.log('Unable to send email - no mailgun credentials provided');
-			return callback(new Error('could not find mailgun credentials'));
-		}
+    if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+      console.log('Unable to send email - no mailgun credentials provided');
+      return callback(new Error('could not find mailgun credentials'));
+    }
 
-		const brandDetails = keystone.get('brandDetails');
+    const brandDetails = keystone.get('brandDetails');
 
-		new keystone.Email({
-			templateName: 'newsletter',
-			transport: 'mailgun'
-		}).send({
-			to: 'subscribers@mycareerchoice.global',
-			from: {
-				name: 'MCC',
-				email: 'contact@mycareerchoice.global'
-			},
-			subject: newsletter.subject,
-			newsletter,
-			brandDetails
-		}, (err) => {
-			if (err) {
-				reject(err);
-			}
-		});
-		resolve();
-	}));
+    new keystone.Email({
+      templateName: 'newsletter',
+      transport: 'mailgun',
+    }).send({
+      to: 'subscribers@mycareerchoice.global',
+      from: {
+        name: 'MCC',
+        email: 'contact@mycareerchoice.global',
+      },
+      subject: newsletter.subject,
+      newsletter,
+      brandDetails,
+    }, (err) => {
+      if (err) {
+        reject(err);
+      }
+    });
+    resolve();
+  }));
 };
 
-MccNewsletter.defaultSort = '-createdAt';
-MccNewsletter.defaultColumns = 'title, subject, state, createdAt';
-MccNewsletter.register();
+Newsletter.defaultSort = '-createdAt';
+Newsletter.defaultColumns = 'title, subject, state, createdAt';
+Newsletter.register();
