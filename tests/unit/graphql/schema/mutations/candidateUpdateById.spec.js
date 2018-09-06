@@ -1,5 +1,8 @@
+const keystone = require('keystone');
 const chai = require('chai');
 const { graphql } = require('graphql');
+
+const Candidate = keystone.list('Candidate').model;
 
 const schema = require('../../../../../graphql/schema');
 
@@ -31,13 +34,30 @@ mutation M (
     recordId
     record {
       _id
-      name
+      ${fieldName}
     }
   }
 }
 `);
 
 describe('candidateUpdateById Mutation', () => {
+  it('should give an error if user (candidate) is not logged in', async () => {
+    const user = await createRows.createCandidate();
+
+    const query = getUpdateMutation({ fieldName: 'firstName', fieldType: 'String' });
+
+    const rootValue = {};
+    const context = getContext();
+    const variables = {
+      id: user._id,
+      firstName: 'NewFirstname',
+    };
+
+    const result = await graphql(schema, query, rootValue, context, variables);
+
+    expect(result.data.candidateUpdateById).to.equal(null);
+    expect(result.errors[0].extensions.code).to.equal('UNAUTHENTICATED');
+  });
   it('should not be able to change secret fields (e.g password)', async () => {
     const noEditUserFields = [
       'password',
@@ -46,6 +66,7 @@ describe('candidateUpdateById Mutation', () => {
       'result',
       'category',
       'isVerified',
+      'isActivated',
       'isEmployed',
     ];
 
@@ -80,7 +101,7 @@ describe('candidateUpdateById Mutation', () => {
     }));
   });
 
-  it('should should only be able to update logged in user (i.e the "viewer")', async () => {
+  it('should only be able to update logged in user (i.e the "viewer")', async () => {
     const user = await createRows.createCandidate();
 
     const token = user.signToken();
@@ -102,6 +123,37 @@ describe('candidateUpdateById Mutation', () => {
     expect(result.data.candidateUpdateById).to.equal(null);
     expect(result.errors[0].message).to.equal('user is not permitted to perform this action');
     expect(result.errors[0].extensions.code).to.equal('UNAUTHENTICATED');
+  });
+
+  it('should be able to update the logged in user (i.e the "viewer")', async () => {
+    const user = await createRows.createCandidate();
+
+    const token = user.signToken();
+    const jwtPayload = decodeToken(token);
+
+    const query = getUpdateMutation({ fieldName: 'firstName', fieldType: 'String' });
+
+    const firstName = 'Newfirstname';
+
+    const rootValue = {};
+    const context = getContext({ jwtPayload });
+    const variables = {
+      id: user._id,
+      firstName,
+    };
+
+    const result = await graphql(schema, query, rootValue, context, variables);
+
+    const { data: { candidateUpdateById } } = result;
+
+    expect(candidateUpdateById.recordId).to.equal(`${user._id}`);
+    expect(candidateUpdateById.record._id).to.equal(`${user._id}`);
+    expect(candidateUpdateById.record.firstName).to.equal(firstName);
+
+    const _user = await Candidate.findById(user._id);
+    expect(_user.firstName).to.equal(firstName);
+
+    expect(result.errors).to.be.undefined;
   });
 
   // it('should generate token when email and password is correct', async () => {
