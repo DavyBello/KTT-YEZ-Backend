@@ -51,13 +51,13 @@ Candidate.add('Candidate', {
 
 // Virtuals
 Candidate.schema.virtual('isTested').get(function () {
-  if (this.result.seeker || this.result.startup) { return true; }
+  if (this.result.seeker || this.result.startup) return true;
   return false;
 });
 Candidate.schema.virtual('testTaken').get(function () {
-  if (this.result.seeker && this.result.startup) { return 'both'; }
-  if (this.result.seeker) { return 'seeker'; }
-  if (this.result.startup) { return 'startup'; }
+  if (this.result.seeker && this.result.startup) return 'both';
+  if (this.result.seeker) return 'seeker';
+  if (this.result.startup) return 'startup';
   return 'none';
 });
 
