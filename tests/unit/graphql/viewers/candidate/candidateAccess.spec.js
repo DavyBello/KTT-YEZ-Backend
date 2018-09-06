@@ -89,4 +89,29 @@ describe('ViewerCandidate Query', () => {
     // expect(result.data.viewerCandidate.me).to.exist;
     expect(result.errors).to.be.undefined;
   });
+
+  it('should not return secret fields when user is logged in', async () => {
+    const secretUserFields = ['password', 'passwordVersion'];
+
+    await Promise.all(secretUserFields.map(async (field) => {
+      // VIEWER_CANDIDATE_SECRET_FIELDS_QUERY
+      const query = `
+      {
+        viewerCandidate{
+          me {
+            ${field}
+          }
+        }
+      }
+      `;
+
+      const rootValue = {};
+      const context = getContext();
+      const variables = {};
+
+      const result = await graphql(schema, query, rootValue, context, variables);
+
+      expect(result.errors[0].message).to.equal(`Cannot query field "${field}" on type "Candidate".`);
+    }));
+  });
 });
