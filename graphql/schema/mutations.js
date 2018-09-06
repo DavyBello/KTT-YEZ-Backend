@@ -6,36 +6,28 @@ const {
 const {
 // 	isSelf,
   updateSelf,
-// 	createSelfRelationship,
-// 	updateSelfRelationship,
-// 	findSelfRelationship,
-// 	deleteSelfRelationship,
-// 	createManagedRelationship,
-// 	deleteManagedRelationship
+  createDocumentWithIdReference,
 } = require('../logic/common');
 
 const {
   // UserTC,
   CandidateTC,
+  JobExperienceTC,
   // PollTC,
   // PollVoteTC,
   // LocalGovernmentTC,
   // StateTC,
   // CandidateTC,
   // CandidateDocumentTC,
-  // ViewerCandidateTC,
-  // JobExperienceTC,
+  // JobTC,
   // EducationTC,
   // CertificateTC,
   // RefereeTC,
   // CompanyTC,
   // CompanyMessageTC,
-  // ViewerCompanyTC,
   // IndustryTC,
-  // JobTC,
   // CaseFileTC,
   // CenterManagerTC,
-  // ViewerCenterManagerTC
 } = require('../composers');
 
 module.exports = {
@@ -47,7 +39,7 @@ module.exports = {
   // signUpCompany: CompanyTC.get('$signUp'),
   ...authAccess({ scope: 'Candidate' }, {
     candidateUpdateById: updateSelf({ TC: CandidateTC }),
-  // 	addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
+    addJobExperience: createDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
   // 	updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
   // 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
   // 	addEducation: createSelfRelationship( 'education', EducationTC),
