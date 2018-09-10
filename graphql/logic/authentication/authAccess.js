@@ -2,12 +2,12 @@ const { AuthenticationError, ForbiddenError } = require('apollo-server');
 
 module.exports = (options = {}, resolvers) => {
   const { scope, isActivated = false } = options;
+  if (!scope) {
+    throw new ForbiddenError('provide an authentication scope for this wrapper');
+  }
   Object.keys(resolvers).forEach((k) => {
     resolvers[k] = resolvers[k].wrapResolve(next => async (rp) => {
       // const { source, args, context, info } = resolveParams = rp
-      if (!scope) {
-        throw new ForbiddenError('provide an authentication scope for this wrapper');
-      }
       try {
         const { viewer } = rp.context;
         // viewer is a mongoose query
@@ -33,6 +33,9 @@ module.exports = (options = {}, resolvers) => {
         return e;
       }
     });
+    resolvers[k].scope = scope;
+    resolvers[k].isAuthWrapped = true;
+    // console.log(resolvers[k].parent);
   });
   return resolvers;
 };
