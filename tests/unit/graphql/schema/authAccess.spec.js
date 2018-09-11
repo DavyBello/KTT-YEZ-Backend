@@ -21,7 +21,7 @@ describe('authAccess', () => {
   it('should wrap candidate queries', async () => {
     const wrappedQueries = [
       'candidateIsAuthenticated',
-      'viewerCandidate'
+      'viewerCandidate',
     ];
 
     wrappedQueries.forEach((query) => {
@@ -33,7 +33,18 @@ describe('authAccess', () => {
   it('should wrap candidate mutations', async () => {
     const wrappedMutations = [
       'candidateUpdateById',
-      'addJobExperience'
+      'addJobExperience',
+      'updateJobExperience',
+      'deleteJobExperience',
+      'addEducation',
+      'updateEducation',
+      'deleteEducation',
+      'addCertificate',
+      'updateCertificate',
+      'deleteCertificate',
+      'addReferee',
+      'updateReferee',
+      'deleteReferee',
     ];
     wrappedMutations.forEach((mutation) => {
       expect(mutations[mutation]).to.exist;
