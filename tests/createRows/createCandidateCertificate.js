@@ -11,7 +11,6 @@ module.exports = async (payload = {}) => {
   return new Certificate({
     title: `Normal Title ${n}`,
     authority: 'Example authority',
-    // field: 'Example field',
     doesNotExpire: true,
     fromMonth: MONTHS[n],
     fromYear: '2016',
