@@ -35,6 +35,7 @@ const {
   CandidateTCOptions,
   JobExperienceTCOptions,
   EducationTCOptions,
+  CertificateTCOptions,
   // CenterManagerTCOptions,
   // CompanyTCOptions,
   CaseFileTCOptions,
@@ -53,9 +54,9 @@ const StateTC = composeWithMongoose(State);
 
 const JobExperienceTC = composeWithMongoose(JobExperience, JobExperienceTCOptions);
 const EducationTC = composeWithMongoose(Education, EducationTCOptions);
-const CertificateTC = composeWithMongoose(Certificate);
-const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
+const CertificateTC = composeWithMongoose(Certificate, CertificateTCOptions);
 const RefereeTC = composeWithMongoose(Referee);
+const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
 
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
