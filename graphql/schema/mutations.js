@@ -48,11 +48,11 @@ module.exports = {
     updateEducation: updateDocumentWithIdReference({ TC: EducationTC, refPath: 'candidateId' }),
     deleteEducation: deleteDocumentWithIdReference({ TC: EducationTC, refPath: 'candidateId' }),
     addCertificate: createDocumentWithIdReference({ TC: CertificateTC, refPath: 'candidateId' }),
-  // 	updateCertificate: updateSelfRelationship( 'certificates', CertificateTC),
   // 	deleteCertificate: deleteSelfRelationship( 'certificates', CertificateTC),
   // 	addReferee: createSelfRelationship( 'referees', RefereeTC),
   // 	updateReferee: updateSelfRelationship( 'referees', RefereeTC),
   // 	deleteReferee: deleteSelfRelationship( 'referees', RefereeTC),
+    updateCertificate: updateDocumentWithIdReference({ TC: CertificateTC, refPath: 'candidateId' }),
   }),
   // ...authAccess('Company', {
   // 	companyUpdateById:updateSelf(CompanyTC),
