@@ -48,6 +48,7 @@ module.exports = {
     updateEducation: updateDocumentWithIdReference({ TC: EducationTC, refPath: 'candidateId' }),
   // 	deleteEducation: deleteSelfRelationship( 'education', EducationTC),
   // 	addCertificate: createSelfRelationship( 'certificates', CertificateTC),
+    deleteEducation: deleteDocumentWithIdReference({ TC: EducationTC, refPath: 'candidateId' }),
   // 	updateCertificate: updateSelfRelationship( 'certificates', CertificateTC),
   // 	deleteCertificate: deleteSelfRelationship( 'certificates', CertificateTC),
   // 	addReferee: createSelfRelationship( 'referees', RefereeTC),
