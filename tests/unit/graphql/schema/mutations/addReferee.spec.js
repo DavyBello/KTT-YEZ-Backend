@@ -75,12 +75,12 @@ describe('addReferee Mutation', () => {
     const context = getContext({ jwtPayload });
     const variables = {
       candidateId: user1._id,
-      name: 'Normal user ',
+      name: 'Normal user',
       phone: '08188555624',
       gender: GENDERS[0],
       email: 'referee-@example.com',
-      occupation: 'Normal occupation ',
-      relationship: 'Normal relationship ',
+      occupation: 'Normal occupation',
+      relationship: 'Normal relationship',
     };
 
     const result = await graphql(schema, query, rootValue, context, variables);
