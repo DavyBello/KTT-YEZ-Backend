@@ -1,4 +1,3 @@
-
 exports.updateSelf = require('./updateSelf');
 
 exports.isSelf = require('./isSelf');
@@ -27,3 +26,5 @@ exports.createModelRelationship = require('./createModelRelationship');
 exports.createDocumentWithIdReference = require('./withReference/createDocumentWithIdReference');
 
 exports.updateDocumentWithIdReference = require('./withReference/updateDocumentWithIdReference');
+
+exports.deleteDocumentWithIdReference = require('./withReference/deleteDocumentWithIdReference');
