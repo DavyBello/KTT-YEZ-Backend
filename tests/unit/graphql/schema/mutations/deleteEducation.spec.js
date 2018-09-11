@@ -69,7 +69,7 @@ describe('deleteEducation Mutation', () => {
     expect(result.data.deleteEducation.record._id).to.equal(`${education._id}`);
     expect(result.errors).to.be.undefined;
 
-    const jobExperience = await Education.findById(result.data.deleteEducation.record._id);
-    expect(jobExperience).to.equal(null);
+    const _education = await Education.findById(result.data.deleteEducation.record._id);
+    expect(_education).to.equal(null);
   });
 });

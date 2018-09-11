@@ -86,8 +86,8 @@ describe('updateEducation Mutation', () => {
     expect(result.data.updateEducation.record.school).to.equal(updatedSchool);
     expect(result.errors).to.be.undefined;
 
-    const jobExperience = await Education.findById(result.data.updateEducation.record._id);
-    expect(jobExperience.school).to.equal(updatedSchool);
+    const _education = await Education.findById(result.data.updateEducation.record._id);
+    expect(_education.school).to.equal(updatedSchool);
   });
 
   it('should not be able to change secret fields (e.g candidateId)', async () => {
