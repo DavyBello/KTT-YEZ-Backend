@@ -7,6 +7,7 @@ const {
 // 	isSelf,
   updateSelf,
   createDocumentWithIdReference,
+  updateDocumentWithIdReference,
 } = require('../logic/common');
 
 const {
@@ -43,6 +44,7 @@ module.exports = {
   // 	updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
   // 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
   // 	addEducation: createSelfRelationship( 'education', EducationTC),
+    updateJobExperience: updateDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
   // 	updateEducation: updateSelfRelationship( 'education', EducationTC),
   // 	deleteEducation: deleteSelfRelationship( 'education', EducationTC),
   // 	addCertificate: createSelfRelationship( 'certificates', CertificateTC),
