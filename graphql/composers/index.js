@@ -33,6 +33,8 @@ const PostCategory = keystone.list('PostCategory').model;
 const {
   UserTCOptions,
   CandidateTCOptions,
+  JobExperienceTCOptions,
+  EducationTCOptions,
   // CenterManagerTCOptions,
   // CompanyTCOptions,
   CaseFileTCOptions,
@@ -49,8 +51,8 @@ const CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const LocalGovernmentTC = composeWithMongoose(LocalGovernment);
 const StateTC = composeWithMongoose(State);
 
-const JobExperienceTC = composeWithMongoose(JobExperience);
-const EducationTC = composeWithMongoose(Education);
+const JobExperienceTC = composeWithMongoose(JobExperience, JobExperienceTCOptions);
+const EducationTC = composeWithMongoose(Education, EducationTCOptions);
 const CertificateTC = composeWithMongoose(Certificate);
 const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const RefereeTC = composeWithMongoose(Referee);
