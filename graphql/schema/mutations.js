@@ -52,7 +52,7 @@ module.exports = {
     deleteCertificate: deleteDocumentWithIdReference({ TC: CertificateTC, refPath: 'candidateId' }),
     addReferee: createDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
     updateReferee: updateDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
-    // deleteReferee: deleteDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
+    deleteReferee: deleteDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
   }),
   // ...authAccess('Company', {
   // 	companyUpdateById:updateSelf(CompanyTC),
