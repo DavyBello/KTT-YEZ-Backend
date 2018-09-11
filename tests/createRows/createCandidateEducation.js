@@ -9,7 +9,7 @@ module.exports = async (payload = {}) => {
   const n = (global.__COUNTERS__.education += 1);
 
   return new Education({
-    school: `Normal Company ${n}`,
+    school: `Normal School ${n}`,
     degree: 'Example degree',
     field: 'Example field',
     grade: '1st Class',
