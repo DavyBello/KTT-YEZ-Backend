@@ -6,7 +6,7 @@ const mutations = require('../../../../graphql/schema/mutations');
 // const { decodeToken } = require('../../../../modelMethods/user');
 // const getContext = require('../../../../graphql/lib/getContext');
 const {
-  connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows,
+  connectMongoose, clearDbAndRestartCounters, disconnectMongoose, // createRows,
 } = require('../../../helper');
 
 const { expect } = chai;
@@ -17,7 +17,7 @@ beforeEach(clearDbAndRestartCounters);
 
 after(disconnectMongoose);
 
-describe.only('authAccess', () => {
+describe('authAccess', () => {
   it('should wrap candidate queries', async () => {
     const wrappedQueries = [
       'candidateIsAuthenticated',
