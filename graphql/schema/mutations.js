@@ -8,6 +8,7 @@ const {
   updateSelf,
   createDocumentWithIdReference,
   updateDocumentWithIdReference,
+  deleteDocumentWithIdReference,
 } = require('../logic/common');
 
 const {
@@ -45,6 +46,7 @@ module.exports = {
   // 	deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
   // 	addEducation: createSelfRelationship( 'education', EducationTC),
     updateJobExperience: updateDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
+    deleteJobExperience: deleteDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
   // 	updateEducation: updateSelfRelationship( 'education', EducationTC),
   // 	deleteEducation: deleteSelfRelationship( 'education', EducationTC),
   // 	addCertificate: createSelfRelationship( 'certificates', CertificateTC),
