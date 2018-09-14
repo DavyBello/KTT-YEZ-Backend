@@ -12,7 +12,6 @@ module.exports = {
           'phone',
           'result',
           'category',
-          'isVerified',
           'isEmployed',
           'isActivated',
         ],

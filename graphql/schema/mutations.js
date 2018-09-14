@@ -29,19 +29,19 @@ const {
   JobTC,
   // CompanyMessageTC,
 
-  // CenterManagerTC,
+  CenterManagerTC,
   // CaseFileTC,
 } = require('../composers');
 
 module.exports = {
   loginCandidate: CandidateTC.getResolver('loginWithPhone'),
   candidateCreateAccount: CandidateTC.getResolver('createAccount'),
-  // loginCenterManager: CenterManagerTC.get('$loginWithPhone'),
-  // signUpCenterManager: CenterManagerTC.get('$signUp'),
-  // loginCompany: CompanyTC.get('$loginWithEmail'),
-  // signUpCompany: CompanyTC.get('$signUp'),
+  loginCompany: CompanyTC.getResolver('loginWithEmail'),
+  companyCreateAccount: CompanyTC.getResolver('createAccount'),
+  loginCenterManager: CenterManagerTC.getResolver('loginWithEmail'),
+  centerManagerCreateAccount: CenterManagerTC.getResolver('createAccount'),
   ...authAccess({ scope: 'Candidate' }, {
-    candidateUpdateById: updateSelf({ TC: CandidateTC }),
+    candidateUpdateSelf: updateSelf({ TC: CandidateTC }),
     addJobExperience: createDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
     updateJobExperience: updateDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
     deleteJobExperience: deleteDocumentWithIdReference({ TC: JobExperienceTC, refPath: 'candidateId' }),
@@ -56,18 +56,20 @@ module.exports = {
     deleteReferee: deleteDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
   }),
   ...authAccess({ scope: 'Company' }, {
-    companyUpdateById: updateSelf({ TC: CompanyTC }),
+    companyUpdateSelf: updateSelf({ TC: CompanyTC }),
     companyAddJob: createDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
     companyUpdateJob: updateDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
     companydeleteJob: deleteDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
   }),
-  // ...authAccess('CenterManager', {
-  // 	addCandidateDocument:
-  //    createManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+  ...authAccess({ scope: 'CenterManager' }, {
+    managerUpdateSelf: updateSelf({ TC: CenterManagerTC }),
+    // addCandidateDocument: createManagedRelationship({
+    //   field: 'documentsUploaded',
+    //   TC: CandidateDocumentTC,
+    //   managedModelType: 'Candidate',
+    // }),
   // 	deleteCandidateDocument:
-  //    deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+  //  deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
   // 	addCandidateCaseFile: createManagedRelationship( 'caseFiles', CaseFileTC, 'Candidate'),
-  // 	// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
-  // 	// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),
-  // })
+  }),
 };

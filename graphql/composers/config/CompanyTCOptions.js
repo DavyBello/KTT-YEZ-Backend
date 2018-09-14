@@ -16,7 +16,6 @@ module.exports = {
         removeFields: [
           ...noeditUserFields,
           'cacRegNo',
-          'isVerified',
           'isActive',
         ],
       },

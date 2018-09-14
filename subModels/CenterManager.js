@@ -18,7 +18,7 @@ const CenterManager = new keystone.List('CenterManager', {
 });
 
 CenterManager.add({
-  name: { type: Types.Name, required: true, index: true },
+  // name: { type: Types.Text, required: true, index: true },
   phone: {
     type: Types.Text, initial: true, required: true, unique: true,
   },

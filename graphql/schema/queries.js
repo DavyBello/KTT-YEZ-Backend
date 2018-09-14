@@ -16,7 +16,7 @@ const {
   // PollVoteTC,
   // LocalGovernmentTC,
   // StateTC,
-  // CandidateTC,
+  CandidateTC,
   // CandidateDocumentTC,
   // JobExperienceTC,
   // EducationTC,
@@ -29,7 +29,7 @@ const {
   // JobTC,
   // CaseFileTC,
   // CenterManagerTC,
-  // ViewerCenterManagerTC,
+  ViewerCenterManagerTC,
   PublicJobTC,
 } = require('../composers');
 
@@ -47,12 +47,11 @@ module.exports = {
     industryMany: IndustryTC.getResolver('findMany'),
     // jobById: isSelf(JobTC, '$findById'),
   }),
-  // ...authAccess('CenterManager', {
-  // 	viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),
-  // 	managerCandidateById: CandidateTC.get('$findById'),
-  // 	managerCandidateMany: CandidateTC.get('$findMany'),
-  // 	managerCandidatePagination: CandidateTC.get('$pagination')
-  // }),
+  ...authAccess({ scope: 'CenterManager' }, {
+    viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),
+    managerCandidateById: CandidateTC.get('$findById'),
+    managerCandidatePagination: CandidateTC.get('$pagination'),
+  }),
   currentTime: {
     type: 'Date',
     resolve: () => new Date().toISOString(),

@@ -9,7 +9,7 @@ const { GQC } = require('graphql-compose');
 const User = keystone.list('User').model;
 const Candidate = keystone.list('Candidate').model;
 const Company = keystone.list('Company').model;
-// const CenterManager = keystone.list('CenterManager').model;
+const CenterManager = keystone.list('CenterManager').model;
 
 // const Poll = keystone.list('Poll').model;
 // const PollVote = keystone.list('PollVote').model;
@@ -41,7 +41,7 @@ const {
   EducationTCOptions,
   CertificateTCOptions,
   RefereeTCOptions,
-  // CenterManagerTCOptions,
+  CenterManagerTCOptions,
   CompanyTCOptions,
   CaseFileTCOptions,
   PublicJobTCOptions,
@@ -50,7 +50,7 @@ const {
 const UserTC = composeWithMongoose(User, UserTCOptions);
 const CandidateTC = composeWithMongoose(Candidate, CandidateTCOptions);
 const CompanyTC = composeWithMongoose(Company, CompanyTCOptions);
-// const CenterManagerTC = composeWithMongoose(CenterManager, CenterManagerTCOptions);
+const CenterManagerTC = composeWithMongoose(CenterManager, CenterManagerTCOptions);
 
 // const PollTC = composeWithMongoose(Poll);
 // const PollVoteTC = composeWithMongoose(PollVote);
@@ -79,7 +79,7 @@ const PostCategoryTC = composeWithMongoose(PostCategory);
 */
 const ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
 const ViewerCompanyTC = GQC.getOrCreateTC('ViewerCompany');
-// const ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');
+const ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');
 
 const PlaceHolderTC = GQC.getOrCreateTC('PlaceHolder');
 
@@ -91,6 +91,7 @@ module.exports = {
   UserTC,
   CandidateTC,
   CompanyTC,
+  CenterManagerTC,
 
   LocalGovernmentTC,
   StateTC,
@@ -107,6 +108,7 @@ module.exports = {
   JobTC,
   // CompanyMessageTC,
 
+  ViewerCenterManagerTC,
   CaseFileTC,
 
   PublicJobTC,

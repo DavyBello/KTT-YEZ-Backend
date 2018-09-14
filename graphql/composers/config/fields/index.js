@@ -1,4 +1,4 @@
 module.exports = {
   noviewUserFields: ['password', 'passwordVersion'],
-  noeditUserFields: ['password', 'passwordVersion'],
+  noeditUserFields: ['password', 'passwordVersion', 'isVerified'],
 };
