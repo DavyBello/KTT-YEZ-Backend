@@ -1,9 +1,10 @@
 const keystone = require('keystone');
 
 const { Types } = keystone.Field;
+const ModelMethods = require('../modelMethods/manager');
 
 const {
-  STATES, GENDERS, CANDIDATE_CATEGORIES, PHONE_REGEX, toCamelCase,
+  STATES, PHONE_REGEX, toCamelCase,
 } = require('../lib/common');
 
 /**
@@ -12,16 +13,14 @@ const {
  */
 const CenterManager = new keystone.List('CenterManager', {
   track: true,
+  hidden: false,
+  inherits: keystone.list('User'),
 });
-CenterManager.schema.set('usePushEach', true);
 
 CenterManager.add({
   name: { type: Types.Name, required: true, index: true },
   phone: {
     type: Types.Text, initial: true, required: true, unique: true,
-  },
-  username: {
-    type: Types.Text, initial: true, required: false, unique: true, index: true, sparse: true,
   },
   email: {
     type: Types.Email, initial: true, required: false, unique: true, index: true, sparse: true,
@@ -30,7 +29,6 @@ CenterManager.add({
   passwordVersion: {
     type: Types.Text, initial: false, required: true, default: 1,
   },
-  // category: {type: Types.Select, options: CANDIDATE_CATEGORIES}
 }, 'Details', {
   address: { type: Types.Text },
   stateOfResidence: { type: Types.Select, options: STATES },
@@ -44,7 +42,7 @@ CenterManager.add({
 });
 
 // Model Hooks
-CenterManager.schema.pre('save', function (next) {
+CenterManager.schema.pre('save', function preSave(next) {
   this.name.first = toCamelCase(this.name.first);
   this.name.last = toCamelCase(this.name.last);
   if (PHONE_REGEX.test(this.phone)) {
@@ -54,11 +52,10 @@ CenterManager.schema.pre('save', function (next) {
   }
 });
 
-/**
- * Relationships
- */
-// CenterManager.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
+// Methods
+const { sendActivationLink } = ModelMethods;
 
+CenterManager.schema.methods.sendActivationLink = sendActivationLink;
 
 /**
  * Registration
