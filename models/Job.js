@@ -2,7 +2,7 @@ const keystone = require('keystone');
 
 const { Types } = keystone.Field;
 
-const { STATES, MONTHS, toCamelCase } = require('../lib/common');
+const { STATES } = require('../lib/common');
 
 /**
  * Job Model
@@ -12,7 +12,7 @@ const Job = new keystone.List('Job', {
   track: true,
 });
 
-typeOptions = [
+const typeOptions = [
   { value: 'fullTime', label: 'Full-time' },
   { value: 'partTime', label: 'Part-time' },
   { value: 'contract', label: 'Contract' },
@@ -25,13 +25,14 @@ Job.add({
   role: {
     type: String, required: true, index: true, initial: true,
   },
-  // address: { type: Types.Text, initial: true, required: true},
+  companyId: {
+    type: Types.Relationship, ref: 'Company', required: true, initial: true,
+  },
   state: { type: Types.Select, options: STATES },
   basicDescription: { type: Types.Textarea, initial: true },
   fullDescription: { type: Types.Textarea, initial: true },
   vacancy: { type: Types.Text, initial: true },
   employmentType: { type: Types.Select, options: typeOptions },
-  // industry: { type: Types.Relationship, ref: 'Industry', many: false },
   industries: { type: Types.Relationship, ref: 'Industry', many: true },
   salary: { type: Types.Text, initial: true, required: false },
   publishedDate: {
@@ -49,11 +50,6 @@ Job.add({
   // address: { type: Types.Text, initial: true },
 });
 
-// Provide access to Keystone
-/* Job.schema.virtual('canAccessKeystone').get(function () {
-	return this.isAdmin;
-}); */
-
 
 /**
  * Relationships
@@ -64,5 +60,5 @@ Job.add({
 /**
  * Registration
  */
-Job.defaultColumns = 'title, role, industry';
+Job.defaultColumns = 'role, companyId, industry';
 Job.register();

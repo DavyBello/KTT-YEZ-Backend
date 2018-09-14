@@ -69,17 +69,6 @@ Candidate.schema.pre('save', async function (next) {
   next();
 });
 
-Candidate.schema.post('save', async function () {
-  if (this.wasNew) {
-    try {
-      // this.sendActivationLink();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-});
-
-// Methods
 // Methods
 const { sendActivationLink } = ModelMethods;
 

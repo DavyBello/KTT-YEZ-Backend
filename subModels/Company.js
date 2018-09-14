@@ -1,7 +1,7 @@
 const keystone = require('keystone');
 
 const { Types } = keystone.Field;
-
+const ModelMethods = require('../modelMethods/candidate/index.js');
 
 const { STATES, PHONE_REGEX, toCamelCase } = require('../lib/common');
 
@@ -11,11 +11,12 @@ const { STATES, PHONE_REGEX, toCamelCase } = require('../lib/common');
  */
 const Company = new keystone.List('Company', {
   track: true,
+  hidden: false,
+  inherits: keystone.list('User'),
 });
-Company.schema.set('usePushEach', true);
 
 
-staffOptions = [
+const staffOptions = [
   { value: 'a', label: '0 - 1' },
   { value: 'b', label: '2 - 10' },
   { value: 'c', label: '11 - 50' },
@@ -28,7 +29,9 @@ staffOptions = [
 ];
 
 Company.add({
-  name: { type: String, required: true, index: true },
+  cName: {
+    type: Types.Text, initial: true, required: true, index: true,
+  },
   email: {
     type: Types.Email, initial: true, index: true, required: true, unique: true, sparse: true,
   },
@@ -43,9 +46,6 @@ Company.add({
   description: { type: Types.Text, initial: true },
   yearFounded: { type: Types.Number, initial: true, index: true },
   staffSize: { type: Types.Select, options: staffOptions },
-  industry: {
-    type: Types.Relationship, ref: 'Industry', many: false, initial: true,
-  },
   industries: {
     type: Types.Relationship, ref: 'Industry', many: true, initial: true,
   },
@@ -53,25 +53,12 @@ Company.add({
   passwordVersion: {
     type: Types.Text, initial: false, required: true, default: 1,
   },
-}, 'Jobs', {
-  jobs: { type: Types.Relationship, ref: 'Job', many: true },
 }, 'Status', {
   isActive: { type: Boolean, default: false, index: true },
   isVerified: { type: Boolean, default: false, index: true },
 });
 
-// Provide access to Keystone
-/* Company.schema.virtual('canAccessKeystone').get(function () {
-	return this.isAdmin;
-}); */
-
-
-/**
- * Relationships
- */
-// Company.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
-
-Company.schema.pre('save', function (next) {
+Company.schema.pre('save', function preSave(next) {
   this.name = toCamelCase(this.name);
   if (this.phone) {
     if (PHONE_REGEX.test(this.phone)) {
@@ -82,8 +69,17 @@ Company.schema.pre('save', function (next) {
   } else {
     next();
   }
-  console.log(this);
 });
+
+// Methods
+const { sendActivationLink } = ModelMethods;
+
+Company.schema.methods.sendActivationLink = sendActivationLink;
+
+/**
+ * Relationships
+ */
+Company.relationship({ ref: 'Jobs', path: 'jobs', refPath: 'companyId' });
 
 /**
  * Registration
