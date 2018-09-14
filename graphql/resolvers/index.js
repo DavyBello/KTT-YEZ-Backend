@@ -1,8 +1,3 @@
-
-module.exports = () => {
-  require('./user')();
-  require('./placeholder')();
-  require('./candidate')();
-  // require('./company')();
-  // require('./centerManager')();
-};
+require('./user');
+require('./placeholder');
+require('./candidate');
