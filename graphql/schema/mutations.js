@@ -12,31 +12,32 @@ const {
 } = require('../logic/common');
 
 const {
-  // UserTC,
+  // StateTC,
+  // LocalGovernmentTC,
+
   CandidateTC,
   JobExperienceTC,
   EducationTC,
   CertificateTC,
   RefereeTC,
+  // CandidateDocumentTC,
+
   // PollTC,
   // PollVoteTC,
-  // LocalGovernmentTC,
-  // StateTC,
-  // CandidateTC,
-  // CandidateDocumentTC,
-  // JobTC,
-  // CompanyTC,
+
+  CompanyTC,
+  JobTC,
   // CompanyMessageTC,
-  // IndustryTC,
-  // CaseFileTC,
+
   // CenterManagerTC,
+  // CaseFileTC,
 } = require('../composers');
 
 module.exports = {
   loginCandidate: CandidateTC.getResolver('loginWithPhone'),
   candidateCreateAccount: CandidateTC.getResolver('createAccount'),
   // loginCenterManager: CenterManagerTC.get('$loginWithPhone'),
-  // // signUpCenterManager: CenterManagerTC.get('$signUp'),
+  // signUpCenterManager: CenterManagerTC.get('$signUp'),
   // loginCompany: CompanyTC.get('$loginWithEmail'),
   // signUpCompany: CompanyTC.get('$signUp'),
   ...authAccess({ scope: 'Candidate' }, {
@@ -54,19 +55,17 @@ module.exports = {
     updateReferee: updateDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
     deleteReferee: deleteDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
   }),
-  // ...authAccess('Company', {
-  // 	companyUpdateById:updateSelf(CompanyTC),
-  // 	addJob: createSelfRelationship( 'jobs', JobTC),
-  // 	updateJob: updateSelfRelationship( 'jobs', JobTC),
-  // 	deleteJob: deleteSelfRelationship( 'jobs', JobTC),
-  // 	createCompanyMessage: CompanyMessageTC.get('$createOne')
-  // 	// addJobExperience: createSelfRelationship( 'experience', JobExperienceTC),
-  // 	// updateJobExperience: updateSelfRelationship( 'experience', JobExperienceTC),
-  // 	// deleteJobExperience: deleteSelfRelationship( 'experience', JobExperienceTC),
-  // }),
+  ...authAccess({ scope: 'Company' }, {
+    companyUpdateById: updateSelf({ TC: CompanyTC }),
+    companyAddJob: createDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
+    companyUpdateJob: updateDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
+    companydeleteJob: deleteDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
+  }),
   // ...authAccess('CenterManager', {
-  // 	addCandidateDocument: createManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
-  // 	deleteCandidateDocument: deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+  // 	addCandidateDocument:
+  //    createManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
+  // 	deleteCandidateDocument:
+  //    deleteManagedRelationship( 'documentsUploaded', CandidateDocumentTC, 'Candidate'),
   // 	addCandidateCaseFile: createManagedRelationship( 'caseFiles', CaseFileTC, 'Candidate'),
   // 	// addCandidateDocument: createSelfRelationship( 'referees', CandidateDocumentTC),
   // 	// deleteCandidateDocument: deleteSelfRelationship( 'referees', CandidateDocumentTC),

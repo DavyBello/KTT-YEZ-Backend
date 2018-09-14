@@ -1,1 +1,2 @@
 require('./candidate');
+require('./company');
