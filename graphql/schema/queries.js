@@ -29,13 +29,15 @@ const {
   // JobTC,
   // CaseFileTC,
   // CenterManagerTC,
-  // ViewerCenterManagerTC
+  // ViewerCenterManagerTC,
+  PublicJobTC,
 } = require('../composers');
 
 
 // Add fields and resolvers to rootQuery
 module.exports = {
   posts: PostTC.getResolver('findMany'),
+  jobs: PublicJobTC.getResolver('findMany'),
   ...authAccess({ scope: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),
@@ -44,8 +46,6 @@ module.exports = {
     viewerCompany: ViewerCompanyTC.getResolver('companyAccess'),
     industryMany: IndustryTC.getResolver('findMany'),
     // jobById: isSelf(JobTC, '$findById'),
-    // companyJobById: findSelfRelationship('jobs', JobTC),
-    // companyJobsPagination: findSelfRelationship('jobs', JobTC),
   }),
   // ...authAccess('CenterManager', {
   // 	viewerCenterManager: ViewerCenterManagerTC.get('$centerManagerAccess'),

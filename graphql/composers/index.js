@@ -44,6 +44,7 @@ const {
   // CenterManagerTCOptions,
   CompanyTCOptions,
   CaseFileTCOptions,
+  PublicJobTCOptions,
 } = require('./config');
 
 const UserTC = composeWithMongoose(User, UserTCOptions);
@@ -68,6 +69,8 @@ const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
 const IndustryTC = composeWithMongoose(Industry);
 const JobTC = composeWithMongoose(Job);
 
+// PUBLIC TYPES
+const PublicJobTC = composeWithMongoose(Job, PublicJobTCOptions);
 const PostTC = composeWithMongoose(Post);
 const PostCategoryTC = composeWithMongoose(PostCategory);
 
@@ -105,6 +108,8 @@ module.exports = {
   // CompanyMessageTC,
 
   CaseFileTC,
+
+  PublicJobTC,
   PostTC,
   PostCategoryTC,
 };

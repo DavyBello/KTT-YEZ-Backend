@@ -1,4 +1,4 @@
-const { CompanyTC, JobTC } = require('../../composers');
+const { CompanyTC, JobTC, IndustryTC } = require('../../composers');
 
 module.exports = () => {
   CompanyTC.addRelation('jobs', {
@@ -6,6 +6,13 @@ module.exports = () => {
     prepareArgs: {
       filter: source => ({ companyId: source._id }),
     },
+  });
+  CompanyTC.addRelation('industries', {
+    resolver: () => IndustryTC.getResolver('findByIds'),
+    prepareArgs: {
+      _ids: source => source.industries,
+    },
+    projection: { industries: true },
   });
   CompanyTC.addRelation('jobsPagination', {
     resolver: () => JobTC.getResolver('pagination'),

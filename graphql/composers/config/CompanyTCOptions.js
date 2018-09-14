@@ -1,10 +1,9 @@
-// const { noviewUserFields, noeditUserFields } = require('./fields');
+const { noviewUserFields, noeditUserFields } = require('./fields');
 
 module.exports = {
   fields: {
     remove: [
-      'password',
-      'passwordVersion',
+      ...noviewUserFields,
       'createdAt',
       'createdBy',
       'updatedAt',
@@ -15,10 +14,8 @@ module.exports = {
     updateById: {
       record: {
         removeFields: [
-          'jobs',
+          ...noeditUserFields,
           'cacRegNo',
-          'password',
-          'passwordVersion',
           'isVerified',
           'isActive',
         ],

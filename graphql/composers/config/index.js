@@ -7,6 +7,7 @@ const RefereeTCOptions = require('./RefereeTCOptions');
 // const CenterManagerTCOptions = require('./CenterManagerTCOptions');
 // const CompanyTCOptions = require('./CompanyTCOptions');
 // const CaseFileTCOptions = require('./CaseFileTCOptions');
+const PublicJobTCOptions = require('./PublicJobTCOptions');
 
 module.exports = {
   UserTCOptions,
@@ -18,4 +19,5 @@ module.exports = {
   // CenterManagerTCOptions,
   // CompanyTCOptions,
   // CaseFileTCOptions,
+  PublicJobTCOptions,
 };
