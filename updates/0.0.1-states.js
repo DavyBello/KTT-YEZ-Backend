@@ -2,7 +2,7 @@
  * This script automatically creates the nigerian states and local governmennts
  * when an empty database is used for the first time. You can use this
  */
-
+/* eslint-disable new-cap */
 const keystone = require('keystone');
 const async = require('async');
 
@@ -25,11 +25,11 @@ const createState = (state, done) => {
           name: local.name,
           stateId: savedState.id,
         });
-        newLocalGovernment.save((err, localGov) => {
-          if (err) {
+        newLocalGovernment.save((e, localGov) => {
+          if (e) {
             console.error(`Error adding lG: ${localGov.name} to the database:`);
-            console.error(err);
-            done(err);
+            console.error(e);
+            done(e);
           }
         });
       });
@@ -38,6 +38,6 @@ const createState = (state, done) => {
   });
 };
 
-exports = module.exports = function (done) {
+module.exports = (done) => {
   async.forEach(states, createState, done);
 };

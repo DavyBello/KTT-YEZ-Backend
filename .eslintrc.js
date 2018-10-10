@@ -9,6 +9,7 @@ module.exports = {
     'no-console': 0,
     'no-underscore-dangle': 0,
     'no-tabs': 0,
+    'func-names': 0
   },
   env: {
     node: true,

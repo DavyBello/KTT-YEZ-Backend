@@ -207,7 +207,7 @@ module.exports = [{
       name: 'Uruan',
       id: 28,
     }, {
-      name: 'Urue-Offong\/Oruko',
+      name: 'Urue-Offong/Oruko',
       id: 29,
     }, {
       name: 'Uyo',
@@ -309,7 +309,7 @@ module.exports = [{
       name: 'Giade',
       id: 8,
     }, {
-      name: 'Itas\/Gadau',
+      name: 'Itas/Gadau',
       id: 9,
     }, {
       name: "Jama'are",
@@ -351,7 +351,7 @@ module.exports = [{
       name: 'Ekeremor',
       id: 1,
     }, {
-      name: 'Kolokuma\/Opokuma',
+      name: 'Kolokuma/Opokuma',
       id: 2,
     }, {
       name: 'Nembe',
@@ -447,7 +447,7 @@ module.exports = [{
     name: 'Borno State',
     id: 8,
     locals: [{
-      name: 'Askira\/Uba',
+      name: 'Askira/Uba',
       id: 1,
     }, {
       name: 'Bama',
@@ -486,7 +486,7 @@ module.exports = [{
       name: 'Kaga',
       id: 13,
     }, {
-      name: 'Kala\/Balge',
+      name: 'Kala/Balge',
       id: 14,
     }, {
       name: 'Konduga',
@@ -798,10 +798,10 @@ module.exports = [{
       name: 'Ilejemeje',
       id: 11,
     }, {
-      name: 'Irepodun\/Ifelodun',
+      name: 'Irepodun/Ifelodun',
       id: 12,
     }, {
-      name: 'Ise\/Orun',
+      name: 'Ise/Orun',
       id: 13,
     }, {
       name: 'Moba',
@@ -918,7 +918,7 @@ module.exports = [{
       name: 'Shongom',
       id: 9,
     }, {
-      name: 'Yamaltu\/Deba',
+      name: 'Yamaltu/Deba',
       id: 10,
     }],
   },
@@ -942,7 +942,7 @@ module.exports = [{
       name: 'Ideato South',
       id: 5,
     }, {
-      name: 'Ihitte\/Uboma',
+      name: 'Ihitte/Uboma',
       id: 6,
     }, {
       name: 'Ikeduru',
@@ -975,7 +975,7 @@ module.exports = [{
       name: 'Oguta',
       id: 16,
     }, {
-      name: 'Ohaji\/Egbema',
+      name: 'Ohaji/Egbema',
       id: 17,
     }, {
       name: 'Okigwe',
@@ -1440,7 +1440,7 @@ module.exports = [{
       name: 'Kalgo',
       id: 11,
     }, {
-      name: 'Koko\/Besse',
+      name: 'Koko/Besse',
       id: 12,
     }, {
       name: 'Maiyama',
@@ -1458,7 +1458,7 @@ module.exports = [{
       name: 'Suru',
       id: 17,
     }, {
-      name: 'Wasagu\/Danko',
+      name: 'Wasagu/Danko',
       id: 18,
     }, {
       name: 'Yauri',
@@ -1497,7 +1497,7 @@ module.exports = [{
       name: 'Ijumu',
       id: 8,
     }, {
-      name: 'Kabba\/Bunu',
+      name: 'Kabba/Bunu',
       id: 9,
     }, {
       name: 'Kogi',
@@ -1512,7 +1512,7 @@ module.exports = [{
       name: 'Ofu',
       id: 13,
     }, {
-      name: 'Ogori\/Magongo',
+      name: 'Ogori/Magongo',
       id: 14,
     }, {
       name: 'Okehi',
@@ -1776,7 +1776,7 @@ module.exports = [{
       name: 'Abeokuta South',
       id: 1,
     }, {
-      name: 'Ado-Odo\/Ota',
+      name: 'Ado-Odo/Ota',
       id: 2,
     }, {
       name: 'Egbado North',
@@ -1863,7 +1863,7 @@ module.exports = [{
       name: 'Ilaje',
       id: 9,
     }, {
-      name: 'Ile Oluji\/Okeigbo',
+      name: 'Ile Oluji/Okeigbo',
       id: 10,
     }, {
       name: 'Irele',
@@ -2181,13 +2181,13 @@ module.exports = [{
       name: 'Khana',
       id: 13,
     }, {
-      name: 'Obio\/Akpor',
+      name: 'Obio/Akpor',
       id: 14,
     }, {
-      name: 'Ogba\/Egbema\/Ndoni',
+      name: 'Ogba/Egbema/Ndoni',
       id: 15,
     }, {
-      name: 'Ogu\/Bolo',
+      name: 'Ogu/Bolo',
       id: 16,
     }, {
       name: 'Okrika',
@@ -2196,7 +2196,7 @@ module.exports = [{
       name: 'Omuma',
       id: 18,
     }, {
-      name: 'Opobo\/Nkoro',
+      name: 'Opobo/Nkoro',
       id: 19,
     }, {
       name: 'Oyigbo',
@@ -2394,7 +2394,7 @@ module.exports = [{
       name: 'Bakura',
       id: 1,
     }, {
-      name: 'Birnin Magaji\/Kiyaw',
+      name: 'Birnin Magaji/Kiyaw',
       id: 2,
     }, {
       name: 'Bukkuyum',
