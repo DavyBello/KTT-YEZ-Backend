@@ -23,7 +23,7 @@ const createState = (state, done) => {
       state.state.locals.forEach((local) => {
         const newLocalGovernment = new LocalGovernment.model({
           name: local.name,
-          stateId: savedState.id
+          stateId: savedState.id,
         });
         newLocalGovernment.save((err, localGov) => {
           if (err) {

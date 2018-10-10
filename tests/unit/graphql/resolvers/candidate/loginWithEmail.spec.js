@@ -14,11 +14,11 @@ const { expect } = chai;
 // language=GraphQL
 const LOGIN_CANDIDATE_MUTATION = `
 mutation M(
-  $phone: String!,
+  $email: String!,
   $password: String!
 ) {
   loginCandidate(input: {
-    phone: $phone,
+    email: $email,
     password: $password
   }) {
     token
@@ -33,22 +33,22 @@ beforeEach(clearDbAndRestartCounters);
 
 after(disconnectMongoose);
 
-describe('loginWithPhone Mutation', () => {
-  it('should not login if phone is not in the database', async () => {
-
+describe('loginWithEmail Mutation', () => {
+  it('should not login if email is not in the database', async () => {
     const query = LOGIN_CANDIDATE_MUTATION;
 
     const rootValue = {};
     const context = getContext();
     const variables = {
-      phone: '0818855561',
+      email: 'randomemail@a.com',
       password: 'awesome',
     };
 
     const result = await graphql(schema, query, rootValue, context, variables);
 
     expect(result.data.loginCandidate).to.equal(null);
-    expect(result.errors[0].message).to.equal('phone/user not found');
+    expect(result.errors[0].message).to.equal('email not found');
+    expect(result.errors[0].extensions.code).to.equal('BAD_USER_INPUT');
   });
 
   it('should not login with wrong password', async () => {
@@ -59,7 +59,7 @@ describe('loginWithPhone Mutation', () => {
     const rootValue = {};
     const context = getContext();
     const variables = {
-      phone: user.phone,
+      email: user.email,
       password: 'awesome',
     };
 
@@ -78,7 +78,7 @@ describe('loginWithPhone Mutation', () => {
     const rootValue = {};
     const context = getContext();
     const variables = {
-      phone: user.phone,
+      email: user.email,
       password: 'awesome',
     };
 

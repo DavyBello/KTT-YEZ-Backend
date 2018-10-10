@@ -32,7 +32,7 @@ describe('authAccess', () => {
   });
   it('should wrap candidate mutations', async () => {
     const wrappedMutations = [
-      'candidateUpdateById',
+      'candidateUpdateSelf',
       'addJobExperience',
       'updateJobExperience',
       'deleteJobExperience',

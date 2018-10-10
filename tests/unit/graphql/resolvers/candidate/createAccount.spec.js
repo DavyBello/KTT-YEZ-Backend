@@ -21,14 +21,12 @@ mutation M(
   $lastName: String!,
   $email: String!,
   $password: String!,
-  $phone: String!
 ) {
   candidateCreateAccount(input: {
     firstName: $firstName,
     lastName: $lastName,
     email: $email,
-    password: $password,
-    phone: $phone
+    password: $password
   }) {
     token
     name
@@ -43,7 +41,7 @@ beforeEach(clearDbAndRestartCounters);
 after(disconnectMongoose);
 
 describe('createAccount Mutation', () => {
-  it('should not create an account with an existing phone', async () => {
+  it('should not create an account with an existing email', async () => {
     const user = await createRows.createCandidate();
 
     const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;
@@ -53,37 +51,11 @@ describe('createAccount Mutation', () => {
     const variables = {
       firstName: 'firstName',
       lastName: 'lastName',
-      email: 'test@email.com',
       password: 'testpass',
-      phone: user.phone,
-    };
-
-    const result = await graphql(schema, query, rootValue, context, variables);
-
-    expect(result.data.candidateCreateAccount).to.equal(null);
-    expect(result.errors[0].message).to.equal('phone already exists');
-  });
-
-  it.skip('should not create an account with an existing email', async () => {
-    const user = await createRows.createCandidate();
-
-    const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;
-
-    const rootValue = {};
-    const context = getContext();
-    const variables = {
-      firstName: 'firstName',
-      lastName: 'lastName',
       email: user.email,
-      password: 'testpass',
-      phone: '08188555911',
     };
 
     const result = await graphql(schema, query, rootValue, context, variables);
-
-    // console.log(result);
-    // const candidates = await Candidate.find();
-    // console.log(candidates);
 
     expect(result.data.candidateCreateAccount).to.equal(null);
     expect(result.errors[0].message).to.equal('email already exists');
@@ -94,7 +66,6 @@ describe('createAccount Mutation', () => {
     const lastName = 'lastName';
     const email = 'test@email.com';
     const password = 'testpass';
-    const phone = '08188555611';
 
     const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;
 
@@ -105,7 +76,6 @@ describe('createAccount Mutation', () => {
       lastName,
       email,
       password,
-      phone,
     };
 
     const result = await graphql(schema, query, rootValue, context, variables);
@@ -114,7 +84,7 @@ describe('createAccount Mutation', () => {
     expect(result.data.candidateCreateAccount.token).to.exist;
     expect(result.errors).to.be.undefined;
 
-    const candidate = await Candidate.findOne({ phone });
+    const candidate = await Candidate.findOne({ email });
     expect(candidate).to.exist;
   });
 });

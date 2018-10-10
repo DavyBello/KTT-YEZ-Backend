@@ -27,7 +27,7 @@ mutation M (
   $id: MongoID!,
   $${fieldName}: ${fieldType}
 ){
-  candidateUpdateById(record: {
+  candidateUpdateSelf(record: {
     _id: $id,
     ${fieldName}: $${fieldName}
   }) {
@@ -40,7 +40,7 @@ mutation M (
 }
 `);
 
-describe('candidateUpdateById Mutation', () => {
+describe('candidateUpdateSelf Mutation', () => {
   it('should give an error if user (candidate) is not logged in', async () => {
     const user = await createRows.createCandidate();
 
@@ -55,7 +55,7 @@ describe('candidateUpdateById Mutation', () => {
 
     const result = await graphql(schema, query, rootValue, context, variables);
 
-    expect(result.data.candidateUpdateById).to.equal(null);
+    expect(result.data.candidateUpdateSelf).to.equal(null);
     expect(result.errors[0].extensions.code).to.equal('UNAUTHENTICATED');
   });
   it('should not be able to change secret fields (e.g password)', async () => {
@@ -74,7 +74,7 @@ describe('candidateUpdateById Mutation', () => {
     await Promise.all(noEditUserFields.map(async (field) => {
       const UPDATE_CANDIDATE_NO_EDIT_FIELDS_MUTATION = `
       mutation M {
-        candidateUpdateById(record: {
+        candidateUpdateSelf(record: {
           _id: "${user._id}",
           ${field}: "newValue"
         }) {
@@ -120,7 +120,7 @@ describe('candidateUpdateById Mutation', () => {
 
     const result = await graphql(schema, query, rootValue, context, variables);
 
-    expect(result.data.candidateUpdateById).to.equal(null);
+    expect(result.data.candidateUpdateSelf).to.equal(null);
     expect(result.errors[0].message).to.equal('user is not permitted to perform this action');
     expect(result.errors[0].extensions.code).to.equal('UNAUTHENTICATED');
   });
@@ -144,11 +144,11 @@ describe('candidateUpdateById Mutation', () => {
 
     const result = await graphql(schema, query, rootValue, context, variables);
 
-    const { data: { candidateUpdateById } } = result;
+    const { data: { candidateUpdateSelf } } = result;
 
-    expect(candidateUpdateById.recordId).to.equal(`${user._id}`);
-    expect(candidateUpdateById.record._id).to.equal(`${user._id}`);
-    expect(candidateUpdateById.record.firstName).to.equal(firstName);
+    expect(candidateUpdateSelf.recordId).to.equal(`${user._id}`);
+    expect(candidateUpdateSelf.record._id).to.equal(`${user._id}`);
+    expect(candidateUpdateSelf.record.firstName).to.equal(firstName);
 
     const _user = await Candidate.findById(user._id);
     expect(_user.firstName).to.equal(firstName);

@@ -1,3 +1,5 @@
+// import { load } from 'protobufjs';
+
 /* eslint-disable func-names */
 const keystone = require('keystone');
 
@@ -41,8 +43,9 @@ Candidate.add('Candidate', {
   // bvn: { type: Types.Text},
   gender: { type: Types.Select, options: GENDERS },
   dateOfBirth: { type: Types.Date },
-  placeOfBirth: { type: Types.Text },
-  nationality: { type: Types.Text },
+  // placeOfBirth: { type: Types.Text },
+  nationality: { type: Types.Select, options: ['Nigerian', 'Other'], default: 'Nigerian' },
+  nationalityAlt: { type: Types.Text },
   stateOfOrigin: { type: Types.Select, options: STATES },
 }, 'Status', {
   isEmployed: { type: Boolean, index: true },
@@ -60,6 +63,32 @@ Candidate.schema.virtual('testTaken').get(function () {
   if (this.result.startup) return 'startup';
   return 'none';
 });
+Candidate.schema.virtual('basicProfileStatus').get(function () {
+  const basicProfileFields = [
+    'firstName',
+    'lastName',
+    'phone',
+    'username',
+    'email',
+    'dateOfBirth',
+  ];
+
+  if (basicProfileFields.find(field => !this[field])) {
+    // get list of missing fields
+    const missingFields = [];
+    basicProfileFields.forEach(field => !this[field] && missingFields.push(field));
+
+    return {
+      status: false,
+      message: `${missingFields.join(', ')} are missing from your profile.`,
+    };
+  }
+
+  return {
+    status: true,
+    message: 'user basic profile is complete',
+  };
+});
 
 // Model Hooks
 Candidate.schema.pre('save', async function (next) {
@@ -70,9 +99,10 @@ Candidate.schema.pre('save', async function (next) {
 });
 
 // Methods
-const { sendActivationLink } = ModelMethods;
+const { sendActivationLink, getProfilePercent } = ModelMethods;
 
 Candidate.schema.methods.sendActivationLink = sendActivationLink;
+Candidate.schema.methods.getProfilePercent = getProfilePercent;
 
 /**
  * Relationships
@@ -82,6 +112,7 @@ Candidate.relationship({ ref: 'JobExperience', path: 'experience', refPath: 'can
 Candidate.relationship({ ref: 'CandidateDocument', path: 'documents', refPath: 'candidateId' });
 Candidate.relationship({ ref: 'Certificate', path: 'certificates', refPath: 'candidateId' });
 Candidate.relationship({ ref: 'CaseFile', path: 'caseFiles', refPath: 'candidateId' });
+Candidate.relationship({ ref: 'Referee', path: 'referees', refPath: 'candidateId' });
 
 /**
  * Registration

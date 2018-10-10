@@ -33,7 +33,6 @@ const VIEWER_CANDIDATE_QUERY = `
       imageUrl
       gender
       dateOfBirth
-      placeOfBirth
       nationality
       stateOfOrigin
       isEmployed

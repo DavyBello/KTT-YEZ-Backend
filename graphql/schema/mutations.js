@@ -34,7 +34,7 @@ const {
 } = require('../composers');
 
 module.exports = {
-  loginCandidate: CandidateTC.getResolver('loginWithPhone'),
+  loginCandidate: CandidateTC.getResolver('loginWithEmail'),
   candidateCreateAccount: CandidateTC.getResolver('createAccount'),
   loginCompany: CompanyTC.getResolver('loginWithEmail'),
   companyCreateAccount: CompanyTC.getResolver('createAccount'),

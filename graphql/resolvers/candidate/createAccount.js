@@ -1,5 +1,5 @@
 const keystone = require('keystone');
-// const { UserInputError } = require('apollo-server');
+const { UserInputError } = require('apollo-server');
 
 const Candidate = keystone.list('Candidate').model;
 const User = keystone.list('User').model;
@@ -14,7 +14,6 @@ module.exports = {
       lastName: String!
       email: String!
       password: String!
-      phone: String!
 		}`,
   },
   type: `type CreateCandidateAccountPayload {
@@ -24,14 +23,13 @@ module.exports = {
   resolve: async ({ args }) => {
     const {
       input: {
-        firstName, lastName, email, password, phone,
+        firstName, lastName, email, password,
       },
     } = args;
     try {
-      const existing = await User.findOne({ phone });
+      const existing = await User.findOne({ email });
       if (!existing) {
         const newCandidate = new Candidate({
-          phone,
           email,
           password,
           firstName,
@@ -43,8 +41,8 @@ module.exports = {
           token: newCandidate.signToken(),
         };
       }
-      return Promise.reject(Error('phone already exists'));
-      // throw new UserInputError('phone already exists');
+      // return Promise.reject(Error('phone already exists'));
+      return Promise.reject(new UserInputError('email already exists'));
     } catch (e) {
       return Promise.reject(e);
     }

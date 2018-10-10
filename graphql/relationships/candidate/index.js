@@ -57,3 +57,7 @@ CandidateTC.addRelation('documentsPagination', {
   },
   projection: { _id: true },
 });
+CandidateTC.addFields({
+  isBasicProfileComplete: require('./isBasicProfileComplete'),
+  profilePercentage: require('./profilePercentage'),
+});

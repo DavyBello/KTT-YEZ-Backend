@@ -47,4 +47,4 @@ before(async () => {
 after(async () => {
   // console.log('stop mongod');
   await mongod.stop();
-})
+});

@@ -1,4 +1,4 @@
 const { CandidateTC } = require('../../composers');
 
 CandidateTC.addResolver(require('./createAccount'));
-CandidateTC.addResolver(require('./loginWithPhone'));
+CandidateTC.addResolver(require('./loginWithEmail'));

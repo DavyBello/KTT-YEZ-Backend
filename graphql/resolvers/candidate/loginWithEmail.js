@@ -1,25 +1,26 @@
 const keystone = require('keystone');
+const { UserInputError } = require('apollo-server');
 
 const User = keystone.list('User').model;
 
 module.exports = {
   kind: 'mutation',
-  name: 'loginWithPhone',
+  name: 'loginWithEmail',
   description: 'login a user',
   args: {
-    input: `input LoginWithPhoneInput {
-			phone: String!
+    input: `input CandidateLoginWithEmailInput {
+			email: String!
 	    password: String!
 		}`,
   },
-  type: `type LoginWithPhonePayload {
+  type: `type CandidateLoginWithEmailPayload {
     token: String!
     name: String!
   }`,
   resolve: async ({ args }) => {
-    const { input: { phone, password } } = args;
+    const { input: { email, password } } = args;
     try {
-      const user = await User.findOne({ phone });
+      const user = await User.findOne({ email });
       if (user) {
         return new Promise((resolve, reject) => {
           // validate password
@@ -33,11 +34,13 @@ module.exports = {
                 token: user.signToken(),
               });
             }
-            reject(Error('invalid password'));
+            // reject(Error('invalid password'));
+            reject(new UserInputError('invalid password'));
           });
         });
       }
-      return Promise.reject(Error('phone/user not found'));
+      // return Promise.reject(Error('email/user not found'));
+      return Promise.reject(new UserInputError('email not found'));
     } catch (e) {
       return Promise.reject(e);
     }

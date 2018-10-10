@@ -1,41 +1,37 @@
 const cors = require('cors');
-const jwt = require('express-jwt');
-const bodyParser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-// const { ApolloServer } = require('apollo-server-express');
+const eJwt = require('express-jwt');
+const { ApolloServer } = require('apollo-server-express');
 
-// const schema = require('../graphql/schema-compose');
 const schema = require('../graphql/schema');
 const getContext = require('../graphql/lib/getContext');
 // const corsOptions = require('../config/corsOptions');
 
+const apiPath = '/graphql';
+const eJwtOptions = {
+  secret: process.env.JWT_SECRET,
+  credentialsRequired: false,
+};
+
 // Setup Route Bindings
 module.exports = (app) => {
   // Register API middleware
-  app.use(
-    '/graphql',
-    cors(),
-    bodyParser.json(),
-    jwt({
-      secret: process.env.JWT_SECRET,
-      credentialsRequired: false,
+  app.use(apiPath, eJwt(eJwtOptions));
+
+  const server = new ApolloServer({
+    cors,
+    schema,
+    context: ({ req, res }) => ({
+      ...getContext({ jwtPayload: req.user }),
+      req,
+      res,
     }),
-    graphqlExpress(req => ({ schema, context: getContext({ jwtPayload: req.user }) })),
-  );
+    introspection: true,
+    playground: true,
+  });
 
-  app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-
-  // const server = new ApolloServer({ schema });
-  // server.applyMiddleware({ app });
-  // console.log(server);
-
+  server.applyMiddleware({ app, path: apiPath });
 
   // Views
   app.get('/admin', (req, res) => { res.redirect('/keystone'); });
   app.get('/', (req, res) => { res.redirect('/keystone'); });
-
-  // routes for testing in development
-  // if (process.env.NODE_ENV === 'development') {
-  //   app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-  // }
 };

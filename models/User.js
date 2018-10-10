@@ -17,7 +17,7 @@ const User = new keystone.List('User', {
 User.add({
   name: { type: Types.Text, index: true },
   email: {
-    type: Types.Email, initial: true, required: true, unique: true, index: true, sparse: true
+    type: Types.Email, initial: true, required: true, unique: true, index: true, sparse: true,
   },
   password: { type: Types.Password, initial: true, required: true },
   passwordVersion: { type: Types.Number, required: true, default: 1 },
