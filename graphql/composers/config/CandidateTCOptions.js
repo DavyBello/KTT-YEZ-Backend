@@ -9,7 +9,6 @@ module.exports = {
       record: {
         removeFields: [
           ...noeditUserFields,
-          'phone',
           'result',
           'category',
           'isEmployed',

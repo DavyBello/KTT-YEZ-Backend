@@ -62,7 +62,6 @@ describe('candidateUpdateSelf Mutation', () => {
     const noEditUserFields = [
       'password',
       'passwordVersion',
-      'phone',
       'result',
       'category',
       'isVerified',
