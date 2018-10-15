@@ -5,7 +5,7 @@ const { decodeToken } = require('../');
 const getContext = require('../../../graphql/lib/getContext');
 const {
   connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows,
-} = require('../../../tests/helper');
+} = require('../../../__tests__/helper');
 
 const { expect } = chai;
 
