@@ -38,8 +38,11 @@ const {
 // Add fields and resolvers to rootQuery
 module.exports = {
   posts: PostTC.getResolver('findMany'),
+  postsConnection: PostTC.getResolver('connection'),
   jobs: PublicJobTC.getResolver('findMany'),
+  jobsConnection: PublicJobTC.getResolver('connection'),
   jobCenters: JobCenterTC.getResolver('findMany'),
+  jobCentersConnection: JobCenterTC.getResolver('connection'),
   ...authAccess({ scope: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),
