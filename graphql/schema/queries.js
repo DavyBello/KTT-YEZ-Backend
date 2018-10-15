@@ -27,6 +27,7 @@ const {
   ViewerCompanyTC,
   IndustryTC,
   // JobTC,
+  JobCenterTC,
   // CaseFileTC,
   // CenterManagerTC,
   ViewerCenterManagerTC,
@@ -38,6 +39,7 @@ const {
 module.exports = {
   posts: PostTC.getResolver('findMany'),
   jobs: PublicJobTC.getResolver('findMany'),
+  jobCenters: JobCenterTC.getResolver('findMany'),
   ...authAccess({ scope: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),

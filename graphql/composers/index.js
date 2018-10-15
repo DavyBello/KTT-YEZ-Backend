@@ -3,8 +3,8 @@ const keystone = require('keystone');
 const { GQC } = require('graphql-compose');
 
 /**
-* Mongoose Models
-*/
+ * Mongoose Models
+ */
 // User models
 const User = keystone.list('User').model;
 const Candidate = keystone.list('Candidate').model;
@@ -25,6 +25,7 @@ const Referee = keystone.list('Referee').model;
 // const CompanyMessage = keystone.list('CompanyMessage').model;
 const Industry = keystone.list('Industry').model;
 const Job = keystone.list('Job').model;
+const JobCenter = keystone.list('JobCenter').model;
 
 const CaseFile = keystone.list('CaseFile').model;
 
@@ -32,8 +33,8 @@ const Post = keystone.list('Post').model;
 const PostCategory = keystone.list('PostCategory').model;
 
 /**
-* Config
-*/
+ * Config
+ */
 const {
   UserTCOptions,
   CandidateTCOptions,
@@ -45,6 +46,7 @@ const {
   CompanyTCOptions,
   CaseFileTCOptions,
   PublicJobTCOptions,
+  JobCenterTCOptions,
 } = require('./config');
 
 const UserTC = composeWithMongoose(User, UserTCOptions);
@@ -71,12 +73,13 @@ const JobTC = composeWithMongoose(Job);
 
 // PUBLIC TYPES
 const PublicJobTC = composeWithMongoose(Job, PublicJobTCOptions);
+const JobCenterTC = composeWithMongoose(JobCenter, JobCenterTCOptions);
 const PostTC = composeWithMongoose(Post);
 const PostCategoryTC = composeWithMongoose(PostCategory);
 
 /**
-* Viewer Fields for authentication and authorization
-*/
+ * Viewer Fields for authentication and authorization
+ */
 const ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
 const ViewerCompanyTC = GQC.getOrCreateTC('ViewerCompany');
 const ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');
@@ -84,8 +87,8 @@ const ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');
 const PlaceHolderTC = GQC.getOrCreateTC('PlaceHolder');
 
 /**
-* Exports
-*/
+ * Exports
+ */
 module.exports = {
   PlaceHolderTC,
   UserTC,
@@ -111,6 +114,7 @@ module.exports = {
   ViewerCenterManagerTC,
   CaseFileTC,
 
+  JobCenterTC,
   PublicJobTC,
   PostTC,
   PostCategoryTC,
