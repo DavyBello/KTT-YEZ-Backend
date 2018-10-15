@@ -6,7 +6,6 @@ require('dotenv').config();
 const keystone = require('keystone');
 const Cryptr = require('cryptr');
 
-
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -45,6 +44,7 @@ keystone.set('locals', {
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
 
+keystone.set('signin logo', '/images/yez-logo.svg');
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
