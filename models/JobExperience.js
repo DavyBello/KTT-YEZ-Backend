@@ -19,7 +19,7 @@ JobExperience.add({
     type: Types.Text, required: true, initial: true, index: true,
   },
   candidateId: {
-    type: Types.Relationship, ref: 'Candidate', index: true, initial: true, required: true,
+    type: Types.Relationship, ref: 'Candidate', index: true, noedit: true, initial: true, required: true,
   },
   role: {
     type: Types.Text, label: 'Role/Position', initial: true, required: true,

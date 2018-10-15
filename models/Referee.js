@@ -13,7 +13,7 @@ const { GENDERS, PHONE_REGEX, toCamelCase } = require('../lib/common');
 Referee.add({
   name: { type: Types.Text, required: true, index: true },
   candidateId: {
-    type: Types.Relationship, ref: 'Candidate', index: true, required: true, initial: true,
+    type: Types.Relationship, ref: 'Candidate', index: true, noedit: true, initial: true, required: true,
   },
   phone: { type: Types.Text, initial: true, required: true },
   gender: { type: Types.Select, options: GENDERS, initial: true },

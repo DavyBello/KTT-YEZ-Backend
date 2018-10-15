@@ -21,7 +21,7 @@ CandidateDocument.add({
   createdAt: { type: Types.Datetime, index: true, default: Date.now },
   updatedAt: { type: Types.Datetime, index: true },
   candidateId: {
-    type: Types.Relationship, ref: 'Candidate', initial: true, required: true, index: true,
+    type: Types.Relationship, ref: 'Candidate', index: true, noedit: true, initial: true, required: true,
   },
 });
 

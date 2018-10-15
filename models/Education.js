@@ -16,7 +16,9 @@ const Education = new keystone.List('Education', {
 
 Education.add({
   school: { type: Types.Text, initial: true, required: true },
-  candidateId: { type: Types.Relationship, ref: 'Candidate', index: true },
+  candidateId: {
+    type: Types.Relationship, ref: 'Candidate', index: true, noedit: true, initial: true, required: true,
+  },
   degree: { type: Types.Text, initial: true, required: true },
   field: { type: Types.Text, initial: true, required: true },
   grade: { type: Types.Text, initial: true },
