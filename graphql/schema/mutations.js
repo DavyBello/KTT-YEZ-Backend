@@ -21,6 +21,7 @@ const {
   CertificateTC,
   RefereeTC,
   // CandidateDocumentTC,
+  CandidateEnquiryTC,
 
   // PollTC,
   // PollVoteTC,
@@ -54,6 +55,7 @@ module.exports = {
     addReferee: createDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
     updateReferee: updateDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
     deleteReferee: deleteDocumentWithIdReference({ TC: RefereeTC, refPath: 'candidateId' }),
+    candidateCreateEnquiry: CandidateEnquiryTC.getResolver('createEnquiry'),
   }),
   ...authAccess({ scope: 'Company' }, {
     companyUpdateSelf: updateSelf({ TC: CompanyTC }),

@@ -28,6 +28,7 @@ const Job = keystone.list('Job').model;
 const JobCenter = keystone.list('JobCenter').model;
 
 const CaseFile = keystone.list('CaseFile').model;
+const CandidateEnquiry = keystone.list('CandidateEnquiry').model;
 
 const Post = keystone.list('Post').model;
 const PostCategory = keystone.list('PostCategory').model;
@@ -45,6 +46,7 @@ const {
   CenterManagerTCOptions,
   CompanyTCOptions,
   CaseFileTCOptions,
+  CandidateEnquiryTCOptions,
   PublicJobTCOptions,
   JobCenterTCOptions,
 } = require('./config');
@@ -66,6 +68,7 @@ const CertificateTC = composeWithMongoose(Certificate, CertificateTCOptions);
 const RefereeTC = composeWithMongoose(Referee, RefereeTCOptions);
 const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
+const CandidateEnquiryTC = composeWithMongoose(CandidateEnquiry, CandidateEnquiryTCOptions);
 
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = composeWithMongoose(Industry);
@@ -105,6 +108,7 @@ module.exports = {
   EducationTC,
   CertificateTC,
   RefereeTC,
+  CandidateEnquiryTC,
 
   ViewerCompanyTC,
   IndustryTC,
