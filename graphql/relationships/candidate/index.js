@@ -5,6 +5,7 @@ const {
   CertificateTC,
   CandidateDocumentTC,
   RefereeTC,
+  NotificationTC,
   // CaseFileTC,
 } = require('../../composers');
 
@@ -56,6 +57,13 @@ CandidateTC.addRelation('documentsPagination', {
     filter: source => ({ candidateId: source._id }),
   },
   projection: { _id: true },
+});
+CandidateTC.addRelation('notifications', {
+  resolver: () => NotificationTC.getResolver('userNotifications'),
+  prepareArgs: {
+    filter: source => ({ userId: source._id, userCreatedAt: source.createdAt }),
+  },
+  projection: { _id: true, createdAt: true }
 });
 CandidateTC.addFields({
   isBasicProfileComplete: require('./isBasicProfileComplete'),

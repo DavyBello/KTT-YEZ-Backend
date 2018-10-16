@@ -21,6 +21,7 @@ const JobExperience = keystone.list('JobExperience').model;
 const Education = keystone.list('Education').model;
 const Certificate = keystone.list('Certificate').model;
 const Referee = keystone.list('Referee').model;
+const Notification = keystone.list('Notification').model;
 
 // const CompanyMessage = keystone.list('CompanyMessage').model;
 const Industry = keystone.list('Industry').model;
@@ -69,6 +70,7 @@ const RefereeTC = composeWithMongoose(Referee, RefereeTCOptions);
 const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
 const CandidateEnquiryTC = composeWithMongoose(CandidateEnquiry, CandidateEnquiryTCOptions);
+const NotificationTC = composeWithMongoose(Notification);
 
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = composeWithMongoose(Industry);
@@ -109,6 +111,7 @@ module.exports = {
   CertificateTC,
   RefereeTC,
   CandidateEnquiryTC,
+  NotificationTC,
 
   ViewerCompanyTC,
   IndustryTC,
