@@ -50,7 +50,7 @@ module.exports = {
             to: [user.email],
             from: {
               name: 'MCC',
-              email: 'no-reply@mycareerchoice.global',
+              email: 'no-reply@yeznigeria.org',
             },
             subject: 'MCC Account Activation',
             user,

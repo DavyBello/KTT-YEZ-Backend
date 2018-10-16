@@ -76,10 +76,10 @@ Newsletter.schema.methods.sendNewsletter = function () {
       templateName: 'newsletter',
       transport: 'mailgun',
     }).send({
-      to: 'subscribers@mycareerchoice.global',
+      to: 'subscribers@yeznigeria.org',
       from: {
         name: 'MCC',
-        email: 'contact@mycareerchoice.global',
+        email: 'contact@yeznigeria.org',
       },
       subject: newsletter.subject,
       newsletter,
