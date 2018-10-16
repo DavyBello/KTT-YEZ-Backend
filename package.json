@@ -53,7 +53,7 @@
     "dev": "nodemon keystone.js",
     "start": "NODE_ENV=production node keystone.js",
     "test:int": "mocha --recursive --timeout 6000 --exit __tests__/init.js __tests__/unit",
-    "test": "npm test:int",
+    "test": "npm run test:int",
     "test:unit": "mocha --recursive --timeout 6000 --exit __tests__/init.js ./**/__tests__/*.unit.spec.js"
   },
   "husky": {
