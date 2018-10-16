@@ -1,6 +1,6 @@
 const { composeWithMongoose } = require('graphql-compose-mongoose');
 const keystone = require('keystone');
-const { GQC } = require('graphql-compose');
+const { schemaComposer } = require('graphql-compose');
 
 /**
  * Mongoose Models
@@ -85,11 +85,11 @@ const PostCategoryTC = composeWithMongoose(PostCategory);
 /**
  * Viewer Fields for authentication and authorization
  */
-const ViewerCandidateTC = GQC.getOrCreateTC('ViewerCandidate');
-const ViewerCompanyTC = GQC.getOrCreateTC('ViewerCompany');
-const ViewerCenterManagerTC = GQC.getOrCreateTC('ViewerCenterManager');
+const ViewerCandidateTC = schemaComposer.getOrCreateTC('ViewerCandidate');
+const ViewerCompanyTC = schemaComposer.getOrCreateTC('ViewerCompany');
+const ViewerCenterManagerTC = schemaComposer.getOrCreateTC('ViewerCenterManager');
 
-const PlaceHolderTC = GQC.getOrCreateTC('PlaceHolder');
+const PlaceHolderTC = schemaComposer.getOrCreateTC('PlaceHolder');
 
 /**
  * Exports

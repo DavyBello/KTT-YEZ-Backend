@@ -4267,33 +4267,27 @@ graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphql-compose-connection@>=3.2.0, graphql-compose-connection@^3.2.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/graphql-compose-connection/-/graphql-compose-connection-3.2.1.tgz#7ab3d59c775e9b165d2cd70c72e940e0fde1b681"
-  dependencies:
-    babel-runtime "^6.26.0"
+graphql-compose-connection@>=4.0.0, graphql-compose-connection@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose-connection/-/graphql-compose-connection-4.0.0.tgz#ec6a7ef5cbbab6ca87d6196577967d465aea8acd"
 
-graphql-compose-mongoose@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/graphql-compose-mongoose/-/graphql-compose-mongoose-4.6.0.tgz#438fbc88bfa14b7a2966bd5e22ed54d41eec640c"
+graphql-compose-mongoose@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose-mongoose/-/graphql-compose-mongoose-5.1.0.tgz#88d7879cf8e568d6ec06f4ddc7de01353270dba2"
   dependencies:
-    babel-runtime "^6.26.0"
     object-path "^0.11.4"
   optionalDependencies:
-    graphql-compose-connection ">=3.2.0"
-    graphql-compose-pagination ">=3.3.0"
+    graphql-compose-connection ">=4.0.0"
+    graphql-compose-pagination ">=4.0.0"
 
-graphql-compose-pagination@>=3.3.0, graphql-compose-pagination@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/graphql-compose-pagination/-/graphql-compose-pagination-3.3.0.tgz#9977bf416985e8c512b3dfba373e6a90f8d316cf"
-  dependencies:
-    babel-runtime "^6.26.0"
+graphql-compose-pagination@>=4.0.0, graphql-compose-pagination@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose-pagination/-/graphql-compose-pagination-4.0.0.tgz#a48625e3716f929878f9b8093740837ad52a039e"
 
-graphql-compose@^4.8.2:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-4.8.2.tgz#701b0c0b74d5d8e279a352bc833b638517019970"
+graphql-compose@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-5.2.0.tgz#1ce447ed55162df91f2364d2ccdc65387342b774"
   dependencies:
-    babel-runtime "^6.26.0"
     graphql-type-json "^0.2.1"
     object-path "^0.11.4"
 
@@ -4334,11 +4328,11 @@ graphql-type-json@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.2.1.tgz#d2c177e2f1b17d87f81072cd05311c0754baa420"
 
-graphql@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.0.tgz#d1b44a282279a9ce0a6ec1037329332f4c1079b6"
+graphql@^14.0.2:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.0.2.tgz#7dded337a4c3fd2d075692323384034b357f5650"
   dependencies:
-    iterall "1.1.x"
+    iterall "^1.2.2"
 
 grappling-hook@^3.0.0:
   version "3.0.0"
@@ -5297,11 +5291,11 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-iterall@1.1.x, iterall@^1.1.1, iterall@^1.1.3:
+iterall@^1.1.1, iterall@^1.1.3:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.4.tgz#0db40d38fdcf53ae14dc8ec674e62ab190d52cfc"
 
-iterall@^1.2.1:
+iterall@^1.2.1, iterall@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
 
