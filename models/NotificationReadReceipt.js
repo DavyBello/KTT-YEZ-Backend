@@ -7,7 +7,6 @@ const { Field: { Types }, List } = require('keystone');
 const NotificationReadReceipt = new List('NotificationReadReceipt', {
   noedit: true,
 });
-NotificationReadReceipt.schema.set('usePushEach', true);
 
 NotificationReadReceipt.add({
   notification: {

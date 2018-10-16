@@ -14,8 +14,6 @@ const Notification = new List('Notification', {
   track: true,
 });
 
-Notification.schema.set('usePushEach', true);
-
 Notification.add({
   message: {
     type: Types.Text, initial: true, required: true, index: true,
