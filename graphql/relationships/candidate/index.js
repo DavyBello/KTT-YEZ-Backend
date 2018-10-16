@@ -63,7 +63,7 @@ CandidateTC.addRelation('notifications', {
   prepareArgs: {
     filter: source => ({ userId: source._id, userCreatedAt: source.createdAt }),
   },
-  projection: { _id: true, createdAt: true }
+  projection: { _id: true, createdAt: true },
 });
 CandidateTC.addFields({
   isBasicProfileComplete: require('./isBasicProfileComplete'),

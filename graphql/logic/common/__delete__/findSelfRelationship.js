@@ -4,7 +4,7 @@ module.exports = ({ field, TC }) => TC.get('$findById').wrapResolve(next => asyn
   const _field = sourceUser[field];
   if (Array.isArray(_field)) {
     // check if relationship to be update is a member of _field array
-    const exist = _field.find(fieldId => (fieldId == args._id));
+    const exist = _field.find(fieldId => (`${fieldId}` === `${args._id}`));
     if (exist) {
       // add field to db and get result of createOne resolver
       const result = await next(rp);

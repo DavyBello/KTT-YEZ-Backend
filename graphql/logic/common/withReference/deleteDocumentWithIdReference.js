@@ -11,5 +11,5 @@ module.exports = ({ TC, refPath }) => TC.getResolver('removeById').wrapResolve(n
     // run removeById resolver
     return next(rp);
   }
-  Promise.reject(Error('invalid refPath'));
+  return Promise.reject(Error('invalid refPath'));
 });

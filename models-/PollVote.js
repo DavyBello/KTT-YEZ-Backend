@@ -12,7 +12,7 @@ const PollVote = new keystone.List('PollVote', {
   noedit: true,
 });
 
-voteOptions = [
+const voteOptions = [
   { value: 'a', label: '1' },
   { value: 'b', label: '2' },
   { value: 'c', label: '3' },

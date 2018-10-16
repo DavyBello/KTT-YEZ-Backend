@@ -44,7 +44,7 @@ module.exports = {
       });
 
       return notifications.map((notification) => {
-        notification.isRead = !!readReceipts.find(receipt => (receipt.notification == notification.id));
+        notification.isRead = !!readReceipts.find(receipt => (`${receipt.notification}` === `${notification.id}`));
         return (notification);
       });
     } catch (e) {

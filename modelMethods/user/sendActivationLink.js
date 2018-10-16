@@ -28,10 +28,10 @@ module.exports = function () {
       }).send({
         to: [user.email],
         from: {
-          name: 'Career Intelligence [ MCC, PRET, JP ]',
-          email: 'no-reply@careerintelligence.global',
+          name: 'Youth Empowerment Zone (YEZ)',
+          email: 'no-reply@yeznigeria.org',
         },
-        subject: 'Career Intelligence Account Activation',
+        subject: 'Youth Empowerment Zone (YEZ) Account Activation',
         user,
         brandDetails,
         activationLink,

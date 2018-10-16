@@ -20,9 +20,9 @@ module.exports = {
     // To test enquiry notifications we create a dummy enquiry that
     // is not saved to the database, but passed to the template.
 
-    const Enquiry = keystone.list('Enquiry');
+    const Enquiry = keystone.list('Enquiry').model;
 
-    const newEnquiry = new Enquiry.model({
+    const newEnquiry = new Enquiry({
       name: { first: 'Test', last: 'User' },
       email: 'contact@ktt-backend.com',
       phone: '+61 2 1234 5678',

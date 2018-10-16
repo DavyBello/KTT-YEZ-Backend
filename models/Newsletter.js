@@ -31,7 +31,7 @@ Newsletter.add({
 }, 'if the <state> field is missing it means this newsletter has already been sent and will not be resent');
 
 Newsletter.schema.pre('save', async function (next) {
-  if (this.state == 'published' && !this.isSent) {
+  if (this.state === 'published' && !this.isSent) {
     // console.log('sending newsletter');
     try {
       await this.sendNewsletter();
@@ -67,7 +67,7 @@ Newsletter.schema.methods.sendNewsletter = function () {
 
     if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
       console.log('Unable to send email - no mailgun credentials provided');
-      return callback(new Error('could not find mailgun credentials'));
+      reject(new Error('could not find mailgun credentials'));
     }
 
     const brandDetails = keystone.get('brandDetails');

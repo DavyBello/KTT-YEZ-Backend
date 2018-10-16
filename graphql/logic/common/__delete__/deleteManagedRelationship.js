@@ -17,12 +17,12 @@ module.exports = ({ field, TC, managedModelType }) => TC.get('$removeById').addA
         const _field = item[field];
         if (Array.isArray(_field)) {
           // check if relationship to be update is a member of _field array
-          const exist = _field.find(fieldId => (fieldId == _id));
+          const exist = _field.find(fieldId => (`${fieldId}` === `${_id}`));
           if (exist) {
             // delete document from db
             const result = await next(rp);
             // delete relationship id from sourcedocument
-            item[field] = item[field].filter(e => e != result.recordId);
+            item[field] = item[field].filter(e => `${e}` !== `${result.recordId}`);
             try {
               await item.save();
               return result;

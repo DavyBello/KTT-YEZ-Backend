@@ -51,7 +51,7 @@ module.exports = ({ field, TC, managedModelType }) => TC.get('$createOne').addAr
     if (e.message === `Cast to ObjectId failed for value "${managedId}" at path "_id" for model "${managedModelType}"`) {
       throw new Error(`Invalid Id supplied for model type "${managedModelType}"`);
     }
-
+    return e;
     // console.log(e.message === `Unknown keystoone list "asda"`);
     // throw new Error(`Unexpected error adding the document to ${managedModelType.toLowerCase()}`);
   }

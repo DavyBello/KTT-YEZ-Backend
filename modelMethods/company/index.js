@@ -1,3 +1,5 @@
+const sendActivationLink = require('./sendActivationLink');
+
 module.exports = {
-  sendActivationLink: require('./sendActivationLink'),
+  sendActivationLink,
 };

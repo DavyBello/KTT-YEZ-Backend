@@ -6,12 +6,12 @@ module.exports = ({ field, TC }) => TC.get('$removeById').wrapResolve(next => as
     const _field = sourceUser[field];
     if (Array.isArray(_field)) {
       // check if relationship to be update is a member of _field array
-      const exist = _field.find(fieldId => (fieldId == args._id));
+      const exist = _field.find(fieldId => (`${fieldId}` === `${args._id}`));
       if (exist) {
         // delete document from db
         const result = await next(rp);
         // delete relationship id from sourcedocument
-        sourceUser[field] = sourceUser[field].filter(e => e != result.recordId);
+        sourceUser[field] = sourceUser[field].filter(e => `${e}` !== `${result.recordId}`);
         try {
           await sourceUser.save();
           return result;

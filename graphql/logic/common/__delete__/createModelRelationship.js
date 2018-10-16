@@ -13,10 +13,11 @@ module.exports = ({ field, TC }) => TC.get('$createOne').wrapResolve(next => asy
       } catch (e) {
         // Placeholder function to stop the field from saving to the db
         result.record.remove().exec();
-        throw new Error(`Unexpected error adding the document to ${sourceUserType.toLowerCase()}`);
+        return (Error(`Unexpected error adding the document to ${sourceUserType.toLowerCase()}`));
+        // return e;
       }
     } else {
-      throw new Error(`Field: ${field} is not a collection`);
+      return (Error(`Field: ${field} is not a collection`));
     }
   }
 });

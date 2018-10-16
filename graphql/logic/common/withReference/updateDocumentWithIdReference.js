@@ -13,5 +13,5 @@ module.exports = ({ TC, refPath }) => TC.getResolver('updateById').wrapResolve(n
     // run updateById resolver
     return next(rp);
   }
-  Promise.reject(Error('invalid refPath'));
+  return Promise.reject(Error('invalid refPath'));
 });

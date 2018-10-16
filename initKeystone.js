@@ -4,7 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 require('dotenv').load();
 // require('dotenv').config();
 
-const chai = require('chai');
+// const chai = require('chai');
 const keystone = require('keystone');
 const Cryptr = require('cryptr');
 
@@ -62,7 +62,7 @@ keystone.import('subModels');
 // keystone.set('brandDetails', {
 //   brand: keystone.get('brand') || 'My Career Choice',
 //   mailAddress: '22 Kumasi Cresent, Wuse 2, Abuja',
-//   homepageUrl: 'https://careerintelligence.global',
+//   homepageUrl: 'https://yeznigeria.org',
 //   phone: '+234.818.855.5611',
 //   emailLogoUrl: 'https://res.cloudinary.com/hhg3osmd2/image/upload/v1533052639/career-intelligence.png',
 //   emailSubLogoUrl: 'https://res.cloudinary.com/hhg3osmd2/image/upload/v1533052643/all-logos-1.png',
