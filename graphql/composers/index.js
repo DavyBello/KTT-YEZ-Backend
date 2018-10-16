@@ -33,6 +33,7 @@ const CandidateEnquiry = keystone.list('CandidateEnquiry').model;
 
 const Post = keystone.list('Post').model;
 const PostCategory = keystone.list('PostCategory').model;
+const Event = keystone.list('Event').model;
 
 /**
  * Config
@@ -81,6 +82,7 @@ const PublicJobTC = composeWithMongoose(Job, PublicJobTCOptions);
 const JobCenterTC = composeWithMongoose(JobCenter, JobCenterTCOptions);
 const PostTC = composeWithMongoose(Post);
 const PostCategoryTC = composeWithMongoose(PostCategory);
+const EventTC = composeWithMongoose(Event);
 
 /**
  * Viewer Fields for authentication and authorization
@@ -125,4 +127,5 @@ module.exports = {
   PublicJobTC,
   PostTC,
   PostCategoryTC,
+  EventTC,
 };

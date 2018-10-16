@@ -12,6 +12,7 @@ const {
   UserTC,
   ViewerCandidateTC,
   PostTC,
+  EventTC,
   // PollTC,
   // PollVoteTC,
   // LocalGovernmentTC,
@@ -39,6 +40,8 @@ const {
 module.exports = {
   posts: PostTC.getResolver('findMany'),
   postsConnection: PostTC.getResolver('connection'),
+  events: EventTC.getResolver('findMany'),
+  eventsConnection: EventTC.getResolver('connection'),
   jobs: PublicJobTC.getResolver('findMany'),
   jobsConnection: PublicJobTC.getResolver('connection'),
   jobCenters: JobCenterTC.getResolver('findMany'),
