@@ -23,6 +23,7 @@ Referee.add({
   // password: { type: Types.Password, initial: true, required: true },
   // passwordVersion: { type: Types.Text, initial: false, required: true, default: 1},
   occupation: { type: Types.Text, initial: true },
+  workAddress: { type: Types.Text, initial: true },
   relationship: { type: Types.Text, initial: true },
   letter: { type: Types.Textarea, initial: true },
 }, 'verification', {
