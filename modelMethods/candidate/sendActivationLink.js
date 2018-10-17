@@ -1,47 +1,37 @@
 const keystone = require('keystone');
 const jwt = require('jsonwebtoken');
 
-module.exports = function () {
+const handleEmail = require('../../lib/handleEmail');
+
+module.exports = async function (method) {
   const user = this;
-  return new Promise(((resolve, reject) => {
-    console.log('sending user activation email');
-    if (user.isActivated) {
-      // console.log('Account is already activated');
-      reject(new Error('Account is already activated'));
-    } else {
-      if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-        console.log('Unable to send email - no mailgun credentials provided');
-        reject(new Error('could not find mailgun credentials'));
-      }
+  console.log('sending user activation email');
+  if (user.isActivated) return (Error('Account is already activated'));
 
-      const brandDetails = keystone.get('brandDetails');
+  const brandDetails = keystone.get('brandDetails');
 
-      const code = jwt.sign({
-        id: user._id,
-        createdAt: Date.now(),
-      }, process.env.ACTIVATION_JWT_SECRET);
-      const activationLink = `${process.env.FRONT_END_URL}/activate?code=${code}`;
+  const code = jwt.sign({
+    id: user._id,
+    createdAt: Date.now(),
+  }, process.env.ACTIVATION_JWT_SECRET);
+  const activationLink = `${process.env.FRONT_END_URL}/activate?code=${code}`;
 
-      new keystone.Email({
-        templateName: 'activate-account',
-        transport: 'mailgun',
-      }).send({
-        to: [user.email],
-        from: {
-          name: 'Youth Empowerment Zone (YEZ)',
-          email: 'no-reply@yeznigeria.org',
-        },
-        subject: 'Youth Empowerment Zone (YEZ) Account Activation',
-        user,
-        brandDetails,
-        activationLink,
-      }, (err) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        }
-      });
-      resolve();
-    }
-  }));
+  return handleEmail({
+    method,
+    emailOpts: {
+      templateName: 'activate-account',
+      transport: 'mailgun',
+    },
+    locals: {
+      to: [user.email],
+      from: {
+        name: 'Youth Empowerment Zone (YEZ)',
+        email: 'no-reply@yeznigeria.org',
+      },
+      subject: 'Youth Empowerment Zone (YEZ) Account Activation',
+      user,
+      brandDetails,
+      activationLink,
+    },
+  });
 };

@@ -36,12 +36,12 @@ module.exports = {
           lastName,
         });
         await newCandidate.save();
+        await newCandidate.sendActivationLink('send');
         return {
           name: newCandidate.name,
           token: newCandidate.signToken(),
         };
       }
-      // return Promise.reject(Error('phone already exists'));
       return Promise.reject(new UserInputError('email already exists'));
     } catch (e) {
       return Promise.reject(e);

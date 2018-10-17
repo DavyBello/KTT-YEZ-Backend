@@ -73,7 +73,8 @@ keystone.set('brandDetails', {
   mailAddress: '22 Kumasi Cresent, Wuse 2, Abuja',
   homepageUrl: process.env.FRONT_END_URL,
   phone: '+234.818.855.5611',
-  emailLogoUrl: 'http://www.yeznigeria.org/static/images/mcclogo-text-dark.png',
+  emailLogoUrl: 'https://yez-ng-backend.herokuapp.com/images/yez-logo.svg',
+  // emailLogoUrl: 'http://www.yeznigeria.org/static/images/yez-logo.svg',
 });
 
 // check for environment variables
