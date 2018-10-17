@@ -9,12 +9,23 @@ keystone.init({
   name: 'yez-ng-backend',
   's3 config': {},
   headless: true,
-  'module root': 'C:\\Users\\DAVID\\Documents\\GitHub\\YEZ-NG-Backend',
+  // 'module root': 'C:\\Users\\DAVID\\Documents\\GitHub\\YEZ-NG-Backend',
+  'view engine': 'pug',
+  emails: 'templates/emails',
 });
 
 
-keystone.import('./models');
-keystone.import('./subModels');
+keystone.import('../models');
+keystone.import('../subModels');
+
+keystone.set('brandDetails', {
+  brand: keystone.get('brand') || 'Youth Empowerment Zone',
+  mailAddress: '22 Kumasi Cresent, Wuse 2, Abuja',
+  homepageUrl: process.env.FRONT_END_URL,
+  phone: '+234.818.855.5611',
+  emailLogoUrl: 'https://yez-ng-backend.herokuapp.com/images/yez-logo.svg',
+  // emailLogoUrl: 'http://www.yeznigeria.org/static/images/yez-logo.svg',
+});
 
 keystone.pvCryptr = new Cryptr(process.env.PASSWORD_VERSION_SECRET);
 

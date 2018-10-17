@@ -61,7 +61,7 @@ describe('createAccount Mutation', () => {
     expect(result.errors[0].message).to.equal('email already exists');
   });
 
-  it.skip('should create a new user when parameters are valid', async () => {
+  it('should create a new user when parameters are valid', async () => {
     const firstName = 'firstName';
     const lastName = 'lastName';
     const email = 'test@email.com';
@@ -79,8 +79,6 @@ describe('createAccount Mutation', () => {
     };
 
     const result = await graphql(schema, query, rootValue, context, variables);
-
-    console.log(result);
 
     expect(result.data.candidateCreateAccount.name).to.exist;
     expect(result.data.candidateCreateAccount.token).to.exist;
