@@ -34,4 +34,6 @@ module.exports = (app) => {
   // Views
   app.get('/admin', (req, res) => { res.redirect('/keystone'); });
   app.get('/', (req, res) => { res.redirect('/keystone'); });
+
+  app.use('/t', require('./emails'));
 };

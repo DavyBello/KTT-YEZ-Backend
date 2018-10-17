@@ -1,40 +1,30 @@
-/**
- * This file defines the email tests for your project.
- *
- * Each email test should provide the locals used to render the
- * email template for preview.
- *
- * Values can either be an object (for simple tests), or a
- * function that calls a callback(err, locals).
- *
- * Sample generated emails, based on the keys and methods below,
- * can be previewed at /keystone/test-email/{key}
- */
-
 const keystone = require('keystone');
 
-module.exports = {
+const router = keystone.express.Router();
 
-  /** New Enquiry Notifications */
-  'enquiry-notification': function (req, res, callback) {
-    // To test enquiry notifications we create a dummy enquiry that
-    // is not saved to the database, but passed to the template.
+const Candidate = keystone.list('Candidate').model;
 
-    const Enquiry = keystone.list('Enquiry').model;
-
-    const newEnquiry = new Enquiry({
-      name: { first: 'Test', last: 'User' },
-      email: 'contact@ktt-backend.com',
-      phone: '+61 2 1234 5678',
-      enquiryType: 'message',
-      message: { md: 'Nice enquiry notification.' },
-    });
-
-    callback(null, {
-      admin: 'Admin User',
-      enquiry: newEnquiry,
-      enquiry_url: '/keystone/enquiries/',
-    });
+const routes = {
+  '/candidate-activation': async (req, res) => {
+    const candidate = await Candidate.findOne();
+    const html = await candidate.sendActivationLink('render');
+    res.send(html);
   },
-
 };
+
+/* higher order function */
+// const handlerException = fn => (req, res, next) => {
+//   fn(req, res).catch(error => next(error));
+// };
+const handlerException = fn => async (req, res, next) => {
+  try {
+    await fn(req, res);
+  } catch (e) {
+    next(e);
+  }
+};
+
+Object.entries(routes).forEach(([key, value]) => router.get(key, handlerException(value)));
+
+// router
+module.exports = router;
