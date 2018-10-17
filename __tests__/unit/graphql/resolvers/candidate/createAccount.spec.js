@@ -11,6 +11,7 @@ const getContext = require('../../../../../graphql/lib/getContext');
 const {
   connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows,
 } = require('../../../../helper');
+const services = require('../../../../mocks/services');
 
 const { expect } = chai;
 
@@ -61,7 +62,7 @@ describe('createAccount Mutation', () => {
     expect(result.errors[0].message).to.equal('email already exists');
   });
 
-  it('should create a new user when parameters are valid', async () => {
+  it.only('should create a new user when parameters are valid', async () => {
     const firstName = 'firstName';
     const lastName = 'lastName';
     const email = 'test@email.com';
@@ -70,7 +71,7 @@ describe('createAccount Mutation', () => {
     const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;
 
     const rootValue = {};
-    const context = getContext();
+    const context = {...getContext(), services};
     const variables = {
       firstName,
       lastName,

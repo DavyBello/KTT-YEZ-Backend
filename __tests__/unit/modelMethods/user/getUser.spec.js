@@ -9,7 +9,6 @@ const {
 
 const { expect } = chai;
 
-
 const { ObjectId } = mongoose.Types;
 
 before(connectMongoose);

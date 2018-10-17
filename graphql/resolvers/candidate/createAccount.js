@@ -20,7 +20,7 @@ module.exports = {
     token: String!
     name: String!
   }`,
-  resolve: async ({ args }) => {
+  resolve: async ({ args, context: { services } }) => {
     const {
       input: {
         firstName, lastName, email, password,
@@ -36,7 +36,8 @@ module.exports = {
           lastName,
         });
         await newCandidate.save();
-        newCandidate.sendActivationLink('send');
+        // newCandidate.handleActivationLinkEmail('send');
+        services.sendActivationLink(newCandidate);
         return {
           name: newCandidate.name,
           token: newCandidate.signToken(),

@@ -7,9 +7,9 @@ module.exports = {
 		email: String!
 	}`,
   resolve: async ({ sourceUser }) => {
-    if (sourceUser.sendActivationLink) {
+    if (sourceUser.handleActivationLinkEmail) {
       try {
-        await sourceUser.sendActivationLink();
+        await sourceUser.handleActivationLinkEmail();
         return ({
           status: 'success',
           email: sourceUser.email,

@@ -3,6 +3,7 @@ const eJwt = require('express-jwt');
 const { ApolloServer } = require('apollo-server-express');
 
 const schema = require('../graphql/schema');
+const services = require('../lib/services');
 const getContext = require('../graphql/lib/getContext');
 // const corsOptions = require('../config/corsOptions');
 
@@ -22,6 +23,7 @@ module.exports = (app) => {
     schema,
     context: ({ req, res }) => ({
       ...getContext({ jwtPayload: req.user }),
+      services,
       req,
       res,
     }),
