@@ -72,9 +72,9 @@ Company.schema.pre('save', function preSave(next) {
 });
 
 // Methods
-const { sendActivationLink } = ModelMethods;
+const { handleActivationLinkEmail } = ModelMethods;
 
-Company.schema.methods.sendActivationLink = sendActivationLink;
+Company.schema.methods.handleActivationLinkEmail = handleActivationLinkEmail;
 
 /**
  * Relationships

@@ -7,7 +7,7 @@ const Candidate = keystone.list('Candidate').model;
 const routes = {
   '/candidate-activation': async (req, res) => {
     const candidate = await Candidate.findOne();
-    const html = await candidate.sendActivationLink('render');
+    const html = await candidate.handleActivationLinkEmail('render');
     res.send(html);
   },
 };
