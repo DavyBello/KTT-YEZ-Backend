@@ -33,7 +33,7 @@ CandidateTC.addRelation('certificates', {
 CandidateTC.addRelation('referees', {
   resolver: () => RefereeTC.getResolver('findMany'),
   prepareArgs: {
-    filter: source => ({ candidateId: source._id }),
+    filter: source => ({ candidateId: source._id, d: false }),
   },
   projection: { _id: true },
 });

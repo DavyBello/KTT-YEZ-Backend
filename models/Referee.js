@@ -28,6 +28,9 @@ Referee.add({
   letter: { type: Types.Textarea, initial: true },
 }, 'verification', {
   isVerified: { type: Boolean, index: true },
+}, 'Status', {
+  // isDeleted
+  d: { type: Types.Boolean, default: false, label: 'isDeleted' },
 });
 
 // Model Hooks

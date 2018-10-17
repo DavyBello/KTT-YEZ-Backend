@@ -44,7 +44,7 @@ mutation M(
 }
 `;
 
-describe('deleteReferee Mutation', () => {
+describe.skip('deleteReferee Mutation', () => {
   it('should only be able to delete referee for logged in user (i.e the "viewer")', async () => {
     const user = await createRows.createCandidate();
 
