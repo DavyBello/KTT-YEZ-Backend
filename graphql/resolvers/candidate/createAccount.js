@@ -36,7 +36,7 @@ module.exports = {
           lastName,
         });
         await newCandidate.save();
-        await newCandidate.sendActivationLink('send');
+        newCandidate.sendActivationLink('send');
         return {
           name: newCandidate.name,
           token: newCandidate.signToken(),
