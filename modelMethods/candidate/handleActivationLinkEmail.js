@@ -18,7 +18,7 @@ module.exports = async function (method) {
 
   return handleEmail({
     method,
-    emailOpts: {
+    options: {
       templateName: 'activate-account',
       transport: 'mailgun',
     },
