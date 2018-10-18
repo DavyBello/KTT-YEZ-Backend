@@ -62,7 +62,7 @@ describe('createAccount Mutation', () => {
     expect(result.errors[0].message).to.equal('email already exists');
   });
 
-  it.only('should create a new user when parameters are valid', async () => {
+  it('should create a new user when parameters are valid', async () => {
     const firstName = 'firstName';
     const lastName = 'lastName';
     const email = 'test@email.com';
