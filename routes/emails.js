@@ -7,15 +7,12 @@ const Candidate = keystone.list('Candidate').model;
 const routes = {
   '/candidate-activation': async (req, res) => {
     const candidate = await Candidate.findOne();
-    const html = await candidate.handleActivationLinkEmail('render');
+    const { html } = await candidate.getActivationLinkEmail().render();
     res.send(html);
   },
 };
 
 /* higher order function */
-// const handlerException = fn => (req, res, next) => {
-//   fn(req, res).catch(error => next(error));
-// };
 const handlerException = fn => async (req, res, next) => {
   try {
     await fn(req, res);

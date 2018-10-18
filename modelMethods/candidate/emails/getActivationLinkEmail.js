@@ -1,9 +1,9 @@
 const keystone = require('keystone');
 const jwt = require('jsonwebtoken');
 
-const handleEmail = require('../../../lib/handleEmail');
+const prepareEmail = require('../../../lib/prepareEmail');
 
-module.exports = async function (method) {
+module.exports = function () {
   const user = this;
   console.log('sending user activation email');
   if (user.isActivated) return (Error('Account is already activated'));
@@ -16,8 +16,7 @@ module.exports = async function (method) {
   }, process.env.ACTIVATION_JWT_SECRET);
   const activationLink = `${process.env.FRONT_END_URL}/activate?code=${code}`;
 
-  return handleEmail({
-    method,
+  return prepareEmail({
     options: {
       templateName: 'user/activate-account',
       transport: 'mailgun',

@@ -1,7 +1,7 @@
 // const mongoose = require('mongoose');
 const chai = require('chai');
 
-const { decodeToken } = require('../');
+const decodeToken = require('../decodeToken');
 
 const {
   connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows, getContext

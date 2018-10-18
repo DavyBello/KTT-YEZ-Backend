@@ -1,5 +1,5 @@
-const handleActivationLinkEmail = require('./handleActivationLinkEmail');
+const getActivationLinkEmail = require('./emails/getActivationLinkEmail');
 
 module.exports = {
-  handleActivationLinkEmail,
+  getActivationLinkEmail,
 };

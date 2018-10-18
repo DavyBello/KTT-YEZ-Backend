@@ -36,7 +36,7 @@ module.exports = {
           lastName,
         });
         await newCandidate.save();
-        // newCandidate.handleActivationLinkEmail('send');
+        // newCandidate.getActivationLinkEmail().send();
         services.sendActivationLink(newCandidate);
         return {
           name: newCandidate.name,

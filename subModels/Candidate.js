@@ -99,9 +99,9 @@ Candidate.schema.pre('save', async function (next) {
 });
 
 // Methods
-const { handleActivationLinkEmail, getProfilePercent } = ModelMethods;
+const { getActivationLinkEmail, getProfilePercent } = ModelMethods;
 
-Candidate.schema.methods.handleActivationLinkEmail = handleActivationLinkEmail;
+Candidate.schema.methods.getActivationLinkEmail = getActivationLinkEmail;
 Candidate.schema.methods.getProfilePercent = getProfilePercent;
 
 /**

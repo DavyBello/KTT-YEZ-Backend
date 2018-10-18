@@ -53,9 +53,9 @@ CenterManager.schema.pre('save', function preSave(next) {
 });
 
 // Methods
-const { handleActivationLinkEmail } = ModelMethods;
+const { getActivationLinkEmail } = ModelMethods;
 
-CenterManager.schema.methods.handleActivationLinkEmail = handleActivationLinkEmail;
+CenterManager.schema.methods.getActivationLinkEmail = getActivationLinkEmail;
 
 /**
  * Registration
