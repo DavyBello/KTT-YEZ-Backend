@@ -40,7 +40,7 @@ beforeEach(clearDbAndRestartCounters);
 
 after(disconnectMongoose);
 
-describe.only('createAccount Mutation', () => {
+describe('createAccount Mutation', () => {
   it('should not create an account with an existing email', async () => {
     const user = await createRows.createCandidate();
 
