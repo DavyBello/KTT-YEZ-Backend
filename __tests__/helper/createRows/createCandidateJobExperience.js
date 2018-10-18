@@ -1,7 +1,7 @@
 /* eslint-disable no-multi-assign,prefer-const */
 const keystone = require('keystone');
 
-const { STATES, MONTHS } = require('../../lib/common');
+const { STATES, MONTHS } = require('../../../lib/common');
 
 const JobExperience = keystone.list('JobExperience').model;
 

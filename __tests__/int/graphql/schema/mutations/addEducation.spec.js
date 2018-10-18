@@ -8,9 +8,9 @@ const Education = keystone.list('Education').model;
 const schema = require('../../../../../graphql/schema');
 
 const { decodeToken } = require('../../../../../modelMethods/user');
-const getContext = require('../../../../../graphql/lib/getContext');
+
 const {
-  connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows,
+  connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows, getContext
 } = require('../../../../helper');
 
 const { expect } = chai;

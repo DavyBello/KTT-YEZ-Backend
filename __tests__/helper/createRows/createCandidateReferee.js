@@ -1,7 +1,7 @@
 /* eslint-disable no-multi-assign,prefer-const */
 const keystone = require('keystone');
 
-const { GENDERS } = require('../../lib/common');
+const { GENDERS } = require('../../../lib/common');
 
 const Referee = keystone.list('Referee').model;
 
