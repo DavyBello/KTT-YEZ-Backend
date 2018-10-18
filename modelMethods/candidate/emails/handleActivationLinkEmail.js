@@ -1,7 +1,7 @@
 const keystone = require('keystone');
 const jwt = require('jsonwebtoken');
 
-const handleEmail = require('../../lib/handleEmail');
+const handleEmail = require('../../../lib/handleEmail');
 
 module.exports = async function (method) {
   const user = this;
@@ -19,7 +19,7 @@ module.exports = async function (method) {
   return handleEmail({
     method,
     options: {
-      templateName: 'activate-account',
+      templateName: 'user/activate-account',
       transport: 'mailgun',
     },
     locals: {

@@ -1,4 +1,4 @@
 module.exports = {
-  handleActivationLinkEmail: require('./handleActivationLinkEmail'),
+  handleActivationLinkEmail: require('./emails/handleActivationLinkEmail'),
   getProfilePercent: require('./getProfilePercent'),
 };

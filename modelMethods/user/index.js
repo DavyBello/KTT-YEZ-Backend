@@ -1,9 +1,10 @@
-const encryptPasswordVersion = require('./encryptPasswordVersion');
-const handleActivationLinkEmail = require('./handleActivationLinkEmail');
-const sendPasswordResetLink = require('./sendPasswordResetLink');
-const signToken = require('./signToken');
-const decodeToken = require('./decodeToken');
-const getUser = require('./getUser');
+const handleActivationLinkEmail = require('./emails/handleActivationLinkEmail');
+const sendPasswordResetLink = require('./emails/sendPasswordResetLink');
+
+const encryptPasswordVersion = require('./auth/encryptPasswordVersion');
+const signToken = require('./auth/signToken');
+const decodeToken = require('./auth/decodeToken');
+const getUser = require('./auth/getUser');
 
 module.exports = {
   handleActivationLinkEmail,

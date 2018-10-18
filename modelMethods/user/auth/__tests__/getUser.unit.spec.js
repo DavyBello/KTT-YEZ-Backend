@@ -5,7 +5,7 @@ const { decodeToken } = require('../');
 
 const {
   connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows, getContext
-} = require('../../../__tests__/helper');
+} = require('../../../../__tests__/helper');
 
 const { expect } = chai;
 
