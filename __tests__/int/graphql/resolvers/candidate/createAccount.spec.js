@@ -11,7 +11,6 @@ const schema = require('../../../../../graphql/schema');
 const {
   connectMongoose, clearDbAndRestartCounters, disconnectMongoose, createRows, getContext
 } = require('../../../../helper');
-const services = require('../../../../mocks/services');
 
 const { expect } = chai;
 
@@ -41,7 +40,7 @@ beforeEach(clearDbAndRestartCounters);
 
 after(disconnectMongoose);
 
-describe('createAccount Mutation', () => {
+describe.only('createAccount Mutation', () => {
   it('should not create an account with an existing email', async () => {
     const user = await createRows.createCandidate();
 
@@ -71,7 +70,7 @@ describe('createAccount Mutation', () => {
     const query = CREATE_CANDIDATE_ACCOUNT_MUTATION;
 
     const rootValue = {};
-    const context = {...getContext(), services};
+    const context = getContext();
     const variables = {
       firstName,
       lastName,
