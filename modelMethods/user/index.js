@@ -1,5 +1,5 @@
 const getActivationLinkEmail = require('./emails/getActivationLinkEmail');
-const sendPasswordResetLink = require('./emails/sendPasswordResetLink');
+const getPasswordResetLinkEmail = require('./emails/getPasswordResetLinkEmail');
 
 const encryptPasswordVersion = require('./auth/encryptPasswordVersion');
 const signToken = require('./auth/signToken');
@@ -8,7 +8,7 @@ const getUser = require('./auth/getUser');
 
 module.exports = {
   getActivationLinkEmail,
-  sendPasswordResetLink,
+  getPasswordResetLinkEmail,
   signToken,
   decodeToken,
   getUser,

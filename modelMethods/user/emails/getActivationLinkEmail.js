@@ -5,7 +5,7 @@ const prepareEmail = require('../../../lib/prepareEmail');
 
 module.exports = function () {
   const user = this;
-  console.log('sending user activation email');
+  // console.log('sending user activation email');
   if (user.isActivated) return (Error('Account is already activated'));
 
   const brandDetails = keystone.get('brandDetails');

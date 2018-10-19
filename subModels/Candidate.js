@@ -99,10 +99,15 @@ Candidate.schema.pre('save', async function (next) {
 });
 
 // Methods
-const { getActivationLinkEmail, getProfilePercent } = ModelMethods;
+const {
+  getProfilePercent,
+  getActivationLinkEmail,
+  // getPasswordResetLinkEmail,
+} = ModelMethods;
 
-Candidate.schema.methods.getActivationLinkEmail = getActivationLinkEmail;
 Candidate.schema.methods.getProfilePercent = getProfilePercent;
+Candidate.schema.methods.getActivationLinkEmail = getActivationLinkEmail;
+// Candidate.schema.methods.getPasswordResetLinkEmail = getPasswordResetLinkEmail;
 
 /**
  * Relationships

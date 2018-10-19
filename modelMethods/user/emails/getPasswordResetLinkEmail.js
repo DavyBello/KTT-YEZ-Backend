@@ -5,20 +5,19 @@ const prepareEmail = require('../../../lib/prepareEmail');
 
 module.exports = function () {
   const user = this;
-  // console.log('sending user activation email');
-  if (user.isActivated) return (Error('Account is already activated'));
 
   const brandDetails = keystone.get('brandDetails');
 
   const code = jwt.sign({
     id: user._id,
     createdAt: Date.now(),
+    pv: keystone.pvCryptr.encrypt(user.passwordVersion),
   }, process.env.ACTIVATION_JWT_SECRET);
-  const activationLink = `${process.env.FRONT_END_URL}/activate?code=${code}`;
+  const resetLink = `${process.env.FRONT_END_URL}/forgot/change?code=${code}`;
 
   return prepareEmail({
     options: {
-      templateName: 'user/activate-account',
+      templateName: 'user/reset-password',
       transport: 'mailgun',
     },
     locals: {
@@ -27,10 +26,10 @@ module.exports = function () {
         name: 'Youth Empowerment Zone (YEZ)',
         email: 'no-reply@yeznigeria.org',
       },
-      subject: 'Youth Empowerment Zone (YEZ) Account Activation',
+      subject: 'Password Reset',
       user,
       brandDetails,
-      activationLink,
+      resetLink,
     },
   });
 };

@@ -4,10 +4,20 @@ const router = keystone.express.Router();
 
 const Candidate = keystone.list('Candidate').model;
 
+const demoCandidate = new Candidate({
+  name: 'John Doe',
+  lastName: 'John',
+  firstName: 'Doe',
+  email: 'example@example.com',
+});
+
 const routes = {
+  '/password-reset': async (req, res) => {
+    const { html } = await demoCandidate.getPasswordResetLinkEmail().render();
+    res.send(html);
+  },
   '/candidate-activation': async (req, res) => {
-    const candidate = await Candidate.findOne();
-    const { html } = await candidate.getActivationLinkEmail().render();
+    const { html } = await demoCandidate.getActivationLinkEmail().render();
     res.send(html);
   },
 };

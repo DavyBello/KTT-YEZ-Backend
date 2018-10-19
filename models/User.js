@@ -41,9 +41,9 @@ User.schema.pre('save', (next) => {
 });
 
 // Methods
-const { sendPasswordResetLink, signToken } = ModelMethods;
+const { getPasswordResetLinkEmail, signToken } = ModelMethods;
 
-User.schema.methods.sendPasswordResetLink = sendPasswordResetLink;
+User.schema.methods.getPasswordResetLinkEmail = getPasswordResetLinkEmail;
 User.schema.methods.signToken = signToken;
 
 
