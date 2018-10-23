@@ -11,7 +11,9 @@ const RECEIVERS_TYPE = [
  * ==========
  */
 const Notification = new List('Notification', {
-  track: true,
+  track: {
+    createdAt: true,
+  },
 });
 
 Notification.add({
