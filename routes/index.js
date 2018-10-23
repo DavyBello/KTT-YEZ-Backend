@@ -1,11 +1,6 @@
-const cors = require('cors');
 const eJwt = require('express-jwt');
-const { ApolloServer } = require('apollo-server-express');
 
-const schema = require('../graphql/schema');
-const services = require('../lib/services');
-const getContext = require('../graphql/lib/getContext');
-// const corsOptions = require('../config/corsOptions');
+const apolloServer = require('../apolloServer');
 
 const apiPath = '/graphql';
 const eJwtOptions = {
@@ -18,20 +13,7 @@ module.exports = (app) => {
   // Register API middleware
   app.use(apiPath, eJwt(eJwtOptions));
 
-  const server = new ApolloServer({
-    cors,
-    schema,
-    context: ({ req, res }) => ({
-      ...getContext({ jwtPayload: req.user }),
-      services,
-      req,
-      res,
-    }),
-    introspection: true,
-    playground: true,
-  });
-
-  server.applyMiddleware({ app, path: apiPath });
+  apolloServer.applyMiddleware({ app, path: apiPath });
 
   // Views
   app.get('/admin', (req, res) => { res.redirect('/keystone'); });
