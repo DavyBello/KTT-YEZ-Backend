@@ -2,6 +2,12 @@
 	NOT YET COMPLETE
 */
 const { schemaComposer } = require('graphql-compose');
+// const {
+// 	GraphQLSchema,
+// 	GraphQLNamedType,
+// 	GraphQLDirective,
+// 	SchemaDefinitionNode,
+// } = require('graphql');
 
 // Add relationships and resolvers to schema
 require('../relationships');

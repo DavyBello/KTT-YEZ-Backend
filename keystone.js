@@ -48,18 +48,34 @@ keystone.set('signin logo', '/images/yez-logo.svg');
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-  candidates: ['Candidate', 'Education', 'JobExperience', 'Certificate'],
-  // CandidateDocuments: [
-  //   'CandidateDocument',
-  //   'SkillAnalysisResult',
-  //   'SeekerResult',
-  //   'StartupResult'
-  // ],
-  // Companies: ['CompanyMessage', 'Company', 'Industry', 'Job'],
-  // CenterManager: 'CenterManager',
-  // poll: ['Poll', 'PollVote'],
+  candidates: [
+    'Candidate',
+    'Education',
+    'JobExperience',
+    'Certificate',
+    'Referee',
+    'CandidateEnquiry',
+  ],
+  'Candidate Preferences': [
+    'ScholarshipNotification',
+    'GeneralNotification',
+    'JobAlertNotification',
+  ],
+  CandidateDocuments: [
+    'CandidateDocument',
+    //   'SkillAnalysisResult',
+    //   'SeekerResult',
+    //   'StartupResult'
+  ],
+  notifications: [
+    'Notification',
+    'NotificationReadReceipt',
+  ],
+  scholarships: ['Course'],
+  Companies: ['Company', 'Industry', 'Job'],
+  CenterManager: ['CenterManager', 'CaseFile'],
   country: ['State', 'LocalGovernment'],
-  // posts: ['posts', 'post-categories'],
+  posts: ['posts', 'post-categories'],
   // galleries: 'galleries',
   // enquiries: 'enquiries',
   users: ['keystoneAdmin'],
