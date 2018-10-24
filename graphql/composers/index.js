@@ -35,6 +35,11 @@ const Post = keystone.list('Post').model;
 const PostCategory = keystone.list('PostCategory').model;
 const Event = keystone.list('Event').model;
 
+// User Settings
+const ScholarshipNotification = keystone.list('ScholarshipNotification').model;
+const GeneralNotification = keystone.list('GeneralNotification').model;
+const JobAlertNotification = keystone.list('JobAlertNotification').model;
+
 /**
  * Config
  */
@@ -84,6 +89,13 @@ const PostTC = composeWithMongoose(Post);
 const PostCategoryTC = composeWithMongoose(PostCategory);
 const EventTC = composeWithMongoose(Event);
 
+// Candidate Account Settings
+const ScholarshipNotificationTC = composeWithMongoose(ScholarshipNotification);
+const GeneralNotificationTC = composeWithMongoose(GeneralNotification);
+const JobAlertNotificationTC = composeWithMongoose(JobAlertNotification);
+
+const CandidateSettingsTC = schemaComposer.getOrCreateTC('CandidateSettings');
+
 /**
  * Viewer Fields for authentication and authorization
  */
@@ -128,4 +140,10 @@ module.exports = {
   PostTC,
   PostCategoryTC,
   EventTC,
+
+  // Candidate Account Settings
+  ScholarshipNotificationTC,
+  GeneralNotificationTC,
+  JobAlertNotificationTC,
+  CandidateSettingsTC,
 };

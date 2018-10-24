@@ -1,5 +1,6 @@
 require('./state');
 
+require('./candidateSettings');
 require('./candidate');
 
 require('./company');

@@ -7,6 +7,7 @@ const {
   RefereeTC,
   NotificationTC,
   // CaseFileTC,
+  CandidateSettingsTC,
 } = require('../../composers');
 
 CandidateTC.addRelation('experiences', {
@@ -68,4 +69,8 @@ CandidateTC.addRelation('notifications', {
 CandidateTC.addFields({
   isBasicProfileComplete: require('./isBasicProfileComplete'),
   profilePercentage: require('./profilePercentage'),
+  settings: {
+    type: CandidateSettingsTC.getType(),
+    resolve: async source => ({ candidateId: source._id }),
+  },
 });
