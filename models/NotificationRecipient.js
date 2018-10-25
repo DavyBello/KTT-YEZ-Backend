@@ -6,23 +6,27 @@ const { Field: { Types }, List } = require('keystone');
  */
 const NotificationRecipient = new List('NotificationRecipient', {
   noedit: true,
+  track: {
+    createdAt: true,
+  },
 });
 
 NotificationRecipient.add({
-  notification: {
+  notificationId: {
     type: Types.Relationship, ref: 'Notification', many: false, index: true, required: true, initial: true,
   },
-  user: {
+  userId: {
     type: Types.Relationship, ref: 'User', many: false, index: true, required: true, initial: true,
   },
   isRead: {
     type: Types.Boolean, default: false, index: true,
   },
-  createdAt: { type: Types.Date, index: true, default: Date.now },
+  // readAt: { type: Types.Date, index: true, default: Date.now },
+  // createdAt: { type: Types.Date, index: true, default: Date.now },
 });
 
 /**
  * Registration
  */
-NotificationRecipient.defaultColumns = 'notification, user, createdAt';
+NotificationRecipient.defaultColumns = 'notificationId, userId, isRead';
 NotificationRecipient.register();

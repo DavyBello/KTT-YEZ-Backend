@@ -4,4 +4,4 @@ require('./candidate');
 require('./candidateEnquiry');
 require('./company');
 require('./centerManager');
-require('./notification');
+// require('./notification');

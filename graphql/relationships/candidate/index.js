@@ -5,7 +5,7 @@ const {
   CertificateTC,
   CandidateDocumentTC,
   RefereeTC,
-  NotificationTC,
+  NotificationRecipientTC,
   // CaseFileTC,
   CandidateSettingsTC,
 } = require('../../composers');
@@ -59,18 +59,11 @@ CandidateTC.addRelation('documentsPagination', {
   },
   projection: { _id: true },
 });
-CandidateTC.addRelation('notifications', {
-  resolver: () => NotificationTC.getResolver('userNotifications'),
-  prepareArgs: {
-    filter: source => ({ userId: source._id, userCreatedAt: source.createdAt }),
-  },
-  projection: { _id: true, createdAt: true },
-});
 CandidateTC.addRelation('notificationsConnection', {
-  resolver: () => NotificationTC.getResolver('connection'),
-  // prepareArgs: {
-  //   filter: source => ({ userId: source._id, userCreatedAt: source.createdAt }),
-  // },
+  resolver: () => NotificationRecipientTC.getResolver('connection'),
+  prepareArgs: {
+    filter: source => ({ userId: source._id }),
+  },
   projection: { _id: true, createdAt: true },
 });
 CandidateTC.addFields({
