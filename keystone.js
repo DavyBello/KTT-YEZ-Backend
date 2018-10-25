@@ -70,6 +70,7 @@ keystone.set('nav', {
   notifications: [
     'Notification',
     'NotificationReadReceipt',
+    'NotificationRecipient',
   ],
   scholarships: ['Course'],
   Companies: ['Company', 'Industry', 'Job'],

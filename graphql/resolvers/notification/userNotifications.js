@@ -5,6 +5,7 @@ const { NotificationTC } = require('../../composers');
 
 const Notification = keystone.list('Notification').model;
 const NotificationReadReceipt = keystone.list('NotificationReadReceipt').model;
+// const NotificationRecipient = keystone.list('NotificationRecipient').model;
 
 module.exports = {
   kind: 'query',
@@ -15,11 +16,13 @@ module.exports = {
       input NotificationFilterInput {
         userId: String!
         userCreatedAt: Date!
+        count: Float @default(value: 10)
       }
-    `,
+      `,
   },
   type: [NotificationTC.addFields({ isRead: 'Boolean' })],
   resolve: async ({ args }) => {
+    // TODO default count
     const { filter: { userId, userCreatedAt } } = args;
     try {
       const notifications = await Notification.find({

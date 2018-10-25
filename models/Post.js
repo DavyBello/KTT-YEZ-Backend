@@ -1,14 +1,13 @@
 /* eslint-disable func-names */
-const keystone = require('keystone');
+const { Field: { Types }, List } = require('keystone');
 
-const { Types } = keystone.Field;
 
 /**
  * Post Model
  * ==========
  */
 
-const Post = new keystone.List('Post', {
+const Post = new List('Post', {
   map: { name: 'title' },
   autokey: { path: 'slug', from: 'title', unique: true },
 });
@@ -30,6 +29,18 @@ Post.add({
 
 Post.schema.virtual('content.full').get(function () {
   return this.content.extended || this.content.brief;
+});
+
+const { createNotification } = require('../lib/services');
+const { BLOG_POST_NEW } = require('../lib/events');
+// const { RECEIVERS_TYPES: { ALL_EXISTING_USERS_AT_CREATION } } = require('../utils/constants');
+
+// Model Hooks
+Post.schema.pre('save', async function (next) {
+  if (this.state === 'published') {
+    await createNotification(BLOG_POST_NEW, this);
+  }
+  next();
 });
 
 Post.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
