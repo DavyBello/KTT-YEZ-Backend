@@ -20,6 +20,20 @@ Event.add({
   },
   venue: { type: Types.Location, defaults: { country: 'Nigeria' }, enableImprove: true },
   url: { type: Types.Url, initial: true },
+  // isNotificationSent
+  isNS: { type: Boolean, noedit: true, hidden: true },
+});
+
+const { createNotification } = require('../lib/services');
+const { EVENT_NEW } = require('../lib/events');
+
+// Model Hooks
+Event.schema.pre('save', async function (next) {
+  if (this.state === 'published' && !this.isNS) {
+    await createNotification(EVENT_NEW, this);
+    this.isNS = true;
+  }
+  next();
 });
 
 /**

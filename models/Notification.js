@@ -6,6 +6,7 @@ const { RECEIVERS_TYPES, RECEIVERS_TYPES: { ALL_EXISTING_USERS_AT_CREATION } } =
  * ==========
  */
 const Notification = new List('Notification', {
+  map: { name: 'title' },
   track: {
     createdAt: true,
   },
@@ -30,19 +31,17 @@ Notification.add({
     options: Object.values(RECEIVERS_TYPES),
     default: ALL_EXISTING_USERS_AT_CREATION,
     index: true,
-  },
-  receivers: {
-    type: Types.Relationship, ref: 'User', many: true, dependsOn: { receiversType: 'CUSTOM' }, index: true,
+    initial: true,
   },
 });
 
 /**
  * Relationships
  */
-Notification.relationship({ ref: 'NotificationReadReceipt', path: 'readReceipts', refPath: 'notification' });
+Notification.relationship({ ref: 'NotificationRecipient', path: 'recipients', refPath: 'notificationId' });
 
 /**
  * Registration
  */
-Notification.defaultColumns = 'message, createdAt, receiversType, receivers';
+Notification.defaultColumns = 'title, refId, createdAt, receiversType';
 Notification.register();

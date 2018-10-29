@@ -25,6 +25,8 @@ Post.add({
     extended: { type: Types.Html, wysiwyg: true, height: 400 },
   },
   categories: { type: Types.Relationship, ref: 'PostCategory', many: true },
+  // isNotificationSent
+  isNS: { type: Boolean, noedit: true, hidden: true },
 });
 
 Post.schema.virtual('content.full').get(function () {
@@ -33,12 +35,12 @@ Post.schema.virtual('content.full').get(function () {
 
 const { createNotification } = require('../lib/services');
 const { BLOG_POST_NEW } = require('../lib/events');
-// const { RECEIVERS_TYPES: { ALL_EXISTING_USERS_AT_CREATION } } = require('../utils/constants');
 
 // Model Hooks
 Post.schema.pre('save', async function (next) {
-  if (this.state === 'published') {
+  if (this.state === 'published' && !this.isNS) {
     await createNotification(BLOG_POST_NEW, this);
+    this.isNS = true;
   }
   next();
 });
