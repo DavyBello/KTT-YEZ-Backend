@@ -44,7 +44,7 @@ describe('authAccess', () => {
       'deleteCertificate',
       'addReferee',
       'updateReferee',
-      // 'deleteReferee',
+      'deleteReferee',
     ];
     wrappedMutations.forEach((mutation) => {
       expect(mutations[mutation]).to.exist;

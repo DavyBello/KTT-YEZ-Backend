@@ -44,7 +44,7 @@ mutation M(
 }
 `;
 
-describe.skip('deleteReferee Mutation', () => {
+describe('deleteReferee Mutation', () => {
   it('should only be able to delete referee for logged in user (i.e the "viewer")', async () => {
     const user = await createRows.createCandidate();
 
@@ -70,6 +70,6 @@ describe.skip('deleteReferee Mutation', () => {
     expect(result.errors).to.be.undefined;
 
     const _referee = await Referee.findById(result.data.deleteReferee.record._id);
-    expect(_referee).to.equal(null);
+    expect(_referee.d).to.equal(true);
   });
 });
