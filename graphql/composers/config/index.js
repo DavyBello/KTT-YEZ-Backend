@@ -1,3 +1,5 @@
+const PostTCOptions = require('./PostTCOptions');
+const EventTCOptions = require('./EventTCOptions');
 const UserTCOptions = require('./UserTCOptions');
 const CandidateTCOptions = require('./CandidateTCOptions');
 const JobExperienceTCOptions = require('./JobExperienceTCOptions');
@@ -13,6 +15,8 @@ const JobCenterTCOptions = require('./JobCenterTCOptions');
 const NotificationRecipientTCOptions = require('./NotificationRecipientTCOptions');
 
 module.exports = {
+  PostTCOptions,
+  EventTCOptions,
   UserTCOptions,
   CandidateTCOptions,
   JobExperienceTCOptions,

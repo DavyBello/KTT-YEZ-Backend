@@ -58,6 +58,8 @@ const {
   PublicJobTCOptions,
   JobCenterTCOptions,
   NotificationRecipientTCOptions,
+  PostTCOptions,
+  EventTCOptions,
 } = require('./config');
 
 const UserTC = composeWithMongoose(User, UserTCOptions);
@@ -91,9 +93,9 @@ const JobTC = composeWithMongoose(Job);
 // PUBLIC TYPES
 const PublicJobTC = composeWithMongoose(Job, PublicJobTCOptions);
 const JobCenterTC = composeWithMongoose(JobCenter, JobCenterTCOptions);
-const PostTC = composeWithMongoose(Post);
+const PostTC = composeWithMongoose(Post, PostTCOptions);
 const PostCategoryTC = composeWithMongoose(PostCategory);
-const EventTC = composeWithMongoose(Event);
+const EventTC = composeWithMongoose(Event, EventTCOptions);
 
 // Candidate Account Settings
 const ScholarshipNotificationTC = composeWithMongoose(ScholarshipNotification);
