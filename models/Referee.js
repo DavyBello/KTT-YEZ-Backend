@@ -30,7 +30,9 @@ Referee.add({
   isVerified: { type: Boolean, index: true },
 }, 'Status', {
   // isDeleted
-  d: { type: Types.Boolean, default: false, label: 'isDeleted' },
+  d: {
+    type: Types.Boolean, default: false, label: 'Is Deleted', noedit: true,
+  },
 });
 
 // Model Hooks
@@ -46,5 +48,5 @@ Referee.schema.pre('save', function (next) {
 /**
  * Registration
  */
-Referee.defaultColumns = 'name, candidateId, phone, email, gender, relationship, isVerified';
+Referee.defaultColumns = 'name, candidateId, phone, email, gender, d, isVerified';
 Referee.register();
