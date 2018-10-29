@@ -91,11 +91,16 @@ Candidate.schema.virtual('basicProfileStatus').get(function () {
 });
 
 // Model Hooks
-Candidate.schema.pre('save', async function (next) {
+Candidate.schema.pre('save', function (next) {
+  this.wasNew = this.isNew;
   if (this.firstName) this.firstName = toCamelCase(this.firstName);
   if (this.lastName) this.lastName = toCamelCase(this.lastName);
   this.name = `${this.lastName} ${this.firstName}`;
   next();
+});
+
+Candidate.schema.post('save', () => {
+  if (this.wasNew) this.createDefaultSettings();
 });
 
 // Methods
@@ -103,11 +108,13 @@ const {
   getProfilePercent,
   getActivationLinkEmail,
   // getPasswordResetLinkEmail,
+  createDefaultSettings,
 } = ModelMethods;
 
 Candidate.schema.methods.getProfilePercent = getProfilePercent;
 Candidate.schema.methods.getActivationLinkEmail = getActivationLinkEmail;
 // Candidate.schema.methods.getPasswordResetLinkEmail = getPasswordResetLinkEmail;
+Candidate.schema.methods.createDefaultSettings = createDefaultSettings;
 
 /**
  * Relationships
