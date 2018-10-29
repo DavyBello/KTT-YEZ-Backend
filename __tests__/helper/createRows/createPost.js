@@ -8,7 +8,7 @@ module.exports = async (payload = {}) => {
 
   return new Post({
     title: `Normal Title ${n}`,
-    conent: {
+    content: {
       brief: 'Example brief',
       extended: 'Example extended',
     },

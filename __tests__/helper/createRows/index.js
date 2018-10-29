@@ -12,6 +12,7 @@ const createCandidateCertificate = require('./createCandidateCertificate');
 const createCandidateReferee = require('./createCandidateReferee');
 const createPost = require('./createPost');
 const createPostCategory = require('./createPostCategory');
+const createEvent = require('./createEvent');
 
 module.exports = {
   restartCounters,
@@ -23,4 +24,5 @@ module.exports = {
   createCandidateReferee,
   createPost,
   createPostCategory,
+  createEvent,
 };

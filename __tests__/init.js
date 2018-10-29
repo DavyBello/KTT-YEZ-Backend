@@ -52,6 +52,7 @@ before(async () => {
     caseFile: 0,
     posts: 0,
     postCategories: 0,
+    events: 0,
   };
 });
 
