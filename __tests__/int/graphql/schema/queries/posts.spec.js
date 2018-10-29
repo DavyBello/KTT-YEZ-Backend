@@ -52,6 +52,7 @@ describe('posts Query', () => {
     const post = await createRows.createPost({
       categories: [postCategory._id],
       state: 'published',
+      isNS: true,
     });
 
     const query = GET_POSTS_QUERY;
