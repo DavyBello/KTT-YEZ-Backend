@@ -60,9 +60,15 @@ CandidateTC.addRelation('documentsPagination', {
   projection: { _id: true },
 });
 CandidateTC.addRelation('notificationsConnection', {
-  resolver: () => NotificationRecipientTC.getResolver('connection'),
+  resolver: () => NotificationRecipientTC.getResolver('connection')
+    .addSortArg({
+      name: 'CREATEDAT_DESC',
+      value: { createdAt: -1 },
+      description: 'Sort By most recent',
+    }).wrapResolve(next => async rp => next(rp)),
   prepareArgs: {
     filter: source => ({ userId: source._id }),
+    sort: 'CREATEDAT_DESC',
   },
   projection: { _id: true, createdAt: true },
 });

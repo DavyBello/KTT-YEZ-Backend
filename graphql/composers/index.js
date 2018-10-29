@@ -57,6 +57,7 @@ const {
   CandidateEnquiryTCOptions,
   PublicJobTCOptions,
   JobCenterTCOptions,
+  NotificationRecipientTCOptions,
 } = require('./config');
 
 const UserTC = composeWithMongoose(User, UserTCOptions);
@@ -78,7 +79,10 @@ const CandidateDocumentTC = composeWithMongoose(CandidateDocument);
 const CaseFileTC = composeWithMongoose(CaseFile, CaseFileTCOptions);
 const CandidateEnquiryTC = composeWithMongoose(CandidateEnquiry, CandidateEnquiryTCOptions);
 const NotificationTC = composeWithMongoose(Notification);
-const NotificationRecipientTC = composeWithMongoose(NotificationRecipient);
+const NotificationRecipientTC = composeWithMongoose(
+  NotificationRecipient,
+  NotificationRecipientTCOptions,
+);
 
 // const CompanyMessageTC = composeWithMongoose(CompanyMessage);
 const IndustryTC = composeWithMongoose(Industry);
