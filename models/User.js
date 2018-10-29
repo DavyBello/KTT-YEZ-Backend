@@ -26,7 +26,6 @@ User.add({
 // Model Hooks
 User.schema.pre('save', (next) => {
   // this.wasNew = this.isNew;
-
   if (this.name) this.name = toCamelCase(this.name);
 
   if (this.phone) {
@@ -41,10 +40,13 @@ User.schema.pre('save', (next) => {
 });
 
 // Methods
-const { getPasswordResetLinkEmail, signToken } = ModelMethods;
+const { getPasswordResetLinkEmail, signToken, decodeToken } = ModelMethods;
 
 User.schema.methods.getPasswordResetLinkEmail = getPasswordResetLinkEmail;
 User.schema.methods.signToken = signToken;
+
+// Static Methods
+User.schema.statics.decodeToken = decodeToken;
 
 
 /**
