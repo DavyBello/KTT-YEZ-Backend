@@ -1,3 +1,4 @@
+const keystone = require('keystone');
 const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 
@@ -5,6 +6,8 @@ const schema = require('./graphql/schema');
 const getContext = require('./graphql/lib/getContext');
 // const corsOptions = require('../config/corsOptions');
 const services = require('./lib/services');
+
+const User = keystone.list('User').model;
 
 // Setup Route Bindings
 module.exports = new ApolloServer({
@@ -25,16 +28,18 @@ module.exports = new ApolloServer({
     });
   },
   subscriptions: {
-    // onConnect: ({ Authorization }, webSocket) => {
-    //   // console.log(Authorization);
-    //   // console.log(webSocket);
-    //   if (Authorization) {
-    //     // TODO: Decode jwt
-    //     return ({ tokenPayload: { id: '' } });
-    //   }
+    onConnect: ({ authToken = null }) => {
+      if (authToken) {
+        try {
+          const tokenPayload = User.decodeToken(authToken);
+          return { tokenPayload };
+        } catch (error) {
+          throw error;
+        }
+      }
 
-    //   throw new Error('Missing auth token!');
-    // },
+      throw new Error('Missing auth token!');
+    },
   },
   introspection: true,
   playground: true,
