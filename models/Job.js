@@ -33,7 +33,7 @@ Job.add({
   fullDescription: { type: Types.Textarea, initial: true },
   vacancy: { type: Types.Text, initial: true },
   employmentType: { type: Types.Select, options: typeOptions },
-  industries: { type: Types.Relationship, ref: 'Industry', many: true },
+  industry: { type: Types.Relationship, ref: 'Industry', many: false },
   salary: { type: Types.Text, initial: true, required: false },
   publishedDate: {
     type: Date, index: true, initial: true, default: Date.now,

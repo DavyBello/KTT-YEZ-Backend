@@ -60,6 +60,7 @@ Company.add({
 
 Company.schema.pre('save', function preSave(next) {
   this.name = toCamelCase(this.name);
+  this.cName = toCamelCase(this.cName);
   if (this.phone) {
     if (PHONE_REGEX.test(this.phone)) {
       next();

@@ -60,7 +60,7 @@ module.exports = {
   }),
   ...authAccess({ scope: 'Company' }, {
     companyUpdateSelf: updateSelf({ TC: CompanyTC }),
-    companyAddJob: createDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
+    companyAddJob: CompanyTC.getResolver('addJob'),
     companyUpdateJob: updateDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
     companydeleteJob: deleteDocumentWithIdReference({ TC: JobTC, refPath: 'companyId' }),
   }),
