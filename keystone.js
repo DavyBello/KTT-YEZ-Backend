@@ -124,6 +124,15 @@ set up your mailgun integration`);
 
 keystone.pvCryptr = new Cryptr(process.env.PASSWORD_VERSION_SECRET);
 
+// const admin = require('firebase-admin');
+
+// const serviceAccount = require('./adminsdk-u7kla-b619e1aef6.json');
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   // databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
+// });
+
 const apolloServer = require('./apolloServer');
 
 keystone.start({

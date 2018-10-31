@@ -1,6 +1,7 @@
 const { Field: { Types }, List } = require('keystone');
 
-const { RECEIVERS_TYPES, RECEIVERS_TYPES: { ALL_EXISTING_USERS_AT_CREATION } } = require('../utils/constants');
+const { RECEIVERS_TYPES, RECEIVERS_TYPES: { CUSTOM } } = require('../utils/constants');
+
 /**
  * Notification Model
  * ==========
@@ -29,7 +30,7 @@ Notification.add({
   receiversType: {
     type: Types.Select,
     options: Object.values(RECEIVERS_TYPES),
-    default: ALL_EXISTING_USERS_AT_CREATION,
+    default: CUSTOM,
     index: true,
     initial: true,
   },
