@@ -34,6 +34,7 @@ module.exports = {
       if (!existing) {
         const newCompany = new Company({
           name,
+          cName: name,
           email,
           password,
           cacRegNo,
