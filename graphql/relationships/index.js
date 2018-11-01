@@ -6,6 +6,8 @@ require('./candidate');
 require('./jobAlertNotification');
 require('./scholarshipNotification');
 
+require('./scholarship');
+
 require('./notifications');
 
 require('./company');

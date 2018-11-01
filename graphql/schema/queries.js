@@ -33,6 +33,7 @@ const {
   // CenterManagerTC,
   ViewerCenterManagerTC,
   PublicJobTC,
+  ScholarshipTC,
 } = require('../composers');
 
 
@@ -46,6 +47,8 @@ module.exports = {
   jobsConnection: PublicJobTC.getResolver('connection'),
   jobCenters: JobCenterTC.getResolver('findMany'),
   jobCentersConnection: JobCenterTC.getResolver('connection'),
+  scholarships: ScholarshipTC.getResolver('findMany'),
+  scholarshipsConnection: ScholarshipTC.getResolver('connection'),
   ...authAccess({ scope: 'Candidate' }, {
     candidateIsAuthenticated: UserTC.getResolver('isAuthenticated'),
     viewerCandidate: ViewerCandidateTC.getResolver('candidateAccess'),
