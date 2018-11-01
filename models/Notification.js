@@ -39,7 +39,6 @@ Notification.add({
 
 // Model Hooks
 Notification.schema.post('remove', async function () {
-  console.log(this);
   const NotificationRecipient = keystone.list('NotificationRecipient').model;
   await NotificationRecipient.deleteMany({ notificationId: this._id });
   // next();
