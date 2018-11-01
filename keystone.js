@@ -72,7 +72,7 @@ keystone.set('nav', {
     // 'NotificationReadReceipt',
     'NotificationRecipient',
   ],
-  scholarships: ['Course'],
+  scholarships: ['Scholarship', 'ScholarshipLevel', 'ScholarshipCourse'],
   Companies: ['Company', 'Industry', 'Job'],
   CenterManager: ['CenterManager', 'CaseFile'],
   country: ['State', 'LocalGovernment'],

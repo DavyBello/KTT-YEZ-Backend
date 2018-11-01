@@ -37,9 +37,14 @@ const PostCategory = keystone.list('PostCategory').model;
 const Event = keystone.list('Event').model;
 
 // User Settings
-const ScholarshipNotification = keystone.list('ScholarshipNotification').model;
 const GeneralNotification = keystone.list('GeneralNotification').model;
 const JobAlertNotification = keystone.list('JobAlertNotification').model;
+const ScholarshipNotification = keystone.list('ScholarshipNotification').model;
+
+// Scholarship
+const ScholarshipCourse = keystone.list('ScholarshipCourse').model;
+const ScholarshipLevel = keystone.list('ScholarshipLevel').model;
+const Scholarship = keystone.list('Scholarship').model;
 
 /**
  * Config
@@ -98,9 +103,14 @@ const PostCategoryTC = composeWithMongoose(PostCategory);
 const EventTC = composeWithMongoose(Event, EventTCOptions);
 
 // Candidate Account Settings
-const ScholarshipNotificationTC = composeWithMongoose(ScholarshipNotification);
 const GeneralNotificationTC = composeWithMongoose(GeneralNotification);
 const JobAlertNotificationTC = composeWithMongoose(JobAlertNotification);
+const ScholarshipNotificationTC = composeWithMongoose(ScholarshipNotification);
+
+// Scholarship
+const ScholarshipCourseTC = composeWithMongoose(ScholarshipCourse);
+const ScholarshipLevelTC = composeWithMongoose(ScholarshipLevel);
+const ScholarshipTC = composeWithMongoose(Scholarship);
 
 const CandidateSettingsTC = schemaComposer.getOrCreateTC('CandidateSettings');
 
@@ -155,4 +165,9 @@ module.exports = {
   GeneralNotificationTC,
   JobAlertNotificationTC,
   CandidateSettingsTC,
+
+  // Scholarship
+  ScholarshipCourseTC,
+  ScholarshipLevelTC,
+  ScholarshipTC,
 };

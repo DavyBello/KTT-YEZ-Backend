@@ -2,18 +2,7 @@ const keystone = require('keystone');
 
 const { Field: { Types }, List } = keystone;
 
-const SCHOLARSHIP_LEVELS = [
-  'Certificate',
-  'Competitions',
-  'Diploma',
-  'Fellowship',
-  'Masters',
-  'NonDegree',
-  'PhD',
-  'PostdoctoralFellowships',
-  'Training',
-  'Undergraduate',
-];
+// const { SCHOLARSHIP_LEVELS } = require('../../utils/constants');
 /**
  * ScholarshipNotification Model
  * ==========
@@ -30,15 +19,15 @@ ScholarshipNotification.add('ScholarshipNotification', {
     type: Types.Relationship, ref: 'User', index: true, initial: true, required: true, unique: true,
   },
   level: {
-    type: Types.Select, options: SCHOLARSHIP_LEVELS, index: true,
+    type: Types.Relationship, ref: 'ScholarshipLevel', many: false, index: true,
   },
-  fieldOfStudy: {
-    type: Types.Relationship, ref: 'Course', many: true, index: true,
+  courses: {
+    type: Types.Relationship, ref: 'ScholarshipCourse', many: true, index: true,
   },
 });
 
 /**
  * Registration
  */
-ScholarshipNotification.defaultColumns = 'userId, level, fieldOfStudy';
+ScholarshipNotification.defaultColumns = 'userId, level, courses';
 ScholarshipNotification.register();

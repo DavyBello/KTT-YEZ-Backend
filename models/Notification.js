@@ -1,5 +1,6 @@
-const { Field: { Types }, List } = require('keystone');
+const keystone = require('keystone');
 
+const { Field: { Types }, List } = keystone;
 const { RECEIVERS_TYPES, RECEIVERS_TYPES: { CUSTOM } } = require('../utils/constants');
 
 /**
@@ -34,6 +35,14 @@ Notification.add({
     index: true,
     initial: true,
   },
+});
+
+// Model Hooks
+Notification.schema.post('remove', async function () {
+  console.log(this);
+  const NotificationRecipient = keystone.list('NotificationRecipient').model;
+  await NotificationRecipient.deleteMany({ notificationId: this._id });
+  // next();
 });
 
 /**
