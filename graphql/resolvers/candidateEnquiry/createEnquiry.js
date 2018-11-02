@@ -33,7 +33,7 @@ module.exports = {
   type: CandidateEnquiryTC.getResolver('createOne').getType(),
   resolve: async ({ args, context: { viewer } }) => {
     try {
-      const { input: { message, subject } } = args;
+      const { record: { message, subject } } = args;
       const cEnquiry = new CandidateEnquiry({
         message,
         subject,
